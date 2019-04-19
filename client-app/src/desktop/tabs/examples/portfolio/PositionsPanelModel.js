@@ -1,8 +1,9 @@
 import {HoistModel, XH, managed, LoadSupport} from '@xh/hoist/core';
 import {bindable} from '@xh/hoist/mobx';
-import {DimensionChooserModel} from '@xh/hoist/desktop/cmp/dimensionchooser';
+// import {DimensionChooserModel} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {numberRenderer, millionsRenderer, fmtNumberTooltip} from '@xh/hoist/format';
 import {GridModel} from '@xh/hoist/cmp/grid';
+import {DimensionsModel} from "./dimensions/DimensionsModel";
 
 @HoistModel
 @LoadSupport
@@ -10,18 +11,23 @@ export class PositionsPanelModel {
 
     @bindable loadTimestamp;
 
+    // @managed
+    // dimChooserModel = new DimensionChooserModel({
+    //     dimensions: [
+    //         {value: 'fund', label: 'Fund'},
+    //         {value: 'model', label: 'Model'},
+    //         {value: 'region', label: 'Region'},
+    //         {value: 'sector', label: 'Sector'},
+    //         {value: 'symbol', label: 'Symbol'},
+    //         {value: 'trader', label: 'Trader'}
+    //     ],
+    //     historyPreference: 'portfolioDimHistory'
+    // });
+
     @managed
-    dimChooserModel = new DimensionChooserModel({
-        dimensions: [
-            {value: 'fund', label: 'Fund'},
-            {value: 'model', label: 'Model'},
-            {value: 'region', label: 'Region'},
-            {value: 'sector', label: 'Sector'},
-            {value: 'symbol', label: 'Symbol'},
-            {value: 'trader', label: 'Trader'}
-        ],
-        historyPreference: 'portfolioDimHistory'
-    });
+    dimensionsModel = new DimensionsModel({
+
+    })
 
     @managed
     gridModel = new GridModel({
@@ -89,17 +95,21 @@ export class PositionsPanelModel {
 
     constructor() {
         this.addReaction({
-            track: () => this.dimChooserModel.value,
+            track: () => this.dimensionsModel.dimensions,
             run: this.loadAsync
         });
     }
 
     async doLoadAsync(loadSpec) {
-        const {gridModel, dimChooserModel} = this,
-            dims = dimChooserModel.value;
+        const {gridModel, dimensionsModel} = this;
+
+        if (!dimensionsModel.dimensions) {
+            await dimensionsModel.loadAsync();
+        }
+        const dims = dimensionsModel.dimensions;
 
         return XH.portfolioService
-            .getPortfolioAsync(dims)
+            .getPortfolioAsync(dims.split(','))
             .then(portfolio => {
                 gridModel.loadData(portfolio);
                 if (!gridModel.selectedRecord) {

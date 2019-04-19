@@ -1,0 +1,34 @@
+.dimension-editor {
+  background-color: var(--xh-grid-bg);
+  width: 300px;
+
+  &__selects {
+    padding: var(--xh-pad-half-px) 0;
+    align-items: center;
+
+    .xh-select {
+      flex: none;
+    }
+
+    .xh-button {
+      padding: 0;
+      flex: none;
+    }
+  }
+
+  &__select-row {
+    margin-bottom: 2px;
+  }
+
+  &__nav-row {
+    background-color: var(--xh-tbar-bg);
+    .xh-button {
+      border-radius: 0;
+      border-top: var(--xh-border-solid);
+
+      &:not(:last-child) {
+        border-right: var(--xh-border-solid);
+      }
+    }
+  }
+}

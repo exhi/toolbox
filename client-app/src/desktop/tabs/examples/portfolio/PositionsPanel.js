@@ -8,21 +8,29 @@ import {storeCountLabel} from '@xh/hoist/desktop/cmp/store';
  */
 import {Component} from 'react';
 import {elemFactory, HoistComponent, LayoutSupport} from '@xh/hoist/core/index';
-import {filler} from '@xh/hoist/cmp/layout';
+import {filler, hbox} from '@xh/hoist/cmp/layout';
 import {Icon} from '@xh/hoist/icon/';
-import {panel} from '@xh/hoist/desktop/cmp/panel';
+import {panel, PanelModel} from '@xh/hoist/desktop/cmp/panel';
 import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
 import {refreshButton} from '@xh/hoist/desktop/cmp/button';
 import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {grid} from '@xh/hoist/cmp/grid';
+import {dimensionsManager} from "./dimensions/DimensionsManager";
 
 @HoistComponent
 @LayoutSupport
 export class PositionsPanel extends Component {
 
+    dimensionsPanelModel = new PanelModel({
+        defaultSize: 200,
+        side: 'left',
+        showHeaderCollapseButton: false
+    });
+
     render() {
-        const {model} = this;
+        const {model, dimensionsPanelModel} = this,
+            {dimensionsModel} = model;
 
         return panel({
             title: 'Positions',
@@ -32,15 +40,28 @@ export class PositionsPanel extends Component {
                 defaultSize: 500,
                 side: 'left'
             },
-            item: grid({model: model.gridModel}),
-            bbar: toolbar(
-                dimensionChooser({model: model.dimChooserModel}),
-                storeCountLabel({gridModel: model.gridModel, unit: 'position'}),
-                filler(),
-                relativeTimestamp({timestamp: model.loadTimestamp}),
-                refreshButton({model, intent: 'success'})
-            ),
-            ...this.getLayoutProps()
+            item: hbox({
+                flex: 1,
+                items: [
+                    panel({
+                        title: dimensionsPanelModel.collapsed ? dimensionsModel.formattedDimensions : null,
+                        model: dimensionsPanelModel,
+                        item: dimensionsManager({model: dimensionsModel})
+                    }),
+                    panel({
+
+                        item: grid({model: model.gridModel}),
+                        bbar: toolbar(
+                            // dimensionChooser({model: model.dimChooserModel}),
+                            storeCountLabel({gridModel: model.gridModel, unit: 'position'}),
+                            filler(),
+                            relativeTimestamp({timestamp: model.loadTimestamp}),
+                            refreshButton({model, intent: 'success'})
+                        ),
+                        ...this.getLayoutProps()
+                    })
+                ]
+            })
         });
     }
 }
