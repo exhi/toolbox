@@ -28,6 +28,10 @@ export class DimensionsManager extends Component {
         );
     }
 
+    agOptions = {
+        headerHeight: 0
+    };
+
     renderToolbar() {
         const {model} = this;
         return toolbar({
@@ -51,14 +55,6 @@ export class DimensionsManager extends Component {
             ]
         });
     }
-
-    //----------------
-    // IMPLEMENTATION
-    //----------------
-
-    agOptions = {
-        headerHeight: 0
-    };
 }
 
 export const dimensionsManager = elemFactory(DimensionsManager);

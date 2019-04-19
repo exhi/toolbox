@@ -25,9 +25,7 @@ export class PositionsPanelModel {
     // });
 
     @managed
-    dimensionsModel = new DimensionsModel({
-
-    })
+    dimensionsModel = new DimensionsModel();
 
     @managed
     gridModel = new GridModel({

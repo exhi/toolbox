@@ -3,19 +3,19 @@ import {GridModel} from '@xh/hoist/cmp/grid/index';
 import {wait} from '@xh/hoist/promise/index';
 import {DimensionsEditorModel} from './DimensionsEditorModel';
 import {Icon} from '@xh/hoist/icon/Icon';
-import {Record} from '@xh/hoist/data';
+import {unionWith, pullAllWith, isEqual, startCase} from 'lodash';
 
 @LoadSupport
 @HoistModel
 export class DimensionsModel {
-
-    initialDimensions;
 
     DEFAULT_DIMENSIONS = [
         ['fund', 'trader'],
         ['sector', 'symbol'],
         ['model', 'trader', 'symbol']
     ];
+
+    userDims = null;
 
     @managed
     editorModel = new DimensionsEditorModel({
@@ -40,19 +40,17 @@ export class DimensionsModel {
     });
 
     async doLoadAsync() {
-        const defaults = this.defaultRows,
-            userDefined = [],
-            allDims = [...defaults, ...userDefined];
+        const {defaultRows, userRows, gridModel} = this;
+
         await wait(1)
             .then(() => {
-                this.gridModel.loadData(allDims);
-                this.gridModel.selModel.select({id: 'fund,trader'});
+                gridModel.loadData([...defaultRows, ...userRows]);
+                gridModel.selModel.select({id: 'fund,trader'});
             });
     }
 
-    constructor({initialDimensions}) {
-        this.initialDimensions = initialDimensions;
-
+    constructor() {
+        this.userDims = XH.getPref('portfolioSavedDims');
         this.addReaction({
             track: () => this.editorModel.value,
             run: (val) => this.saveDimensions(val)
@@ -80,6 +78,11 @@ export class DimensionsModel {
 
     get isSelectionProtected() {return this.selection ? this.selection.type === 'Default' : true}
 
+
+    //-----------------------
+    // Process dims for grid
+    //-----------------------
+
     get defaultRows() {
         return this.DEFAULT_DIMENSIONS.map(it => {
             return {
@@ -89,32 +92,31 @@ export class DimensionsModel {
         });
     }
 
+    get userRows() {
+        return this.userDims.map(it => {
+            return {
+                id: it.join(','),
+                type: 'Custom'
+            }
+        })
+
+    }
+
     //---------------
     // Record Actions
     //---------------
 
-    saveDimensions(val) {
-        const {gridModel} = this,
-            {store} = gridModel;
-
-        const id = val.join(','),
-            rec = new Record({
-                raw: {id, type: 'Custom'},
-                store
-            });
-
-
-        if (this.editorModel.isAdd) {
-            store.addRecordInternal(rec)s
-        } else {
-            store.updateRecordInternal(this.selection, rec);
-        }
+    saveDimensions(value) {
+        this.userDims = unionWith(this.userDims, [value], isEqual);
+        XH.setPref('portfolioSavedDims', this.userDims);
+        this.loadAsync();
     }
 
     async deleteDimensions(rec) {
         const {gridModel} = this,
             {store} = gridModel,
-            {id, type} = rec;
+            {id, type} = rec,
+            value = id.split(',');
 
         if (!store.getById(id) || type == 'Default') {
             XH.toast({
@@ -124,8 +126,9 @@ export class DimensionsModel {
             });
             return;
         }
-        store.deleteRecordInternal(rec);
-        this.loadAsync()
+        pullAllWith(this.userDims, [value], isEqual);
+        XH.setPref('portfolioSavedDims', this.userDims);
+        this.loadAsync(this.userDims)
             .then(() => gridModel.selectFirst());
     }
 
@@ -136,6 +139,7 @@ export class DimensionsModel {
     dimFormatter(v) {
         return v
             .split(',')
+            .map(v => startCase(v))
             .join(' \u203a ');
     }
 
