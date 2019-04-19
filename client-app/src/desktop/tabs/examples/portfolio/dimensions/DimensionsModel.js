@@ -3,17 +3,11 @@ import {GridModel} from '@xh/hoist/cmp/grid/index';
 import {wait} from '@xh/hoist/promise/index';
 import {DimensionsEditorModel} from './DimensionsEditorModel';
 import {Icon} from '@xh/hoist/icon/Icon';
-import {unionWith, pullAllWith, isEqual, startCase} from 'lodash';
+import {unionWith, pullAllWith, some, isEqual, startCase, cloneDeep} from 'lodash';
 
 @LoadSupport
 @HoistModel
 export class DimensionsModel {
-
-    DEFAULT_DIMENSIONS = [
-        ['fund', 'trader'],
-        ['sector', 'symbol'],
-        ['model', 'trader', 'symbol']
-    ];
 
     userDims = null;
 
@@ -39,13 +33,13 @@ export class DimensionsModel {
         ]
     });
 
-    async doLoadAsync() {
+    async doLoadAsync(loadSpec) {
         const {defaultRows, userRows, gridModel} = this;
 
         await wait(1)
             .then(() => {
                 gridModel.loadData([...defaultRows, ...userRows]);
-                gridModel.selModel.select({id: 'fund,trader'});
+                if (!gridModel.selectedRecord && !loadSpec.isAdd) gridModel.selectFirst();
             });
     }
 
@@ -67,14 +61,17 @@ export class DimensionsModel {
     // CONVENIENCE GETTERS
     //----------------------
 
+    get defaultDimensions() {
+        return XH.getConf('portfolioDefaultDims');
+    }
     get selection() {
         const {selectedRecord: rec} = this.gridModel;
         return rec || null;
     }
 
-    get dimensions() {return this.selection ? this.selection.id : null}
+    get selectedDimensions() {return this.selection ? this.selection.id : null}
 
-    get formattedDimensions() {return this.dimFormatter(this.dimensions)}
+    get formattedDimensions() {return this.dimFormatter(this.selectedDimensions)}
 
     get isSelectionProtected() {return this.selection ? this.selection.type === 'Default' : true}
 
@@ -84,7 +81,7 @@ export class DimensionsModel {
     //-----------------------
 
     get defaultRows() {
-        return this.DEFAULT_DIMENSIONS.map(it => {
+        return this.defaultDimensions.map(it => {
             return {
                 id: it.join(','),
                 type: 'Default'
@@ -97,9 +94,8 @@ export class DimensionsModel {
             return {
                 id: it.join(','),
                 type: 'Custom'
-            }
-        })
-
+            };
+        });
     }
 
     //---------------
@@ -107,13 +103,31 @@ export class DimensionsModel {
     //---------------
 
     saveDimensions(value) {
-        this.userDims = unionWith(this.userDims, [value], isEqual);
+        const {isAdd} = this.editorModel,
+            newId = value.join(',');
+
+        if (some(this.defaultDimensions, d  => isEqual(d, value))) {
+            XH.toast({
+                message: `Not saved: '${this.dimFormatter(newId)}' is a default grouping.`,
+                intent: 'warning',
+                icon: Icon.warning()
+            });
+            return;
+        }
+
+        const dimsCopy = cloneDeep(this.userDims);
+        if (!isAdd) {
+            pullAllWith(dimsCopy, [this.selectedDimensions.split(',')], isEqual);
+        }
+        this.userDims = unionWith(dimsCopy, [value], isEqual);
+
         XH.setPref('portfolioSavedDims', this.userDims);
-        this.loadAsync();
+        this.loadAsync({isAdd: true})
+            .then(() => this.gridModel.selModel.select(newId));
     }
 
     async deleteDimensions(rec) {
-        const {gridModel} = this,
+        const {gridModel, userDims} = this,
             {store} = gridModel,
             {id, type} = rec,
             value = id.split(',');
@@ -122,13 +136,17 @@ export class DimensionsModel {
             XH.toast({
                 message: 'Unable to delete grouping',
                 intent: 'danger',
-                icon: Icon.warning()
+                icon: Icon.error()
             });
             return;
         }
-        pullAllWith(this.userDims, [value], isEqual);
+
+        const dimsCopy = cloneDeep(userDims);
+
+        this.userDims = pullAllWith(dimsCopy, [value], isEqual);
+
         XH.setPref('portfolioSavedDims', this.userDims);
-        this.loadAsync(this.userDims)
+        this.loadAsync()
             .then(() => gridModel.selectFirst());
     }
 

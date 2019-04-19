@@ -268,7 +268,7 @@ export class PortfolioService {
         return positions;
     }
 
-    // Generate grouped, hierarchical position rollups for a list of one or more dimensions.
+    // Generate grouped, hierarchical position rollups for a list of one or more selectedDimensions.
     getPositions(dims, positions = this.rawPositions, id = 'root') {
         dims = [...dims];  // Avoid mutating our input array.
 
@@ -285,7 +285,7 @@ export class PortfolioService {
                 mktVal: round(sumBy(members, 'mktVal'))
             };
 
-            // Recurse to create children for this node if additional dimensions remain.
+            // Recurse to create children for this node if additional selectedDimensions remain.
             if (dims.length) {
                 groupPos.children = this.getPositions(dims, members, groupPos.id);
             }
@@ -297,7 +297,7 @@ export class PortfolioService {
     }
 
     // Parse a drilldown ID from a rolled-up position into a map of all
-    // dimensions -> dim values contained within the rollup.
+    // selectedDimensions -> dim values contained within the rollup.
     parsePositionId(id) {
         const dims = id.split('>>').slice(1),
             ret = {};

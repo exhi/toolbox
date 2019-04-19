@@ -3,7 +3,7 @@ import {bindable} from '@xh/hoist/mobx';
 // import {DimensionChooserModel} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {numberRenderer, millionsRenderer, fmtNumberTooltip} from '@xh/hoist/format';
 import {GridModel} from '@xh/hoist/cmp/grid';
-import {DimensionsModel} from "./dimensions/DimensionsModel";
+import {DimensionsModel} from './dimensions/DimensionsModel';
 
 @HoistModel
 @LoadSupport
@@ -13,7 +13,7 @@ export class PositionsPanelModel {
 
     // @managed
     // dimChooserModel = new DimensionChooserModel({
-    //     dimensions: [
+    //     selectedDimensions: [
     //         {value: 'fund', label: 'Fund'},
     //         {value: 'model', label: 'Model'},
     //         {value: 'region', label: 'Region'},
@@ -93,26 +93,28 @@ export class PositionsPanelModel {
 
     constructor() {
         this.addReaction({
-            track: () => this.dimensionsModel.dimensions,
-            run: this.loadAsync
+            track: () => this.dimensionsModel.selectedDimensions,
+            run: () => this.loadAsync()
         });
     }
 
     async doLoadAsync(loadSpec) {
         const {gridModel, dimensionsModel} = this;
 
-        if (!dimensionsModel.dimensions) {
+        if (!dimensionsModel.selectedDimensions) {
             await dimensionsModel.loadAsync();
         }
-        const dims = dimensionsModel.dimensions;
+        const dims = dimensionsModel.selectedDimensions;
 
         return XH.portfolioService
             .getPortfolioAsync(dims.split(','))
             .then(portfolio => {
                 gridModel.loadData(portfolio);
+
                 if (!gridModel.selectedRecord) {
                     gridModel.selectFirst();
                 }
+
                 this.setLoadTimestamp(Date.now());
             })
             .track({

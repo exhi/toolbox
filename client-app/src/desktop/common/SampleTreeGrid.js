@@ -120,13 +120,13 @@ class Model {
     });
 
     constructor() {
-        // Load data when dimensions change
+        // Load data when selectedDimensions change
         this.addReaction({
             track: () => this.dimChooserModel.value,
             run: this.loadAsync
         });
 
-        // Bind dimensions to url parameter
+        // Bind selectedDimensions to url parameter
         this.addReaction({
             track: () => XH.routerState,
             run: this.syncDimsToRouter,

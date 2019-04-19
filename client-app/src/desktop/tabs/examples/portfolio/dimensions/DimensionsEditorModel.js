@@ -43,7 +43,7 @@ export class DimensionsEditorModel {
     addPendingDim(dim, level) {
         const newValue = without(this.pendingValue, dim);               // Ensure the new dimension hasn't been selected at another level
         newValue[level] = dim;                                          // Insert the new dimension
-        if (this.dimensions[dim].leaf) newValue.splice(level + 1);      // If it's a leaf dimension, remove any subordinate dimensions
+        if (this.dimensions[dim].leaf) newValue.splice(level + 1);      // If it's a leaf dimension, remove any subordinate selectedDimensions
 
         this.pendingValue = newValue;                                   // Update intermediate state
         this.setShowAddSelect(false);

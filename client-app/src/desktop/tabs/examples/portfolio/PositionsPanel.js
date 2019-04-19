@@ -13,10 +13,10 @@ import {Icon} from '@xh/hoist/icon/';
 import {panel, PanelModel} from '@xh/hoist/desktop/cmp/panel';
 import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
 import {refreshButton} from '@xh/hoist/desktop/cmp/button';
-import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
+// import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {grid} from '@xh/hoist/cmp/grid';
-import {dimensionsManager} from "./dimensions/DimensionsManager";
+import {dimensionsManager} from './dimensions/DimensionsManager';
 
 @HoistComponent
 @LayoutSupport

@@ -8,6 +8,8 @@ import {Icon} from '@xh/hoist/icon/Icon';
 import {filler, fragment} from '@xh/hoist/cmp/layout/index';
 import {dimensionsEditor} from './DimensionsEditor';
 
+import './DimensionsManager.scss';
+
 @HoistComponent
 export class DimensionsManager extends Component {
 
@@ -44,7 +46,7 @@ export class DimensionsManager extends Component {
                 }),
                 button({
                     icon: Icon.edit(),
-                    onClick: () => model.openEditor(model.dimensions),
+                    onClick: () => model.openEditor(model.selectedDimensions),
                     disabled: model.isSelectionProtected
                 }),
                 button({

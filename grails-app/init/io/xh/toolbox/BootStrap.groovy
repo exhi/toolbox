@@ -88,6 +88,13 @@ class BootStrap {
                         groupName: 'Toolbox',
                         note: 'Nested arrays containing user\'s dimension picker history'
                 ],
+                portfolioSavedDims: [
+                        type: 'json',
+                        defaultValue: [],
+                        local: false,
+                        groupName: 'Toolbox',
+                        note: 'Nested arrays containing user\'s dimension manager favorites'
+                ],
                 defaultGridMode: [
                         type: 'string',
                         defaultValue: 'STANDARD',
@@ -142,6 +149,17 @@ class BootStrap {
                         defaultValue: '/var/tmp/toolbox',
                         groupName: 'File Manager',
                         note: 'Absolute path to disk location for storing uploaded files.'
+                ],
+                portfolioDefaultDims: [
+                        valueType: 'json',
+                        defaultValue: [
+                                ['fund', 'trader'],
+                                ['region', 'sector'],
+                                ['model', 'trader', 'symbol']
+                        ],
+                        groupName: 'Portfolio',
+                        clientVisible: true,
+                        note: 'Nested arrays containing default dimension manager options'
                 ]
         ])
     }
