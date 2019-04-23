@@ -3,7 +3,7 @@ import {bindable} from '@xh/hoist/mobx';
 // import {DimensionChooserModel} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {numberRenderer, millionsRenderer, fmtNumberTooltip} from '@xh/hoist/format';
 import {GridModel} from '@xh/hoist/cmp/grid';
-import {DimensionsModel} from './dimensions/DimensionsModel';
+import {DimensionsManagerModel} from './dimensions/DimensionsManagerModel';
 
 @HoistModel
 @LoadSupport
@@ -25,7 +25,7 @@ export class PositionsPanelModel {
     // });
 
     @managed
-    dimensionsModel = new DimensionsModel();
+    dimensionsModel = new DimensionsManagerModel();
 
     @managed
     gridModel = new GridModel({

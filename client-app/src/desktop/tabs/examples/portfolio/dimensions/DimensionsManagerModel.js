@@ -7,7 +7,7 @@ import {unionWith, pullAllWith, some, isEqual, startCase, cloneDeep} from 'lodas
 
 @LoadSupport
 @HoistModel
-export class DimensionsModel {
+export class DimensionsManagerModel {
 
     userDims = null;
 
@@ -27,9 +27,10 @@ export class DimensionsModel {
     @managed
     gridModel = new GridModel({
         groupBy: 'type',
+        sortBy: 'id|asc',
         columns: [
             {field: 'id', headerName: null, width: 275, renderer: this.dimFormatter},
-            {field: 'type', hidden: true}
+            {field: 'type'}
         ]
     });
 

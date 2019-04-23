@@ -31,7 +31,10 @@ export class DimensionsManager extends Component {
     }
 
     agOptions = {
-        headerHeight: 0
+        headerHeight: 0,
+        groupRowRendererParams: {
+            suppressCount: true
+        }
     };
 
     renderToolbar() {
