@@ -4,6 +4,9 @@ import {MINUTES} from '@xh/hoist/utils/datetime';
 import {sumBy, castArray, forOwn, last, sortBy, groupBy, keys, values, find, filter, random, sample, times, round} from 'lodash';
 import moment from 'moment';
 
+/**
+ * @alias XH.portfolioService
+ */
 @HoistService
 export class PortfolioService {
 
