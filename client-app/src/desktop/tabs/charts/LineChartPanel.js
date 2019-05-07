@@ -2,7 +2,7 @@ import {Component} from 'react';
 import {Icon} from '@xh/hoist/icon';
 import {HoistComponent} from '@xh/hoist/core';
 import {wrapper} from '../../common/Wrapper';
-import {box, vframe} from '@xh/hoist/cmp/layout';
+import {span, vframe} from '@xh/hoist/cmp/layout';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {select} from '@xh/hoist/desktop/cmp/input';
 import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
@@ -25,7 +25,7 @@ export class LineChartPanel extends Component {
                 height: 600,
                 item: this.renderExample(),
                 tbar: toolbar(
-                    box('Company: '),
+                    span('Company: '),
                     select({
                         model,
                         bind: 'currentCompany',
