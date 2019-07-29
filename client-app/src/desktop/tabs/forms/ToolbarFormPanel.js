@@ -63,7 +63,6 @@ export class ToolbarFormPanel extends Component {
                             formField({
                                 label: 'Inline label:',
                                 field: 'text1',
-                                commitOnChange: true,
                                 minimal: false,
                                 item: textInput()
                             }),

@@ -43,7 +43,6 @@ export class RecallsPanel extends Component {
                         model,
                         bind: 'searchQuery',
                         placeholder: 'Keyword Search',
-                        commitOnChange: true,
                         enableClear: true
                     }),
                     toolbarSep(),

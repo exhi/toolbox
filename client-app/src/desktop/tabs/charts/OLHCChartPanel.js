@@ -43,7 +43,6 @@ export class OLHCChartPanel extends Component {
                                 width: 50,
                                 model,
                                 bind: 'aspectRatio',
-                                commitOnChange: true,
                                 min: 0
                             }),
                             button({

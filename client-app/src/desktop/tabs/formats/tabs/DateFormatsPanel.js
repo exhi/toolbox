@@ -87,7 +87,7 @@ export class DateFormatsPanel extends Component {
                             model,
                             disabled: !model.enableFmt,
                             bind: 'fmt',
-                            item: textInput({commitOnChange: true}),
+                            item: textInput(),
                             info: 'a moment.js format string.'
                         }),
                         param({
@@ -99,7 +99,7 @@ export class DateFormatsPanel extends Component {
                         param({
                             model,
                             bind: 'nullDisplay',
-                            item: textInput({commitOnChange: true, width: 50}),
+                            item: textInput({width: 50}),
                             info: 'format for null values'
                         })
                     ]

@@ -268,6 +268,7 @@ export class InputsPanel extends Component {
                                     options: usStates,
                                     enableClear: false,
                                     enableMulti: true,
+                                    enableCreate: true,
                                     placeholder: 'Select state(s)...'
                                 })
                             }),

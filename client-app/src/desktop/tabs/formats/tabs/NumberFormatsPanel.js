@@ -126,13 +126,13 @@ export class NumberFormatsPanel extends Component {
                         param({
                             model,
                             bind: 'label',
-                            item: textInput({commitOnChange: true, width: 50}),
+                            item: textInput({width: 50}),
                             info: 'suffix charachters, typically used for units'
                         }),
                         param({
                             model,
                             bind: 'nullDisplay',
-                            item: textInput({commitOnChange: true, width: 50}),
+                            item: textInput({width: 50}),
                             info: 'format for null values'
                         })
                     ]
