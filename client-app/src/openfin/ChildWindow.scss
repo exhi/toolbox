@@ -1,0 +1,19 @@
+
+.openfin-child-window {
+  .title-bar {
+    -webkit-app-region: drag;
+    background: var(--xh-bg-alt);
+    border-bottom: var(--xh-border-solid);
+
+    &--title {
+      padding: var(--xh-pad-half-px);
+      font-size: var(--xh-title-font-size-px);
+
+      align-items: center;
+    }
+
+    &--buttons {
+      -webkit-app-region: no-drag;
+    }
+  }
+}
