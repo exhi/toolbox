@@ -1,0 +1,28 @@
+{
+    "devtools_port": 9090,
+    "startup_app": {
+        "name": "OpenFin Example",
+        "description": "OpenFin Example",
+        "url": "http://localhost:3000/openfin",
+        "applicationIcon": "http://localhost:3000/favicon.ico",
+        "uuid": "xh-openfin-example",
+        "autoShow": true,
+        "frame": false
+    },
+    "runtime": {
+        "arguments": "--enable-aggressive-domstorage-flushing",
+        "version": "10.66.39.43"
+    },
+    "services": [
+        {
+            "name": "layouts",
+            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.5/app.json"
+        }
+    ],
+    "shortcut": {
+        "company": "Extremely Heavy Industries",
+        "description": "OpenFin Example Application",
+        "name": "OpenFin Example"
+    },
+    "splashScreenImage": "http://localhost:3000/public/xh.png"
+}

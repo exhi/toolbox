@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@xh/hoist": "^27.0.0-SNAPSHOT",
+    "openfin-react-hooks": "^1.1.1",
     "react": "~16.8.6",
     "react-dom": "~16.8.6",
     "react-dom-factories": "~1.0.2"
