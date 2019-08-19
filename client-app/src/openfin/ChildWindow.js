@@ -35,6 +35,8 @@ const [, titleBar] = hoistComponent(props => {
         {tabModel, isDocked, windowState} = model,
         {activeTab} = tabModel;
 
+    console.log('Window State:', windowState);
+
     return hbox({
         className: 'title-bar',
         items: [
@@ -61,7 +63,7 @@ const [, titleBar] = hoistComponent(props => {
                         onClick: () => model.minimizeAsync()
                     }),
                     button({
-                        omit: windowState !== WindowState.RESTORED,
+                        omit: windowState !== WindowState.NORMAL,
                         icon: Icon.expand(),
                         onClick: () => model.maximizeAsync()
                     }),
@@ -82,7 +84,7 @@ const [, titleBar] = hoistComponent(props => {
 });
 
 const WindowState = {
-    RESTORED: 'restored',
+    NORMAL: 'normal',
     MINIMIZED: 'minimized',
     MAXIMIZED: 'maximized'
 };
@@ -142,7 +144,7 @@ export class ChildWindowModel {
         const setWindowState = (state) => runInAction(() => this.windowState = state);
         win.addListener('maximized', () => setWindowState(WindowState.MAXIMIZED));
         win.addListener('minimized', () => setWindowState(WindowState.MINIMIZED));
-        win.addListener('restored', () => setWindowState(WindowState.RESTORED));
+        win.addListener('restored', () => setWindowState(WindowState.NORMAL));
 
         const state = await win.getState();
         setWindowState(state);

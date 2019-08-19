@@ -16,18 +16,10 @@ export class AppModel {
             win.close();
         });
 
-        let win = await createWindowAsync('example-child', {
+        createWindowAsync('portfolio-grid', {
             autoShow: true,
             frame: false,
             url: '/openfin-child/portfolioGrid'
         });
-        win.showDeveloperTools();
-
-        win = await createWindowAsync('example-child-2', {
-            autoShow: true,
-            frame: false,
-            url: '/openfin-child/portfolioGrid'
-        });
-        win.showDeveloperTools();
     }
 }
