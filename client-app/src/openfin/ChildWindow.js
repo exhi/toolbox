@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {HoistAppModel, HoistComponent, hoistComponent, useProvidedModel} from '@xh/hoist/core';
+import {HoistAppModel, HoistComponent, hoistComponent, useProvidedModel, XH} from '@xh/hoist/core';
 import {TabContainerModel, tabContainer} from '@xh/hoist/cmp/tab';
 import {Icon} from '@xh/hoist/icon/Icon';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
@@ -9,6 +9,10 @@ import {snapAndDock} from 'openfin-layouts';
 import {observable, runInAction} from '@xh/hoist/mobx';
 
 import './ChildWindow.scss';
+import {PortfolioPanelModel} from '../examples/portfolio/PortfolioPanelModel';
+import {gridPanel} from '../examples/portfolio/GridPanel';
+import {PortfolioService} from '../core/svc/PortfolioService';
+import {mapPanel} from '../examples/portfolio/MapPanel';
 
 @HoistComponent
 export class ChildWindow extends Component {
@@ -91,12 +95,18 @@ const WindowState = {
 
 @HoistAppModel
 export class ChildWindowModel {
+
     tabModel = new TabContainerModel({
         switcherPosition: 'none',
+        route: 'default',
         tabs: [
             {
                 id: 'portfolioGrid',
-                content: () => 'Hello World!'
+                content: () => gridPanel({model: this.portfolioPanelModel.gridPanelModel})
+            },
+            {
+                id: 'portfolioMap',
+                content: () => mapPanel({model: this.portfolioPanelModel.mapPanelModel, inWindow: true})
             }
         ]
     });
@@ -124,6 +134,14 @@ export class ChildWindowModel {
         return snapAndDock.undockWindow();
     }
 
+    async doLoadAsync(loadSpec) {
+        await this.portfolioPanelModel.doLoadAsync(loadSpec);
+    }
+
+    get useCompactGrids() {
+        return XH.getPref('defaultGridMode') == 'COMPACT';
+    }
+
     getRoutes() {
         return [
             {
@@ -133,6 +151,10 @@ export class ChildWindowModel {
                     {
                         name: 'portfolioGrid',
                         path: '/portfolioGrid'
+                    },
+                    {
+                        name: 'portfolioMap',
+                        path: '/portfolioMap'
                     }
                 ]
             }
@@ -157,5 +179,11 @@ export class ChildWindowModel {
 
         const dockGroup = await snapAndDock.getDockedWindows(getWindowIdentity());
         setIsDocked(!!dockGroup);
+
+        await XH.installServicesAsync(PortfolioService);
+
+        this.portfolioPanelModel = new PortfolioPanelModel();
+
+        this.doLoadAsync();
     }
 }

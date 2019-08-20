@@ -9,12 +9,13 @@ export class MapPanel extends Component {
 
     render() {
         const {model} = this,
-            {splitTreeMapModel, panelSizingModel, loadModel} = model;
+            {splitTreeMapModel, panelSizingModel, loadModel} = model,
+            {inWindow} = this.props;
 
         return panel({
-            title: panelSizingModel.collapsed ? 'Treemap' : null,
+            title: !inWindow && panelSizingModel.collapsed ? 'Treemap' : null,
             mask: loadModel,
-            model: panelSizingModel,
+            model: inWindow ? null : panelSizingModel,
             item: splitTreeMap({
                 model: splitTreeMapModel
             })

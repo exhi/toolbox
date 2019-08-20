@@ -3,7 +3,7 @@ import {hoistComponent, HoistComponent} from '@xh/hoist/core';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {Icon} from '@xh/hoist/icon';
 import {ScreenEdge, useDockWindow} from 'openfin-react-hooks';
-import {showDevTools, getWindow} from '@xh/hoist/openfin/utils';
+import {showDevTools, getWindow, showDevToolsForAllChildWindows} from '@xh/hoist/openfin/utils';
 
 @HoistComponent
 export class App extends Component {
@@ -31,6 +31,11 @@ const [, app] = hoistComponent(function App() {
                     icon: Icon.code(),
                     text: 'Show Dev Tools',
                     onClick: () => showDevTools()
+                },
+                {
+                    icon: Icon.code(),
+                    text: 'Show Dev Tools (all)',
+                    onClick: () => showDevToolsForAllChildWindows()
                 }
             ]
         }
