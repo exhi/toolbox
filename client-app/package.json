@@ -16,12 +16,14 @@
   },
   "dependencies": {
     "@xh/hoist": "^27.0.0-SNAPSHOT",
+    "openfin-layouts": "^1.0.5",
     "openfin-react-hooks": "^1.1.1",
     "react": "~16.8.6",
     "react-dom": "~16.8.6",
     "react-dom-factories": "~1.0.2"
   },
   "devDependencies": {
+    "@types/openfin": "^43.0.1",
     "@xh/hoist-dev-utils": "3.8.1",
     "cross-env": "~5.2.0"
   }

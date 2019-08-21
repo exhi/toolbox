@@ -3,7 +3,8 @@ import {hoistComponent, HoistComponent} from '@xh/hoist/core';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {Icon} from '@xh/hoist/icon';
 import {ScreenEdge, useDockWindow} from 'openfin-react-hooks';
-import {showDevTools, getWindow, showDevToolsForAllChildWindows} from '@xh/hoist/openfin/utils';
+import {showDevTools, getWindow, showDevToolsForAllChildWindows, bringAllWindowsToFront} from '@xh/hoist/openfin/utils';
+import {button} from '@xh/hoist/desktop/cmp/button';
 
 @HoistComponent
 export class App extends Component {
@@ -23,8 +24,14 @@ const [, app] = hoistComponent(function App() {
     );
 
     return appBar({
-        style: {},
         icon: Icon.portfolio({size: '2x'}),
+        rightItems: [
+            button({
+                icon: Icon.window(),
+                text: 'Bring All to Front',
+                onClick: () => bringAllWindowsToFront()
+            })
+        ],
         appMenuButtonOptions: {
             extraItems: [
                 {

@@ -1037,6 +1037,14 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.50.tgz#7f2b7fd8a389fd90230c330da0a6ae2f414516af"
   integrity sha512-9Yzqn2NzJxwFzon4W+aqUAMl3FiVnJ965f5F3H5T+EpUrHqb2Is1SPp/lsj2WFBqXrhIINJ5SzSwneLMg5PgSQ==
 
+"@types/openfin@^43.0.1":
+  version "43.0.1"
+  resolved "https://registry.yarnpkg.com/@types/openfin/-/openfin-43.0.1.tgz#a5e3de147d209f874c8015dace40cd74b8b9429e"
+  integrity sha512-cceQvvG02BpknHdDSX6iEVs7d4cyZEjRrfeU6Z2y2rwUoHOBr2Grjag+21myfPrrqjdJCV0nJVnmkE1VKLxyzQ==
+  dependencies:
+    "@types/node" "*"
+    "@types/ws" "*"
+
 "@types/q@^0.0.32":
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-0.0.32.tgz#bd284e57c84f1325da702babfc82a5328190c0c5"
@@ -1046,6 +1054,13 @@
   version "3.0.16"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-3.0.16.tgz#50a4755f8e33edacd9c406729e9b930d2451902a"
   integrity sha512-lMC2G0ItF2xv4UCiwbJGbnJlIuUixHrioOhNGHSCsYCJ8l4t9hMCUimCytvFv7qy6AfSzRxhRHoGa+UqaqwyeA==
+
+"@types/ws@*":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.2.tgz#f3340f7e3d7a07104a5dbcaa8ada4e8d2d45eecb"
+  integrity sha512-22XiR1ox9LftTaAtn/c5JCninwc7moaqbkJfaDUb7PkaUitcf5vbTZHdq9dxSMviCm9C3W85rzB8e6yNR70apQ==
+  dependencies:
+    "@types/node" "*"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -6299,7 +6314,7 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openfin-layouts@^1.0.3:
+openfin-layouts@^1.0.3, openfin-layouts@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/openfin-layouts/-/openfin-layouts-1.0.5.tgz#12f221d0fb38effec1738c458d33b2aabb525f58"
   integrity sha512-zBATAxCM+YD+jEnVu7COWouzBLYrCrOk5M4wVF4DH2L2p/23VrlN/MPWpH3nu/H7l+N1LaMEZo+PMo0VA94nDw==

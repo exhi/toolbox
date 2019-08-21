@@ -16,7 +16,13 @@
     "services": [
         {
             "name": "layouts",
-            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.5/app.json"
+            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.5/app.json",
+            "config": {
+                "tabstrip": {
+                    "url": "http://localhost:3000/openfin-tabstrip",
+                    "height": 60
+                }
+            }
         }
     ],
     "shortcut": {
