@@ -4,7 +4,7 @@ import {numberRenderer} from '@xh/hoist/format';
 
 @HoistModel
 @LoadSupport
-export class OrdersPanelModel {
+export class TradesPanelModel {
 
     gridModel = new GridModel({
         store: {

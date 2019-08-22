@@ -1,5 +1,5 @@
 import {hoistComponentFactory} from '@xh/hoist/core';
-import {OrdersPanelModel} from './OrdersPanelModel';
+import {TradesPanelModel} from './TradesPanelModel';
 import {useLocalModel} from '@xh/hoist/core/hooks';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {grid} from '@xh/hoist/cmp/grid';
@@ -7,8 +7,8 @@ import {select} from '@xh/hoist/desktop/cmp/input';
 import {filler} from '@xh/hoist/cmp/layout';
 import {storeFilterField} from '@xh/hoist/desktop/cmp/store';
 
-export const ordersPanel = hoistComponentFactory(() => {
-    const model = useLocalModel(OrdersPanelModel),
+export const tradesPanel = hoistComponentFactory(() => {
+    const model = useLocalModel(TradesPanelModel),
         {gridModel, loadModel} = model;
 
     return panel({
