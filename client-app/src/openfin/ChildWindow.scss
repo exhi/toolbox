@@ -1,5 +1,7 @@
 
 .openfin-child-window {
+  border: var(--xh-border-solid);
+
   .title-bar {
     -webkit-app-region: drag;
     background: var(--xh-bg-alt);

@@ -26,6 +26,9 @@ export const [, tabStrip] = hoistComponent(function TabStrip() {
                     id: tab.id,
                     item: hbox({
                         className: 'tab',
+                        draggable: true,
+                        onDragStart: (e) => model.onTabDragStart(tab, e),
+                        onDragEnd: (e) => model.onTabDragEnd(tab, e),
                         items: [
                             tab.icon && tab.icon.startsWith('<svg') ?
                                 <div dangerouslySetInnerHTML={{__html: tab.icon}}/> :

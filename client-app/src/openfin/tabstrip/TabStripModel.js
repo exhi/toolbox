@@ -66,6 +66,30 @@ export class TabStripModel {
         return tabbing.closeTabGroup();
     }
 
+    /**
+     * @param {Tab} tab
+     * @param {DragEvent} e
+     */
+    onTabDragStart(tab, e) {
+        console.debug('onTabDragStart', tab, e);
+
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        tabstrip.startDrag(tab.windowIdentity);
+        return true;
+    }
+
+    /**
+     * @param {Tab} tab
+     * @param {DragEvent} e
+     */
+    onTabDragEnd(tab, e) {
+        console.debug('onTabDragEnd', tab, e);
+        tabstrip.endDrag();
+    }
+
     // ------------------------------------------
     // Implementation
 
