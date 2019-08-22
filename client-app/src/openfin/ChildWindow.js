@@ -1,11 +1,11 @@
 import {Component} from 'react';
 import {HoistAppModel, HoistComponent, hoistComponent, useProvidedModel, XH} from '@xh/hoist/core';
 import {TabContainerModel, tabContainer} from '@xh/hoist/cmp/tab';
-import {Icon} from '@xh/hoist/icon/Icon';
+import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
 import {vframe, hbox, filler, box} from '@xh/hoist/cmp/layout';
 import {showDevTools, closeWindow, getWindow, getWindowIdentity} from '@xh/hoist/openfin/utils';
-import {snapAndDock} from 'openfin-layouts';
+import {snapAndDock, tabbing} from 'openfin-layouts';
 import {observable, runInAction} from '@xh/hoist/mobx';
 
 import './ChildWindow.scss';
@@ -25,7 +25,7 @@ export class ChildWindow extends Component {
         return vframe({
             className: this.getClassName(),
             items: [
-                titleBar({model: this.model}),
+                titleBar({omit: model.isInTabGroup, model}),
                 tabContainer({
                     model: tabModel
                 })
@@ -39,7 +39,7 @@ const [, titleBar] = hoistComponent(props => {
         {tabModel, isDocked, windowState} = model,
         {activeTab} = tabModel;
 
-    console.log('Window State:', windowState);
+    console.debug('Window State:', windowState);
 
     return hbox({
         className: 'title-bar',
@@ -67,7 +67,7 @@ const [, titleBar] = hoistComponent(props => {
                         onClick: () => model.minimizeAsync()
                     }),
                     button({
-                        omit: windowState !== WindowState.NORMAL,
+                        omit: windowState === WindowState.MAXIMIZED,
                         icon: Icon.expand(),
                         onClick: () => model.maximizeAsync()
                     }),
@@ -102,10 +102,14 @@ export class ChildWindowModel {
         tabs: [
             {
                 id: 'portfolioGrid',
+                icon: Icon.portfolio(),
+                title: 'Positions',
                 content: () => gridPanel({model: this.portfolioPanelModel.gridPanelModel})
             },
             {
                 id: 'portfolioMap',
+                icon: Icon.gridPanel(),
+                title: 'P&L Tree Map',
                 content: () => mapPanel({model: this.portfolioPanelModel.mapPanelModel, inWindow: true})
             }
         ]
@@ -117,6 +121,12 @@ export class ChildWindowModel {
     @observable isDocked;
 
     @observable windowState;
+
+    @observable isInTabGroup = false;
+
+    constructor() {
+        this.addAutorun(this.updateTabProperties);
+    }
 
     async minimizeAsync() {
         return this.win.minimize();
@@ -180,10 +190,34 @@ export class ChildWindowModel {
         const dockGroup = await snapAndDock.getDockedWindows(getWindowIdentity());
         setIsDocked(!!dockGroup);
 
+        const setIsInTabGroup = (isInTabGroup) => runInAction(() => this.isInTabGroup = isInTabGroup);
+        tabbing.addEventListener('tab-added', async (event) => {
+            console.debug('TabAddedEvent', event);
+            setIsInTabGroup(true);
+        });
+        tabbing.addEventListener('tab-removed', async (event) => {
+            console.debug('TabRemovedEvent', event);
+            setIsInTabGroup(false);
+        });
+
+        const tabGroup = await tabbing.getTabs();
+        setIsInTabGroup(!!tabGroup);
+
         await XH.installServicesAsync(PortfolioService);
 
         this.portfolioPanelModel = new PortfolioPanelModel();
 
         this.doLoadAsync();
+    }
+
+    updateTabProperties() {
+        const {activeTab} = this.tabModel;
+        if (activeTab && this.isInTabGroup) {
+            const {title, icon} = activeTab,
+                properties = {title, icon: icon ? convertIconToSvg(icon) : undefined};
+
+            console.debug('Updating Tab Properties', properties);
+            tabbing.updateTabProperties(properties);
+        }
     }
 }

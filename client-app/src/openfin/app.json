@@ -20,7 +20,7 @@
             "config": {
                 "tabstrip": {
                     "url": "http://localhost:3000/openfin-tabstrip",
-                    "height": 60
+                    "height": 42
                 }
             }
         }

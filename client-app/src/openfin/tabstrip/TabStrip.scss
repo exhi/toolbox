@@ -1,8 +1,35 @@
 .tabstrip {
   -webkit-app-region: drag;
   background: var(--xh-bg-alt);
-  border-bottom: var(--xh-border-solid);
+  border: var(--xh-border-solid);
 
   padding-top: var(--xh-pad-half-px);
   padding-bottom: var(--xh-pad-half-px);
+
+  .bp3-tabs {
+    -webkit-app-region: no-drag;
+
+    .tab {
+      align-items: center;
+
+      > *:not(:last-child) {
+        margin-right: var(--xh-pad-half-px);
+      }
+
+      button {
+        min-height: unset;
+        min-width: unset;
+        height: 22px;
+        border-radius: 12px;
+
+        svg.svg-inline--fa {
+          width: 0.7em;
+        }
+      }
+    }
+  }
+
+  .tab-group-actions {
+    -webkit-app-region: no-drag;
+  }
 }

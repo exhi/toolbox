@@ -3,7 +3,7 @@ import {hoistComponent, HoistComponent} from '@xh/hoist/core';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {Icon} from '@xh/hoist/icon';
 import {ScreenEdge, useDockWindow} from 'openfin-react-hooks';
-import {showDevTools, getWindow, showDevToolsForAllChildWindows, bringAllWindowsToFront} from '@xh/hoist/openfin/utils';
+import {showDevTools, getWindow, showDevToolsForAllChildWindows, bringAllWindowsToFront, quitApplication} from '@xh/hoist/openfin/utils';
 import {button} from '@xh/hoist/desktop/cmp/button';
 
 @HoistComponent
@@ -30,21 +30,23 @@ const [, app] = hoistComponent(function App() {
                 icon: Icon.window(),
                 text: 'Bring All to Front',
                 onClick: () => bringAllWindowsToFront()
+            }),
+            button({
+                icon: Icon.code(),
+                text: 'Show Dev Tools',
+                onClick: () => showDevTools()
+            }),
+            button({
+                icon: Icon.code(),
+                text: 'Show Dev Tools (all)',
+                onClick: () => showDevToolsForAllChildWindows()
+            }),
+            button({
+                icon: Icon.close(),
+                intent: 'danger',
+                text: 'Quit',
+                onClick: () => quitApplication()
             })
-        ],
-        appMenuButtonOptions: {
-            extraItems: [
-                {
-                    icon: Icon.code(),
-                    text: 'Show Dev Tools',
-                    onClick: () => showDevTools()
-                },
-                {
-                    icon: Icon.code(),
-                    text: 'Show Dev Tools (all)',
-                    onClick: () => showDevToolsForAllChildWindows()
-                }
-            ]
-        }
+        ]
     });
 });
