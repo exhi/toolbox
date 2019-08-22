@@ -58,9 +58,6 @@ export class GridPanelModel {
                     align: 'right',
                     width: 130,
                     absSort: true,
-                    agOptions: {
-                        aggFunc: 'sum'
-                    },
                     tooltip: (val) => fmtNumberTooltip(val, {ledger: true}),
                     renderer: millionsRenderer({
                         precision: 3,
@@ -73,9 +70,7 @@ export class GridPanelModel {
                     align: 'right',
                     width: 130,
                     absSort: true,
-                    agOptions: {
-                        aggFunc: 'sum'
-                    },
+                    highlightOnChange: true,
                     tooltip: (val) => fmtNumberTooltip(val, {ledger: true}),
                     renderer: numberRenderer({
                         precision: 0,
