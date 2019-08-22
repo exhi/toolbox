@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {HoistComponent, hoistComponentFactory} from '@xh/hoist/core';
+import {HoistComponent, hoistElemFactory} from '@xh/hoist/core';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {Icon} from '@xh/hoist/icon';
 import {ScreenEdge, useDockWindow} from 'openfin-react-hooks';
@@ -21,7 +21,7 @@ export class OpenFinApp extends Component {
     }
 }
 
-export const openFinApp = hoistComponentFactory(props => {
+export const openFinApp = hoistElemFactory(props => {
     // Dock to the top of the screen, full-width
     useDockWindow(
         ScreenEdge.TOP,
