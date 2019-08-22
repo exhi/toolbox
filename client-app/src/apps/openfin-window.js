@@ -3,8 +3,8 @@ import {ChildWindowAppContainer} from '@xh/hoist/openfin/appcontainer';
 import {ChildWindow, ChildWindowModel} from '../openfin/window';
 
 XH.renderApp({
-    clientAppCode: 'openfin-child-window',
-    clientAppName: 'OpenFin Child Window',
+    clientAppCode: 'openfin-window',
+    clientAppName: 'OpenFin Window',
     componentClass: ChildWindow,
     modelClass: ChildWindowModel,
     containerClass: ChildWindowAppContainer,

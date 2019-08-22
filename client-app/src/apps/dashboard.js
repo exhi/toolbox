@@ -1,11 +1,11 @@
 import {XH} from '@xh/hoist/core';
-import {App} from '../openfin/App';
-import {AppModel} from '../openfin/AppModel';
+import {App} from '../dashboard/App';
+import {AppModel} from '../dashboard/AppModel';
 import {AppContainer} from '@xh/hoist/desktop/appcontainer';
 
 XH.renderApp({
-    clientAppCode: 'openfin-example',
-    clientAppName: 'OpenFin Example',
+    clientAppCode: 'dashboard',
+    clientAppName: 'Dashboard',
     componentClass: App,
     modelClass: AppModel,
     containerClass: AppContainer,
