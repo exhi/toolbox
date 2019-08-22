@@ -1,11 +1,11 @@
 {
     "devtools_port": 9090,
     "startup_app": {
-        "name": "OpenFin Example",
-        "description": "OpenFin Example",
-        "url": "http://localhost:3000/openfin",
+        "name": "Dashboard",
+        "description": "Dashboard",
+        "url": "http://localhost:3000/dashboard",
         "applicationIcon": "http://localhost:3000/favicon.ico",
-        "uuid": "xh-openfin-example",
+        "uuid": "xh-dashboard",
         "autoShow": true,
         "frame": false
     },
@@ -27,8 +27,8 @@
     ],
     "shortcut": {
         "company": "Extremely Heavy Industries",
-        "description": "OpenFin Example Application",
-        "name": "OpenFin Example"
+        "description": "Dashboard",
+        "name": "Dashboard"
     },
     "splashScreenImage": "http://localhost:3000/public/xh.png"
 }
