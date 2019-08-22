@@ -183,7 +183,14 @@ class BootStrap {
                 local: false,
                 groupName: 'Toolbox - Example Apps',
                 note: 'Size of Panel Model'
-            ]
+            ],
+            dashboardPositionDims: [
+                    type: 'json',
+                    defaultValue: [:],
+                    local: true,
+                    groupName: 'Toolbox - Example Apps',
+                    note: 'Object containing user\'s dimension picker value & history'
+            ],
         ])
     }
 

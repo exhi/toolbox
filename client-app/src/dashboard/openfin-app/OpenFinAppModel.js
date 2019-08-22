@@ -1,29 +1,9 @@
-import {HoistAppModel} from '@xh/hoist/core';
+import {HoistModel} from '@xh/hoist/core';
 import {getChildWindowsAsync, createWindowAsync} from '@xh/hoist/openfin/utils';
-import {observable, action} from '@xh/hoist/mobx';
 
-@HoistAppModel
-export class AppModel {
+@HoistModel
+export class OpenFinAppModel {
 
-    /** @member {_Window} */
-    @observable gridWindow;
-
-    /** @member {_Window} */
-    @observable mapWindow;
-
-    @action
-    async toggleGridWindowAsync() {
-        let {gridWindow} = this;
-        if (!gridWindow) {
-            gridWindow = await createWindowAsync('portfolio-grid', {
-                autoShow: true,
-                frame: false,
-                url: '/openfin-child/portfolioGrid'
-            });
-        } else {
-            gridWindow.close();
-        }
-    }
 
     async initAsync() {
         // TODO: Launch some windows!
