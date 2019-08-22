@@ -8,7 +8,7 @@ import {bindable} from '@xh/hoist/mobx';
 
 @HoistModel
 @LoadSupport
-export class PositionsPanelModel {
+export class PositionsModel {
     dimChooserModel = new DimensionChooserModel({
         dimensions: [
             {value: 'fund', label: 'Fund'},

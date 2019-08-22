@@ -1,12 +1,9 @@
-import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
-import {timeCol, GridModel} from '@xh/hoist/cmp/grid';
+import {GridModel, timeCol} from '@xh/hoist/cmp/grid';
 import {numberRenderer} from '@xh/hoist/format';
 
-@HoistModel
-@LoadSupport
-export class TradesPanelModel {
+export function createTradesGridModel({groupBy = 'fund', hiddenCols = []}) {
 
-    gridModel = new GridModel({
+    return new GridModel({
         store: {
             fields: [
                 'symbol',
@@ -30,7 +27,7 @@ export class TradesPanelModel {
         colDefaults: {
             width: 120
         },
-        groupBy: 'fund',
+        groupBy,
         columns: [
             {
                 field: 'id',
@@ -39,22 +36,28 @@ export class TradesPanelModel {
                 hidden: true
             },
             {
-                field: 'trader'
+                field: 'trader',
+                hidden: hiddenCols.includes('trader')
             },
             {
-                field: 'sector'
+                field: 'sector',
+                hidden: hiddenCols.includes('sector')
             },
             {
-                field: 'fund'
+                field: 'fund',
+                hidden: hiddenCols.includes('fund')
             },
             {
-                field: 'model'
+                field: 'model',
+                hidden: hiddenCols.includes('model')
             },
             {
-                field: 'region'
+                field: 'region',
+                hidden: hiddenCols.includes('region')
             },
             {
-                field: 'symbol'
+                field: 'symbol',
+                hidden: hiddenCols.includes('symbol')
             },
             {
                 field: 'dir',
@@ -105,9 +108,4 @@ export class TradesPanelModel {
             }
         ]
     });
-
-    async doLoadAsync() {
-        const orders = await XH.portfolioService.getAllOrdersAsync();
-        this.gridModel.loadData(orders);
-    }
 }

@@ -2,7 +2,8 @@ import {HoistAppModel, XH} from '@xh/hoist/core';
 import {TabContainerModel} from '@xh/hoist/cmp/tab';
 import {positionsPanel} from '../tabs/positions/PositionsPanel';
 import {PortfolioService} from '../../core/svc/PortfolioService';
-import {tradesPanel} from '../tabs/orders/TradesPanel';
+import {tradesPanel} from '../tabs/trades/TradesPanel';
+import {positionTradesPanel} from '../widgets/position-trades/PositionTradesPanel';
 
 @HoistAppModel
 export class BrowserAppModel {
@@ -19,31 +20,17 @@ export class BrowserAppModel {
                 content: () => tradesPanel()
             },
             {
-                id: 'positionsDetailsWidget',
-                title: 'Position Details',
-                content: () => null
+                id: 'positionTrades',
+                title: 'Position Trades',
+                content: () => positionTradesPanel()
             },
             {
-                id: 'winnersLosersWidget',
-                title: 'Winners/Losers',
-                content: () => null
-            },
-            {
-                id: 'tradingVolumeWidget',
-                title: 'Trading Volume',
-                content: () => null
-            },
-            {
-                id: 'priceHistoryWidget',
-                title: 'Price History',
+                id: 'positionCharts',
+                title: 'Position Charts',
                 content: () => null
             }
         ]
     });
-
-    async initAsync() {
-        await XH.installServicesAsync(PortfolioService);
-    }
 
     getRoutes() {
         return [
@@ -58,9 +45,21 @@ export class BrowserAppModel {
                     {
                         name: 'trades',
                         path: '/trades'
+                    },
+                    {
+                        name: 'positionTrades',
+                        path: '/positionTrades?:positionId'
+                    },
+                    {
+                        name: 'positionCharts',
+                        path: '/positionCharts?:positionId'
                     }
                 ]
             }
         ];
+    }
+
+    async initAsync() {
+        await XH.installServicesAsync(PortfolioService);
     }
 }

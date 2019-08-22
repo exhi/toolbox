@@ -1,13 +1,13 @@
 import {useLocalModel, hoistElemFactory} from '@xh/hoist/core';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
-import {PositionsPanelModel} from './PositionsPanelModel';
+import {PositionsModel} from './PositionsModel';
 import {grid} from '@xh/hoist/cmp/grid';
 import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {filler} from '@xh/hoist/cmp/layout';
 
 export const positionsPanel = hoistElemFactory(() => {
-    const model = useLocalModel(PositionsPanelModel),
+    const model = useLocalModel(PositionsModel),
         {gridModel, dimChooserModel, loadModel, loadTimestamp} = model;
 
     return panel({
