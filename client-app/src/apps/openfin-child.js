@@ -1,6 +1,6 @@
 import {XH} from '@xh/hoist/core';
 import {ChildWindowAppContainer} from '@xh/hoist/openfin/appcontainer';
-import {ChildWindow, ChildWindowModel} from '../openfin/ChildWindow';
+import {ChildWindow, ChildWindowModel} from '../openfin/window';
 
 XH.renderApp({
     clientAppCode: 'openfin-child-window',

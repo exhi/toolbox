@@ -1,93 +1,15 @@
-import {Component} from 'react';
-import {HoistAppModel, HoistComponent, hoistComponent, useProvidedModel, XH} from '@xh/hoist/core';
-import {TabContainerModel, tabContainer} from '@xh/hoist/cmp/tab';
-import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
-import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
-import {vframe, hbox, filler, box} from '@xh/hoist/cmp/layout';
-import {showDevTools, closeWindow, getWindow, getWindowIdentity} from '@xh/hoist/openfin/utils';
+import {HoistAppModel, XH} from '@xh/hoist/core';
+import {TabContainerModel} from '@xh/hoist/cmp/tab';
+import {Icon, convertIconToSvg} from '@xh/hoist/icon';
 import {snapAndDock, tabbing} from 'openfin-layouts';
+import {gridPanel} from '../../examples/portfolio/GridPanel';
+import {mapPanel} from '../../examples/portfolio/MapPanel';
 import {observable, runInAction} from '@xh/hoist/mobx';
+import {getWindow, getWindowIdentity} from '@xh/hoist/openfin/utils';
+import {PortfolioService} from '../../core/svc/PortfolioService';
+import {PortfolioPanelModel} from '../../examples/portfolio/PortfolioPanelModel';
 
-import './ChildWindow.scss';
-import {PortfolioPanelModel} from '../examples/portfolio/PortfolioPanelModel';
-import {gridPanel} from '../examples/portfolio/GridPanel';
-import {PortfolioService} from '../core/svc/PortfolioService';
-import {mapPanel} from '../examples/portfolio/MapPanel';
-
-@HoistComponent
-export class ChildWindow extends Component {
-    baseClassName = 'openfin-child-window';
-
-    render() {
-        const {model} = this,
-            {tabModel} = model;
-
-        return vframe({
-            className: this.getClassName(),
-            items: [
-                titleBar({omit: model.isInTabGroup, model}),
-                tabContainer({
-                    model: tabModel
-                })
-            ]
-        });
-    }
-}
-
-const [, titleBar] = hoistComponent(props => {
-    const model = useProvidedModel(ChildWindowModel, props),
-        {tabModel, isDocked, windowState} = model,
-        {activeTab} = tabModel;
-
-    console.debug('Window State:', windowState);
-
-    return hbox({
-        className: 'title-bar',
-        items: [
-            box({
-                className: 'title-bar--title',
-                item: activeTab.title
-            }),
-            filler(),
-            buttonGroup({
-                className: 'title-bar--buttons',
-                items: [
-                    button({
-                        icon: Icon.code(),
-                        onClick: () => showDevTools()
-                    }),
-                    button({
-                        omit: !isDocked,
-                        icon: Icon.unlink(),
-                        intent: 'primary',
-                        onClick: () => model.undockAsync()
-                    }),
-                    button({
-                        icon: Icon.minimize(),
-                        onClick: () => model.minimizeAsync()
-                    }),
-                    button({
-                        omit: windowState === WindowState.MAXIMIZED,
-                        icon: Icon.expand(),
-                        onClick: () => model.maximizeAsync()
-                    }),
-                    button({
-                        omit: windowState !== WindowState.MAXIMIZED,
-                        icon: Icon.collapse(),
-                        onClick: () => model.restoreAsync()
-                    }),
-                    button({
-                        icon: Icon.close(),
-                        intent: 'danger',
-                        onClick: () => closeWindow()
-                    })
-                ]
-            })
-        ]
-    });
-});
-
-const WindowState = {
+export const WindowState = {
     NORMAL: 'normal',
     MINIMIZED: 'minimized',
     MAXIMIZED: 'maximized'
@@ -95,7 +17,6 @@ const WindowState = {
 
 @HoistAppModel
 export class ChildWindowModel {
-
     tabModel = new TabContainerModel({
         switcherPosition: 'none',
         route: 'default',
