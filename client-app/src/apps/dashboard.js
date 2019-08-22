@@ -14,7 +14,7 @@ XH.renderApp({
     containerClass: AppContainer,
     isMobile: false,
     isSSO: false,
-    webSocketsEnabled: false,
+    webSocketsEnabled: true,
     idleDetectedEnabled: false,
     checkAccess: 'APP_READER',
     loginMessage: 'User: \'toolbox@xh.io\' / Password: \'toolbox\''

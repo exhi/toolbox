@@ -4,6 +4,7 @@ import {fmtNumberTooltip, millionsRenderer, numberRenderer} from '@xh/hoist/form
 import {clamp} from 'lodash';
 import {DimensionChooserModel} from '@xh/hoist/cmp/dimensionchooser';
 import {managed} from '@xh/hoist/core/mixins';
+import {bindable} from '@xh/hoist/mobx';
 
 @HoistModel
 @LoadSupport
@@ -98,6 +99,8 @@ export class PositionsPanelModel {
     /** @member {PositionSession} */
     @managed session;
 
+    @bindable loadTimestamp;
+
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
@@ -112,20 +115,15 @@ export class PositionsPanelModel {
         if (session) session.destroy();
 
         session = await XH.portfolioService.getLivePositionsAsync(dimChooserModel.value, 'mainApp');
-        const positions = [session.initialPositions.root];
 
+        gridModel.loadData([session.initialPositions.root]);
         session.onUpdate = ({data}) => {
-            // this.gridPanelModel.setLoadTimestamp(Date.now());
-            if (data.isFull) {
-                gridModel.loadData(data.positions);
-            } else {
-                throw XH.exception('Streaming updates not yet implemented on the client');
-            }
+            this.setLoadTimestamp(Date.now());
+            gridModel.updateData(data);
         };
 
         this.session = session;
 
-        gridModel.loadData(positions);
         if (!gridModel.selectedRecord) {
             gridModel.selectFirst();
         }

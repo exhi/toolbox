@@ -2,6 +2,7 @@ import {HoistAppModel, XH} from '@xh/hoist/core';
 import {TabContainerModel} from '@xh/hoist/cmp/tab';
 import {positionsPanel} from '../tabs/positions/PositionsPanel';
 import {PortfolioService} from '../../core/svc/PortfolioService';
+import {ordersPanel} from '../tabs/orders/OrdersPanel';
 
 @HoistAppModel
 export class BrowserAppModel {
@@ -15,7 +16,7 @@ export class BrowserAppModel {
             },
             {
                 id: 'trades',
-                content: () => null
+                content: () => ordersPanel()
             },
             {
                 id: 'positionsDetailsWidget',

@@ -5,6 +5,7 @@ import {Icon} from '@xh/hoist/icon/Icon';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {tabSwitcher} from '@xh/hoist/desktop/cmp/tab';
 import {tabContainer} from '@xh/hoist/cmp/tab';
+import {webSocketIndicator} from '@xh/hoist/cmp/websocket';
 
 @HoistComponent
 export class BrowserApp extends Component {
@@ -18,6 +19,9 @@ export class BrowserApp extends Component {
                     tabSwitcher({
                         model: tabModel
                     })
+                ],
+                rightItems: [
+                    webSocketIndicator()
                 ]
             }),
             hframe({

@@ -19,7 +19,6 @@ import {Component} from 'react';
 @HoistComponent
 @LayoutSupport
 export class GridPanel extends Component {
-
     render() {
         const {model} = this,
             {parentModel} = model;
