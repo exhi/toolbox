@@ -1,38 +1,30 @@
-import {Component} from 'react';
-import {HoistComponent, hoistComponent, useProvidedModel} from '@xh/hoist/core';
-import {tabContainer} from '@xh/hoist/cmp/tab';
+import {hoistComponent, useProvidedModel, hoistElemFactory} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon/Icon';
+import {getClassName} from '@xh/hoist/utils/react';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
 import {vframe, hbox, filler, box} from '@xh/hoist/cmp/layout';
 import {showDevTools, closeWindow} from '@xh/hoist/openfin/utils';
 
-import {WindowState, ChildWindowModel} from './ChildWindowModel';
-import './ChildWindow.scss';
+import {WindowState, OpenFinWindowModel} from './OpenFinWindowModel';
+import './OpenFinWindow.scss';
 
-@HoistComponent
-export class ChildWindow extends Component {
-    baseClassName = 'openfin-child-window';
+export const openFinWindow = hoistElemFactory(props => {
+    const model = useProvidedModel(OpenFinWindowModel, props);
+    return vframe({
+        className: getClassName('openfin-window', props),
+        items: [
+            titleBar({model}),
+            props.children
+        ]
+    });
+});
 
-    render() {
-        const {model} = this,
-            {tabModel} = model;
-
-        return vframe({
-            className: this.getClassName(),
-            items: [
-                titleBar({omit: model.isInTabGroup, model}),
-                tabContainer({
-                    model: tabModel
-                })
-            ]
-        });
-    }
-}
-
-const [, titleBar] = hoistComponent(props => {
-    const model = useProvidedModel(ChildWindowModel, props),
+const titleBar = hoistComponent(props => {
+    const model = useProvidedModel(OpenFinWindowModel, props),
         {tabModel, isDocked, windowState} = model,
         {activeTab} = tabModel;
+
+    if (model.isInTabGroup) return null;
 
     console.debug('Window State:', windowState);
 

@@ -2,8 +2,7 @@ import {HoistModel} from '@xh/hoist/core';
 import {getChildWindowsAsync, createWindowAsync} from '@xh/hoist/openfin/utils';
 
 @HoistModel
-export class OpenFinAppModel {
-
+export class LauncherModel {
 
     async initAsync() {
         // TODO: Launch some windows!

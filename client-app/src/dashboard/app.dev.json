@@ -3,7 +3,7 @@
     "startup_app": {
         "name": "Dashboard",
         "description": "Dashboard",
-        "url": "http://localhost:3000/dashboard",
+        "url": "http://localhost:3000/dashboard/launcher",
         "applicationIcon": "http://localhost:3000/favicon.ico",
         "uuid": "xh-dashboard",
         "autoShow": true,

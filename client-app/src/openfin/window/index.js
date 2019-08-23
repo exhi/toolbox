@@ -1,3 +1,3 @@
 
-export * from './ChildWindow';
-export * from './ChildWindowModel';
+export * from './OpenFinWindow';
+export * from './OpenFinWindowModel';

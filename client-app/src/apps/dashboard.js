@@ -1,16 +1,13 @@
 import {XH} from '@xh/hoist/core';
 import {AppContainer} from '@xh/hoist/desktop/appcontainer';
-import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
-import {OpenFinApp} from '../dashboard/openfin-app/OpenFinApp';
-import {BrowserApp} from '../dashboard/browser-app/BrowserApp';
-import {OpenFinAppModel} from '../dashboard/openfin-app/OpenFinAppModel';
-import {BrowserAppModel} from '../dashboard/browser-app/BrowserAppModel';
+import {App} from '../dashboard/App';
+import {AppModel} from '../dashboard/AppModel';
 
 XH.renderApp({
     clientAppCode: 'dashboard',
     clientAppName: 'Dashboard',
-    componentClass: isRunningInOpenFin() ? OpenFinApp : BrowserApp,
-    modelClass: isRunningInOpenFin() ? OpenFinAppModel : BrowserAppModel,
+    componentClass: App,
+    modelClass: AppModel,
     containerClass: AppContainer,
     isMobile: false,
     isSSO: false,

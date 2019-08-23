@@ -1,8 +1,7 @@
 import {GridModel, timeCol} from '@xh/hoist/cmp/grid';
 import {numberRenderer} from '@xh/hoist/format';
 
-export function createTradesGridModel({groupBy = 'fund', hiddenCols = []}) {
-
+export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) {
     return new GridModel({
         store: {
             fields: [
