@@ -1,7 +1,9 @@
 import {HoistModel} from '@xh/hoist/core';
 import {snapAndDock, tabbing} from 'openfin-layouts';
-import {observable, runInAction} from '@xh/hoist/mobx';
+import {action, bindable, observable, runInAction} from '@xh/hoist/mobx';
 import {getWindow, getWindowIdentity} from '@xh/hoist/openfin/utils';
+import {convertIconToSvg, Icon} from '@xh/hoist/icon';
+import {isEmpty} from 'lodash';
 
 export const WindowState = {
     NORMAL: 'normal',
@@ -11,6 +13,11 @@ export const WindowState = {
 
 @HoistModel
 export class OpenFinWindowModel {
+
+    @bindable title = 'Hoist OpenFin Window';
+
+    @bindable icon = convertIconToSvg(Icon.window());
+
     /** @member {_Window} */
     win;
 
@@ -20,8 +27,36 @@ export class OpenFinWindowModel {
 
     @observable isInTabGroup = false;
 
+    @bindable.ref options;
+
     constructor() {
         this.initAsync();
+
+        this.addReaction({
+            track: () => this.options,
+            run: () => this.syncStateToWindowOptions()
+        });
+
+        this.addAutorun(this.updateTabPropertiesAsync);
+    }
+
+    @action
+    syncStateToWindowOptions() {
+        const {options} = this;
+        if (!options) return;
+
+        const {customData} = options;
+        if (!isEmpty(customData)) {
+            const data = JSON.parse(customData);
+            this.title = data.title;
+            this.icon = data.icon;
+        }
+    }
+
+    async updateTabPropertiesAsync() {
+        const {title, icon} = this;
+        console.debug('Updating Tab Properties', {title, icon});
+        return tabbing.updateTabProperties({title, icon});
     }
 
     async minimizeAsync() {
@@ -51,6 +86,8 @@ export class OpenFinWindowModel {
         setWindowState(state);
 
         this.win = win;
+
+        this.setOptions(await win.getOptions());
 
         const setIsDocked = (isDocked) => runInAction(() => this.isDocked = isDocked);
         snapAndDock.addEventListener('window-docked', async () => setIsDocked(true));

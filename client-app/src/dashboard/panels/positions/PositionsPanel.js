@@ -5,12 +5,16 @@ import {grid} from '@xh/hoist/cmp/grid';
 import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {filler} from '@xh/hoist/cmp/layout';
+import {getClassName} from '@xh/hoist/utils/react';
 
-export const positionsPanel = hoistElemFactory(() => {
+import './PositionsPanel.scss';
+
+export const positionsPanel = hoistElemFactory(props => {
     const model = useLocalModel(PositionsModel),
         {gridModel, dimChooserModel, loadModel, loadTimestamp} = model;
 
     return panel({
+        className: getClassName('positions-panel', props),
         item: grid({model: gridModel}),
         bbar: [
             dimensionChooser({model: dimChooserModel}),

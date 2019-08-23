@@ -1,3 +1,4 @@
+import React from 'react';
 import {useProvidedModel, hoistElemFactory, useLocalModel} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon/Icon';
 import {getClassName} from '@xh/hoist/utils/react';
@@ -21,7 +22,7 @@ export const openFinWindow = hoistElemFactory(props => {
 
 const titleBar = hoistElemFactory(props => {
     const model = useProvidedModel(OpenFinWindowModel, props),
-        {isDocked, windowState} = model;
+        {isDocked, windowState, title, icon} = model;
 
     if (model.isInTabGroup) return null;
 
@@ -30,10 +31,10 @@ const titleBar = hoistElemFactory(props => {
     return hbox({
         className: 'title-bar',
         items: [
-            box({
-                className: 'title-bar--title',
-                item: 'some name'
-            }),
+            icon && icon.startsWith('<svg') ?
+                <div dangerouslySetInnerHTML={{__html: icon}}/> :
+                null,
+            box({className: 'title-bar--title', item: title}),
             filler(),
             buttonGroup({
                 className: 'title-bar--buttons',

@@ -33,12 +33,12 @@ export const launcher = hoistElemFactory(() => {
             button({
                 icon: Icon.portfolio(),
                 text: 'Positions',
-                onClick: () => model.createWindow('positions')
+                onClick: () => model.createWindow('positions', 'Positions', Icon.portfolio())
             }),
             button({
                 icon: Icon.bolt(),
                 text: 'Trades',
-                onClick: () => model.createWindow('trades')
+                onClick: () => model.createWindow('trades', 'Trades', Icon.bolt())
             })
         ],
         rightItems: [

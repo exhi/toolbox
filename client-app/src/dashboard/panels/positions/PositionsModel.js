@@ -5,6 +5,9 @@ import {clamp} from 'lodash';
 import {DimensionChooserModel} from '@xh/hoist/cmp/dimensionchooser';
 import {managed} from '@xh/hoist/core/mixins';
 import {bindable} from '@xh/hoist/mobx';
+import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
+import {box} from '@xh/hoist/cmp/layout';
+import {isRunningInOpenFin, createWindowAsync} from '@xh/hoist/openfin/utils';
 
 @HoistModel
 @LoadSupport
@@ -48,6 +51,44 @@ export class PositionsModel {
             loadRootAsSummary: true
         },
         columns: [
+            {
+                colId: 'tradesWidgetDragger',
+                headerName: '',
+                width: 24,
+                hidden: !isRunningInOpenFin(),
+                elementRenderer: (v, {record}) => {
+                    return box({
+                        className: 'widget-dragger',
+                        draggable: true,
+                        onDragEnd: (e) => {
+                            e.persist();
+                            console.debug('Trades Widget Drag End', e);
+
+                            if (isRunningInOpenFin()) {
+                                const formatPositionId = (positionId) => {
+                                    if (!positionId) return '';
+
+                                    const dimValPairs = positionId.split('>>').splice(1);
+                                    const dimVals = dimValPairs.map((str) => str.split(':')[1]);
+                                    return dimVals.join(' > ');
+                                };
+
+                                createWindowAsync(`trades-widget-${record.id}-${XH.genId()}`, {
+                                    url: XH.router.buildUrl('default.positionTrades', {positionId: record.id}),
+                                    frame: false,
+                                    defaultLeft: e.screenX,
+                                    defaultTop: e.screenY,
+                                    customData: JSON.stringify({
+                                        title: `Trades | ${formatPositionId(record.id)}`,
+                                        icon: convertIconToSvg(Icon.bolt())
+                                    })
+                                });
+                            }
+                        },
+                        item: Icon.bolt()
+                    });
+                }
+            },
             {
                 field: 'id',
                 headerName: 'ID',

@@ -1,6 +1,7 @@
 import {XH, HoistModel, LoadSupport} from '@xh/hoist/core';
 import {bindable} from '@xh/hoist/mobx';
 import {createTradesGridModel} from '../../common/Trades';
+import {isNil} from 'lodash';
 
 @HoistModel
 @LoadSupport
@@ -8,7 +9,18 @@ export class PositionTradesModel {
 
     @bindable positionId;
 
-    gridModel = createTradesGridModel({groupBy: null, hiddenCols: ['sector', 'trader', 'fund', 'model', 'region']});
+    @bindable isLinked = false;
+
+    gridModel = createTradesGridModel({
+        groupBy: null,
+        hiddenCols: [
+            'sector',
+            'trader',
+            'fund',
+            'model',
+            'region'
+        ]
+    });
 
     constructor() {
         this.addReaction({
@@ -34,8 +46,10 @@ export class PositionTradesModel {
     }
 
     async doLoadAsync() {
-        const {positionId} = this,
-            trades = await XH.portfolioService.getOrdersAsync(positionId);
+        const {positionId} = this;
+        if (isNil(positionId)) return;
+
+        const trades = await XH.portfolioService.getOrdersAsync(positionId);
 
         this.gridModel.loadData(trades);
     }

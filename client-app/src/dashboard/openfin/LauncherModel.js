@@ -1,6 +1,7 @@
 import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
 import {getChildWindowsAsync, createWindowAsync} from '@xh/hoist/openfin/utils';
 import {bindable} from '@xh/hoist/mobx';
+import {convertIconToSvg} from '@xh/hoist/icon';
 
 @HoistModel
 @LoadSupport
@@ -8,11 +9,12 @@ export class LauncherModel {
 
     @bindable.ref windows = [];
 
-    async createWindow(route) {
+    async createWindow(route, title, icon) {
         const win = await createWindowAsync(`${route}_${XH.genId()}`, {
             url: `/dashboard/${route}`,
             frame: false,
-            defaultCentered: true
+            defaultCentered: true,
+            customData: JSON.stringify({title, icon: convertIconToSvg(icon)})
         });
 
         this.setWindows([...this.windows, win]);
