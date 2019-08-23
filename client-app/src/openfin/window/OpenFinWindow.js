@@ -1,4 +1,4 @@
-import {hoistComponent, useProvidedModel, hoistElemFactory} from '@xh/hoist/core';
+import {useProvidedModel, hoistElemFactory, useLocalModel} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon/Icon';
 import {getClassName} from '@xh/hoist/utils/react';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
@@ -9,7 +9,7 @@ import {WindowState, OpenFinWindowModel} from './OpenFinWindowModel';
 import './OpenFinWindow.scss';
 
 export const openFinWindow = hoistElemFactory(props => {
-    const model = useProvidedModel(OpenFinWindowModel, props);
+    const model = useLocalModel(OpenFinWindowModel);
     return vframe({
         className: getClassName('openfin-window', props),
         items: [
@@ -19,10 +19,9 @@ export const openFinWindow = hoistElemFactory(props => {
     });
 });
 
-const titleBar = hoistComponent(props => {
+const titleBar = hoistElemFactory(props => {
     const model = useProvidedModel(OpenFinWindowModel, props),
-        {tabModel, isDocked, windowState} = model,
-        {activeTab} = tabModel;
+        {isDocked, windowState} = model;
 
     if (model.isInTabGroup) return null;
 
@@ -33,7 +32,7 @@ const titleBar = hoistComponent(props => {
         items: [
             box({
                 className: 'title-bar--title',
-                item: activeTab.title
+                item: 'some name'
             }),
             filler(),
             buttonGroup({

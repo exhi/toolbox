@@ -5,6 +5,7 @@ import {tradesPanel} from './panels/trades/TradesPanel';
 import {positionTradesPanel} from './panels/position-trades/PositionTradesPanel';
 import {PortfolioService} from '../core/svc/PortfolioService';
 import {launcher} from './openfin/Launcher';
+import {windowWrapper} from './openfin/WindowWrapper';
 
 @HoistAppModel
 export class AppModel {
@@ -22,16 +23,16 @@ export class AppModel {
             },
             {
                 id: 'positions',
-                content: () => positionsPanel()
+                content: () => windowWrapper(positionsPanel())
             },
             {
                 id: 'trades',
-                content: () => tradesPanel()
+                content: () => windowWrapper(tradesPanel())
             },
             {
                 id: 'positionTrades',
                 title: 'Position Trades',
-                content: () => positionTradesPanel()
+                content: () => windowWrapper(positionTradesPanel())
             },
             {
                 id: 'positionCharts',

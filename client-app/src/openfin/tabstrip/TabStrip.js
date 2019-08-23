@@ -1,5 +1,5 @@
 import React from 'react';
-import {hoistComponent, useLocalModel} from '@xh/hoist/core';
+import {useLocalModel, hoistElemFactory} from '@xh/hoist/core';
 import {hbox, filler} from '@xh/hoist/cmp/layout';
 import {tabs as bpTabs, tab as bpTab} from '@xh/hoist/kit/blueprint';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
@@ -8,7 +8,7 @@ import {Icon} from '@xh/hoist/icon';
 import {TabStripModel, TabGroupState} from './TabStripModel';
 import './TabStrip.scss';
 
-export const [, tabStrip] = hoistComponent(function TabStrip() {
+export const tabStrip = hoistElemFactory(function TabStrip() {
     const model = useLocalModel(TabStripModel),
         {tabs, activeTab, tabGroupState} = model;
 

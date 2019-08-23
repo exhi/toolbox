@@ -26,9 +26,21 @@ export const launcher = hoistElemFactory(() => {
         {dockedHeight: 68}  // TODO: Magic number!
     );
 
-    useLocalModel(LauncherModel);
+    const model = useLocalModel(LauncherModel);
     return appBar({
         icon: Icon.portfolio({size: '2x'}),
+        leftItems: [
+            button({
+                icon: Icon.portfolio(),
+                text: 'Positions',
+                onClick: () => model.createWindow('positions')
+            }),
+            button({
+                icon: Icon.bolt(),
+                text: 'Trades',
+                onClick: () => model.createWindow('trades')
+            })
+        ],
         rightItems: [
             button({
                 icon: Icon.window(),

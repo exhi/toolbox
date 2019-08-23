@@ -2,6 +2,7 @@ import {HoistModel} from '@xh/hoist/core';
 import {action, bindable} from '@xh/hoist/mobx';
 import {tabbing, tabstrip} from 'openfin-layouts';
 import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
+import {first} from 'lodash';
 
 export const TabGroupState = {
     NORMAL: 'normal',
@@ -12,7 +13,7 @@ export const TabGroupState = {
 @HoistModel
 export class TabStripModel {
     /** @member {Tab} */
-    @bindable activeTab;
+    @bindable.ref activeTab;
 
     /** @member {Tab[]} */
     @bindable.ref tabs = [];
@@ -31,13 +32,6 @@ export class TabStripModel {
             ]);
 
             this.setActiveTab(this.tabs[1]);
-        } else {
-            this.addReaction({
-                track: () => this.activeTab,
-                run: (tab) => {
-                    tabbing.setActiveTab(tab.windowIdentity);
-                }
-            });
         }
     }
 
@@ -45,9 +39,11 @@ export class TabStripModel {
         this.destroyListeners();
     }
 
+    // Called when the user clicks on a tab in the switcher
     @action
     activateTab(tabId) {
         this.activeTab = this.tabs.find(it => it.id === tabId);
+        tabbing.setActiveTab(this.activeTab.windowIdentity);
     }
 
     async minimizeAsync() {
@@ -106,7 +102,12 @@ export class TabStripModel {
 
     @action
     removeTab(windowIdentity) {
-        this.tabs = this.tabs.filter(it => it.id === Tab.getTabId(windowIdentity));
+        const tab = this.findTabByIdentity(windowIdentity);
+        this.tabs = this.tabs.filter(it => it !== tab);
+
+        if (tab === this.activeTab) {
+            this.activeTab = first(this.tabs);
+        }
     }
 
     /** @param {TabActivatedEvent} event */
@@ -154,7 +155,7 @@ export class TabStripModel {
         this.setTabGroupState(TabGroupState.MAXIMIZED);
     };
 
-    registerListeners(ta) {
+    registerListeners() {
         this.addEventListener(tabbing, 'tab-added', this.onTabAdded);
         this.addEventListener(tabbing, 'tab-removed', this.onTabRemoved);
         this.addEventListener(tabbing, 'tab-activated', this.onTabActivated);

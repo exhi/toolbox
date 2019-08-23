@@ -1,8 +1,31 @@
-import {HoistModel} from '@xh/hoist/core';
+import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
 import {getChildWindowsAsync, createWindowAsync} from '@xh/hoist/openfin/utils';
+import {bindable} from '@xh/hoist/mobx';
 
 @HoistModel
+@LoadSupport
 export class LauncherModel {
+
+    @bindable.ref windows = [];
+
+    async createWindow(route) {
+        const win = await createWindowAsync(`${route}_${XH.genId()}`, {
+            url: `/dashboard/${route}`,
+            frame: false,
+            defaultCentered: true
+        });
+
+        this.setWindows([...this.windows, win]);
+    }
+
+    async doLoadAsync() {
+
+        const childWindows = await getChildWindowsAsync();
+        childWindows.forEach(win => {
+            win.close();
+        });
+
+    }
 
     async initAsync() {
         // TODO: Launch some windows!
