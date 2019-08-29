@@ -14,6 +14,8 @@ export class LauncherModel {
             url: `/dashboard/${route}`,
             frame: false,
             defaultCentered: true,
+            defaultWidth: 1200,
+            defaultHeight: 1200,
             saveWindowState: false, // Since we will end up re-using ids, don't save window state
             customData: JSON.stringify({title, icon: convertIconToSvg(icon)})
         });

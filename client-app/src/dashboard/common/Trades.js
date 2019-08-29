@@ -117,8 +117,10 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                     icon: Icon.openExternal(),
                     text: 'Trading Volume',
                     recordsRequired: 1,
-                    displayFn: () => {
+                    displayFn: ({record}) => {
                         if (!isRunningInOpenFin()) return {hidden: true};
+
+                        return {text: `Trading Volume | ${record.symbol}`};
                     },
                     actionFn: ({record}) => {
                         const {symbol} = record;
@@ -134,6 +136,7 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                         });
                     }
                 },
+                '-',
                 ...GridModel.defaultContextMenuTokens
             ],
             gridModel
