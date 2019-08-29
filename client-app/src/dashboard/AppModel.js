@@ -6,6 +6,7 @@ import {positionTradesPanel} from './panels/position-trades/PositionTradesPanel'
 import {PortfolioService} from '../core/svc/PortfolioService';
 import {launcher} from './openfin/Launcher';
 import {windowWrapper} from './openfin/WindowWrapper';
+import {getWindow, getChildWindowsAsync} from '@xh/hoist/openfin/utils';
 
 @HoistAppModel
 export class AppModel {
@@ -80,5 +81,16 @@ export class AppModel {
 
     async initAsync() {
         await XH.installServicesAsync(PortfolioService);
+    }
+
+    async doLoadAsync(loadSpec) {
+        if (getWindow().isMainWindow()) {
+            const childWindows = await getChildWindowsAsync();
+            childWindows.forEach(wnd => {
+                console.debug('Triggering load on child window', wnd, wnd.getWebWindow());
+                const {XH} = wnd.getWebWindow();
+                XH.refreshContextModel.doLoadAsync(loadSpec);
+            });
+        }
     }
 }
