@@ -1,5 +1,5 @@
 import React from 'react';
-import {useProvidedModel, hoistElemFactory, useLocalModel} from '@xh/hoist/core';
+import {useProvidedModel, hoistElemFactory, useLocalModel, elemFactory} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon/Icon';
 import {getClassName} from '@xh/hoist/utils/react';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
@@ -9,13 +9,19 @@ import {showDevTools, closeWindow} from '@xh/hoist/openfin/utils';
 import {WindowState, OpenFinWindowModel} from './OpenFinWindowModel';
 import './OpenFinWindow.scss';
 
+export const OpenFinWindowContext = React.createContext(null);
+const openFinWindowContextProvider = elemFactory(OpenFinWindowContext.Provider);
+
 export const openFinWindow = hoistElemFactory(props => {
     const model = useLocalModel(OpenFinWindowModel);
     return vframe({
         className: getClassName('openfin-window', props),
         items: [
             titleBar({model}),
-            props.children
+            openFinWindowContextProvider({
+                value: model,
+                items: props.children
+            })
         ]
     });
 });

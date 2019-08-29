@@ -7,11 +7,13 @@ import {managed} from '@xh/hoist/core/mixins';
 import {bindable} from '@xh/hoist/mobx';
 import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {box} from '@xh/hoist/cmp/layout';
-import {isRunningInOpenFin, createWindowAsync} from '@xh/hoist/openfin/utils';
+import {isRunningInOpenFin, createWindowAsync, createChannelAsync} from '@xh/hoist/openfin/utils';
+import {formatPositionId} from '../../common/Misc';
 
 @HoistModel
 @LoadSupport
 export class PositionsModel {
+
     dimChooserModel = new DimensionChooserModel({
         dimensions: [
             {value: 'fund', label: 'Fund'},
@@ -65,16 +67,9 @@ export class PositionsModel {
                             console.debug('Trades Widget Drag End', e);
 
                             if (isRunningInOpenFin()) {
-                                const formatPositionId = (positionId) => {
-                                    if (!positionId) return '';
-
-                                    const dimValPairs = positionId.split('>>').splice(1);
-                                    const dimVals = dimValPairs.map((str) => str.split(':')[1]);
-                                    return dimVals.join(' > ');
-                                };
-
                                 createWindowAsync(`trades-widget-${record.id}-${XH.genId()}`, {
-                                    url: XH.router.buildUrl('default.positionTrades', {positionId: record.id}),
+                                    url: XH.router.buildUrl('default.positionTrades',
+                                        {positionId: record.id}),
                                     frame: false,
                                     defaultLeft: e.screenX,
                                     defaultTop: e.screenY,
@@ -143,11 +138,35 @@ export class PositionsModel {
 
     @bindable loadTimestamp;
 
+    @bindable.ref channel;
+
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
             run: () => this.loadAsync()
         });
+
+        this.addReaction({
+            track: () => [this.channel, this.gridModel.selectedRecord],
+            run: ([channel, record]) => {
+                if (!channel) return;
+
+                const payload = {positionId: record ? record.id : null};
+                console.debug('Publishing position-selected action with payload', payload);
+                channel.publish('position-selected', JSON.stringify(payload));
+            }
+        });
+
+        this.initAsync();
+    }
+
+    async initAsync() {
+        if (isRunningInOpenFin()) {
+            this.setChannel(await createChannelAsync('positions-grid'));
+            this.channel.onConnection((identity, payload) => {
+                console.debug('positions-grid channel connection from', identity, payload);
+            });
+        }
     }
 
     async doLoadAsync() {

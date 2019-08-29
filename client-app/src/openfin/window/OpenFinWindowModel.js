@@ -2,7 +2,6 @@ import {HoistModel} from '@xh/hoist/core';
 import {snapAndDock, tabbing} from 'openfin-layouts';
 import {action, bindable, observable, runInAction} from '@xh/hoist/mobx';
 import {getWindow, getWindowIdentity} from '@xh/hoist/openfin/utils';
-import {convertIconToSvg, Icon} from '@xh/hoist/icon';
 import {isEmpty} from 'lodash';
 
 export const WindowState = {
@@ -14,9 +13,9 @@ export const WindowState = {
 @HoistModel
 export class OpenFinWindowModel {
 
-    @bindable title = 'Hoist OpenFin Window';
+    @bindable title = '';
 
-    @bindable icon = convertIconToSvg(Icon.window());
+    @bindable icon = '';
 
     /** @member {_Window} */
     win;
