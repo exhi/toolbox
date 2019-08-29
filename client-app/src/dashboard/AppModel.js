@@ -6,10 +6,13 @@ import {positionTradesPanel} from './panels/position-trades/PositionTradesPanel'
 import {PortfolioService} from '../core/svc/PortfolioService';
 import {launcher} from './openfin/Launcher';
 import {windowWrapper} from './openfin/WindowWrapper';
-import {getWindow, getChildWindowsAsync} from '@xh/hoist/openfin/utils';
+import {bindable} from '@xh/hoist/mobx';
+import {tradingVolumeChartPanel} from './panels/trading-volume-chart/TradingVolumeChartPanel';
 
 @HoistAppModel
 export class AppModel {
+    @bindable
+
     tabModel = new TabContainerModel({
         route: 'default',
         switcherPosition: 'none',
@@ -32,13 +35,11 @@ export class AppModel {
             },
             {
                 id: 'positionTrades',
-                title: 'Position Trades',
                 content: () => windowWrapper(positionTradesPanel())
             },
             {
-                id: 'positionCharts',
-                title: 'Position Charts',
-                content: () => null
+                id: 'tradingVolume',
+                content: () => windowWrapper(tradingVolumeChartPanel())
             }
         ]
     });
@@ -71,8 +72,8 @@ export class AppModel {
                         path: '/positionTrades?:positionId'
                     },
                     {
-                        name: 'positionCharts',
-                        path: '/positionCharts?:positionId'
+                        name: 'tradingVolume',
+                        path: '/tradingVolume?:symbol'
                     }
                 ]
             }
@@ -81,16 +82,5 @@ export class AppModel {
 
     async initAsync() {
         await XH.installServicesAsync(PortfolioService);
-    }
-
-    async doLoadAsync(loadSpec) {
-        if (getWindow().isMainWindow()) {
-            const childWindows = await getChildWindowsAsync();
-            childWindows.forEach(wnd => {
-                console.debug('Triggering load on child window', wnd, wnd.getWebWindow());
-                const {XH} = wnd.getWebWindow();
-                XH.refreshContextModel.doLoadAsync(loadSpec);
-            });
-        }
     }
 }

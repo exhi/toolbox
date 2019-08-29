@@ -1,8 +1,13 @@
+import {XH} from '@xh/hoist/core';
 import {GridModel, timeCol} from '@xh/hoist/cmp/grid';
 import {numberRenderer} from '@xh/hoist/format';
+import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
+import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
+import {isRunningInOpenFin, createWindowAsync} from '@xh/hoist/openfin/utils';
 
 export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) {
     return new GridModel({
+        compact: true,
         store: {
             fields: [
                 'symbol',
@@ -105,6 +110,33 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                 field: 'time',
                 ...timeCol
             }
-        ]
+        ],
+        contextMenuFn: (agParams, gridModel) => new StoreContextMenu({
+            items: [
+                {
+                    icon: Icon.openExternal(),
+                    text: 'Trading Volume',
+                    recordsRequired: 1,
+                    displayFn: () => {
+                        if (!isRunningInOpenFin()) return {hidden: true};
+                    },
+                    actionFn: ({record}) => {
+                        const {symbol} = record;
+                        createWindowAsync(`trading-volume-${symbol}-${XH.genId()}`, {
+                            url: XH.router.buildUrl('default.tradingVolume', {symbol}),
+                            frame: false,
+                            defaultCentered: true,
+                            saveWindowState: false,
+                            customData: JSON.stringify({
+                                title: `Trading Volume | ${symbol}`,
+                                icon: convertIconToSvg(Icon.chartLine())
+                            })
+                        });
+                    }
+                },
+                ...GridModel.defaultContextMenuTokens
+            ],
+            gridModel
+        })
     });
 }
