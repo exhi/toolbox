@@ -4,10 +4,11 @@
         "name": "Dashboard",
         "description": "Dashboard",
         "url": "http://localhost:3000/dashboard/launcher",
-        "applicationIcon": "http://localhost:3000/favicon.ico",
+        "icon": "http://localhost:3000/public/trayicon.png",
         "uuid": "xh-dashboard",
         "autoShow": true,
-        "frame": false
+        "frame": false,
+        "showTaskbarIcon": true
     },
     "runtime": {
         "arguments": "--enable-aggressive-domstorage-flushing",
@@ -16,13 +17,16 @@
     "services": [
         {
             "name": "layouts",
-            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.5/app.json",
+            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.6/app.json",
             "config": {
                 "tabstrip": {
                     "url": "http://localhost:3000/openfin-tabstrip",
                     "height": 42
                 }
             }
+        },
+        {
+            "name": "notifications"
         }
     ],
     "shortcut": {

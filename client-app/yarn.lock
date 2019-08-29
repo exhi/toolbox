@@ -756,7 +756,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
@@ -1261,9 +1261,9 @@
     webpackbar "~3.2.0"
 
 "@xh/hoist@^28.0.0-SNAPSHOT":
-  version "28.0.0-SNAPSHOT.1566576931879"
-  resolved "https://registry.yarnpkg.com/@xh/hoist/-/hoist-28.0.0-SNAPSHOT.1566576931879.tgz#26e971d29939ffe962e1f7c6f461d7093e28de22"
-  integrity sha512-lZUvl3xXt5amIJddkBhErCunjPazq7XEbw6zsaSgV97ZGgFm9aqYnXh4itZthpWHM05HdcBiOMCbuWu9WPUafQ==
+  version "28.0.0-SNAPSHOT.1567096162956"
+  resolved "https://registry.yarnpkg.com/@xh/hoist/-/hoist-28.0.0-SNAPSHOT.1567096162956.tgz#a730d897ff22d254cd108d123370ef63474039e2"
+  integrity sha512-gWv1Oe1NzlyDhTjN7aIc6wCBo3NNqp0Lyb7421oz8HaxPWanqCo/jIh68jAsuaLRnxkYd63/Ydq+eBWkk+00VQ==
   dependencies:
     "@blueprintjs/core" "~3.18.0"
     "@blueprintjs/datetime" "~3.12.0"
@@ -2774,11 +2774,11 @@ crypto-browserify@^3.11.0:
     randomfill "^1.0.3"
 
 css-box-model@^1.1.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/css-box-model/-/css-box-model-1.1.3.tgz#aa1ac5853d2c9358783e67fe0b1ca22ecd82b232"
-  integrity sha512-qBsLTX8giq7dnep+kXlh5YvDLofO65PDvigAdJbU5zBsmzuCl6uxfTkGexkyIhfnMoZ/bXrCHcXmHeVRHzbs3A==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/css-box-model/-/css-box-model-1.2.0.tgz#3a26377b4162b3200d2ede4b064ec5b6a75186d0"
+  integrity sha512-lri0br+jSNV0kkkiGEp9y9y3Njq2PmpqbeGWRFQJuZteZzY9iC9GZhQ8Y4WpPwM/2YocjHePxy14igJY7YKzkA==
   dependencies:
-    tiny-invariant "^1.0.5"
+    tiny-invariant "^1.0.6"
 
 css-loader@~2.1.1:
   version "2.1.1"
@@ -6316,6 +6316,11 @@ openfin-layouts@^1.0.3, openfin-layouts@^1.0.5:
     hadouken-js-adapter "0.36.1-alpha.1"
     sortablejs "^1.7.0"
 
+openfin-notifications@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/openfin-notifications/-/openfin-notifications-0.11.0.tgz#975ef8bfd423ff38fe562672ebfdd796b02bcf58"
+  integrity sha512-V9/v5z//V76z4/p6TYK9tmupSTafyQJD/FMIctimKu1LpFBCN9jl2S5lMtKt6VmSRtiL66I8GYfiqWKjKoNSRQ==
+
 openfin-react-hooks@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/openfin-react-hooks/-/openfin-react-hooks-1.1.1.tgz#f7855ee7814d842419f7bc96cebc95b1fed072d3"
@@ -7143,9 +7148,9 @@ react-dom@~16.8.6:
     scheduler "^0.13.6"
 
 react-dropzone@~10.1.7:
-  version "10.1.7"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.1.7.tgz#faba6b460a41a27a2d642316602924fe0ec2139c"
-  integrity sha512-PT4DHJCQrY/2vVljupveqnlwzVRQGK7U6mhoO0ox6kSJV0EK6W1ZmZpRyHMA1S6/KUOzN+1pASUMSqV/4uAIXg==
+  version "10.1.8"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.1.8.tgz#348895a3ee9efe7c0f6a2f19642f04704c170757"
+  integrity sha512-Lm6+TxIDf/my4i3VdYmufRcrJ4SUbSTJP3HB49V2+HNjZwLI4NKVkaNRHwwSm9CEuzMP+6SW7pT1txc1uBPfDg==
   dependencies:
     attr-accept "^1.1.3"
     file-selector "^0.1.11"
@@ -7190,16 +7195,16 @@ react-popper@^1.3.3:
     warning "^4.0.2"
 
 react-redux@^7.0.3:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.0.tgz#72af7cf490a74acdc516ea9c1dd80e25af9ea0b2"
-  integrity sha512-hyu/PoFK3vZgdLTg9ozbt7WF3GgX5+Yn3pZm5/96/o4UueXA+zj08aiSC9Mfj2WtD1bvpIb3C5yvskzZySzzaw==
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.1.tgz#ce6eee1b734a7a76e0788b3309bf78ff6b34fa0a"
+  integrity sha512-QsW0vcmVVdNQzEkrgzh2W3Ksvr8cqpAv5FhEk7tNEft+5pp7rXxAudTz3VOPawRkLIepItpkEIyLcN/VVXzjTg==
   dependencies:
-    "@babel/runtime" "^7.4.5"
+    "@babel/runtime" "^7.5.5"
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
-    react-is "^16.8.6"
+    react-is "^16.9.0"
 
 react-select@~3.0.4:
   version "3.0.4"
@@ -8485,7 +8490,7 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
-tiny-invariant@^1.0.4, tiny-invariant@^1.0.5:
+tiny-invariant@^1.0.4, tiny-invariant@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.0.6.tgz#b3f9b38835e36a41c843a3b0907a5a7b3755de73"
   integrity sha512-FOyLWWVjG+aC0UqG76V53yAWdXfH8bO6FNmyZOuUrzDzK8DI3/JRY25UD7+g49JWM1LXwymsKERB+DzI0dTEQA==

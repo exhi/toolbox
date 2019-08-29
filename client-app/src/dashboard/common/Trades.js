@@ -129,6 +129,7 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                             frame: false,
                             defaultCentered: true,
                             saveWindowState: false,
+                            showTaskbarIcon: false,
                             customData: JSON.stringify({
                                 title: `Trading Volume | ${symbol}`,
                                 icon: convertIconToSvg(Icon.chartLine())

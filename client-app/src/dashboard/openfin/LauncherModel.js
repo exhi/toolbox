@@ -1,13 +1,49 @@
 import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
-import {getChildWindowsAsync, createWindowAsync, getWindow} from '@xh/hoist/openfin/utils';
+import {
+    getChildWindowsAsync,
+    createWindowAsync,
+    getWindow,
+    isRunningInOpenFin, getApplication
+} from '@xh/hoist/openfin/utils';
 import {bindable} from '@xh/hoist/mobx';
 import {convertIconToSvg} from '@xh/hoist/icon';
+import * as Notifications from 'openfin-notifications';
 
 @HoistModel
 @LoadSupport
 export class LauncherModel {
 
     @bindable.ref windows = [];
+
+    constructor() {
+        if (isRunningInOpenFin() && getWindow().isMainWindow()) {
+            const app = getApplication();
+            app.setTrayIcon('http://localhost:3000/public/trayicon.png');
+            app.addListener('tray-icon-clicked', event => {
+                const {button} = event;
+                let buttonName;
+                switch (button) {
+                    case 0:
+                        buttonName = 'left';
+                        break;
+                    case 1:
+                        buttonName = 'middle';
+                        break;
+                    case 2:
+                        buttonName = 'right';
+                        break;
+                }
+
+                Notifications.create({
+                    id: `xh-dashboard-notification-${XH.genId()}`,
+                    title: 'System Tray Icon Clicked!',
+                    body: `The ${buttonName} mouse button was clicked`,
+                    category: 'XH Dashboard',
+                    icon: 'https://localhost:3000/public/xh.png'
+                });
+            });
+        }
+    }
 
     async createWindow(route, title, icon) {
         const win = await createWindowAsync(`${route}_${XH.genId()}`, {
@@ -16,6 +52,7 @@ export class LauncherModel {
             defaultCentered: true,
             defaultWidth: 1200,
             defaultHeight: 1200,
+            showTaskbarIcon: false,
             saveWindowState: false, // Since we will end up re-using ids, don't save window state
             customData: JSON.stringify({title, icon: convertIconToSvg(icon)})
         });
