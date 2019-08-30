@@ -156,6 +156,20 @@ export class PositionsModel {
 
                         }
                     },
+                    {
+                        icon: Icon.skull(),
+                        text: 'Terminate',
+                        actionFn: ({record}) => {
+                            const id = `xh-dashboard-notification-${XH.genId()}`;
+                            Notifications.create({
+                                id,
+                                title: `${formatPositionId(record.id)} Terminated`,
+                                body: `Position ${formatPositionId(record.id)} has been terminated`,
+                                category: 'Positions',
+                                icon: 'https://localhost:3000/public/xh.png'
+                            });
+                        }
+                    },
                     '-',
                     ...GridModel.defaultContextMenuTokens
                 ]
