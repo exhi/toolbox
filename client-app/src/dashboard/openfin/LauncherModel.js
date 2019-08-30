@@ -8,6 +8,7 @@ import {
 import {bindable} from '@xh/hoist/mobx';
 import {convertIconToSvg} from '@xh/hoist/icon';
 import * as Notifications from 'openfin-notifications';
+import {wait} from '@xh/hoist/promise';
 
 @HoistModel
 @LoadSupport
@@ -34,13 +35,16 @@ export class LauncherModel {
                         break;
                 }
 
+                const id = `xh-dashboard-notification-${XH.genId()}`;
                 Notifications.create({
-                    id: `xh-dashboard-notification-${XH.genId()}`,
+                    id,
                     title: 'System Tray Icon Clicked!',
                     body: `The ${buttonName} mouse button was clicked`,
                     category: 'XH Dashboard',
                     icon: 'https://localhost:3000/public/xh.png'
                 });
+
+                wait(5000).then(() => Notifications.clear(id));
             });
         }
     }

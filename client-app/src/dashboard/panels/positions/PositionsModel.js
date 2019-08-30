@@ -9,6 +9,9 @@ import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {box} from '@xh/hoist/cmp/layout';
 import {isRunningInOpenFin, createWindowAsync, createChannelAsync} from '@xh/hoist/openfin/utils';
 import {formatPositionId} from '../../common/Misc';
+import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
+import * as Notifications from 'openfin-notifications';
+import {wait} from '@xh/hoist/promise';
 
 @HoistModel
 @LoadSupport
@@ -131,7 +134,33 @@ export class PositionsModel {
                     colorSpec: true
                 })
             }
-        ]
+        ],
+        contextMenuFn: (agParams, gridModel) => {
+            return new StoreContextMenu({
+                gridModel,
+                items: [
+                    {
+                        icon: Icon.info(),
+                        text: 'Position Info',
+                        actionFn: ({record}) => {
+                            const id = `xh-dashboard-notification-${XH.genId()}`;
+                            Notifications.create({
+                                id,
+                                title: formatPositionId(record.id),
+                                body: `Position ${formatPositionId(record.id)} has ${record.children ? record.children.length : 0} child positions`,
+                                category: 'Positions',
+                                icon: 'https://localhost:3000/public/xh.png'
+                            });
+
+                            wait(5000).then(() => Notifications.clear(id));
+
+                        }
+                    },
+                    '-',
+                    ...GridModel.defaultContextMenuTokens
+                ]
+            });
+        }
     });
 
     /** @member {PositionSession} */
