@@ -77,7 +77,6 @@ export class PositionsModel {
                                     defaultLeft: e.screenX,
                                     defaultTop: e.screenY,
                                     saveWindowState: false,
-                                    showTaskbarIcon: false,
                                     customData: JSON.stringify({
                                         title: `Trades | ${formatPositionId(record.id)}`,
                                         icon: convertIconToSvg(Icon.bolt())
