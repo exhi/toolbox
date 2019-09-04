@@ -4,6 +4,8 @@ import {ChartModel} from '@xh/hoist/desktop/cmp/chart';
 import {fmtDate} from '@xh/hoist/format';
 import {Highcharts} from '@xh/hoist/kit/highcharts';
 import {isNil} from 'lodash';
+import {convertIconToSvg, Icon} from '@xh/hoist/icon';
+import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
 
 @HoistModel
 @LoadSupport
@@ -48,7 +50,11 @@ export class TradingVolumeChartModel {
                         },
                         stops: [
                             [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            [
+                                1,
+                                Highcharts.Color(Highcharts.getOptions().colors[0])
+                                    .setOpacity(0)
+                                    .get('rgba')]
                         ]
                     },
                     marker: {
@@ -69,6 +75,9 @@ export class TradingVolumeChartModel {
         }
     });
 
+    /** @member {OpenFinWindowModel} */
+    openFinWindowModel;
+
     constructor() {
         this.addReaction({
             track: () => XH.routerState,
@@ -80,6 +89,13 @@ export class TradingVolumeChartModel {
             track: () => this.symbol,
             run: () => this.loadAsync()
         });
+    }
+
+    async initAsync({openFinWindowModel}) {
+        if (isRunningInOpenFin()) {
+            this.openFinWindowModel = openFinWindowModel;
+            this.openFinWindowModel.setIcon(convertIconToSvg(Icon.chartLine()));
+        }
     }
 
     syncWithRouterState() {
@@ -101,5 +117,9 @@ export class TradingVolumeChartModel {
 
         const series = await XH.portfolioService.getLineChartSeriesAsync(symbol);
         this.chartModel.setSeries([series]);
+
+        if (this.openFinWindowModel) {
+            this.openFinWindowModel.setTitle(`${symbol} Trading Volume`);
+        }
     }
 }

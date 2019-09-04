@@ -8,7 +8,9 @@ import {
 import {bindable} from '@xh/hoist/mobx';
 import {convertIconToSvg} from '@xh/hoist/icon';
 import * as Notifications from 'openfin-notifications';
+import {workspaces, restoreHelpers} from 'openfin-layouts';
 import {wait} from '@xh/hoist/promise';
+import {isEmpty} from 'lodash';
 
 @HoistModel
 @LoadSupport
@@ -19,6 +21,9 @@ export class LauncherModel {
     constructor() {
         if (isRunningInOpenFin() && getWindow().isMainWindow()) {
             const app = getApplication();
+
+            // --------------------------
+            // Misc. OpenFin App Init
             app.setTrayIcon('http://localhost:3000/public/trayicon.png');
             app.addListener('tray-icon-clicked', event => {
                 const {button} = event;
@@ -46,7 +51,46 @@ export class LauncherModel {
 
                 wait(5000).then(() => Notifications.clear(id));
             });
+
+            // ----------------------------
+            // OpenFin Workspace Init
+            workspaces.setRestoreHandler((workspaceApp) => {
+                console.debug('Workspace Restore', workspaceApp);
+                this.restoreAppWorkspaceAsync(workspaceApp);
+            });
+
+            workspaces.setGenerateHandler(() => {
+                console.debug('Workspace Generate Handler');
+
+
+            });
+
+            workspaces.ready().then(workspace => console.debug('Workspace Ready', workspace));
         }
+    }
+
+    async saveLayoutAsync() {
+        const workspace = await workspaces.generate();
+        console.debug(workspace);
+
+        XH.setPref('dashboardLayoutConfig', workspace);
+    }
+
+    async restoreLayoutAsync() {
+        /** @type {Workspace} */
+        const layoutConfig = XH.getPref('dashboardLayoutConfig');
+        if (!isEmpty(layoutConfig)) {
+            // The workspace we are restoring here is actually a multi-app workspace. There is no
+            // way to restore an app workspace on its own.
+            const result = await workspaces.restore(layoutConfig);
+            console.debug('Workspace Restore Result', result);
+        }
+    }
+
+    /** @param {WorkspaceApp} workspaceApp */
+    async restoreAppWorkspaceAsync(workspaceApp) {
+        const {childWindows} = workspaceApp;
+        await Promise.all(childWindows.map(childWnd => restoreHelpers.createOrPositionChild(childWnd)));
     }
 
     async createWindow(route, title, icon) {

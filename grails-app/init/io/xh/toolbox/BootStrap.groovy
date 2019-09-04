@@ -191,6 +191,13 @@ class BootStrap {
                     groupName: 'Toolbox - Example Apps',
                     note: 'Object containing user\'s dimension picker value & history'
             ],
+            dashboardLayoutConfig: [
+                    type: 'json',
+                    defaultValue: [:],
+                    local: true,
+                    groupName: 'Toolbox - Example Apps',
+                    note: 'Object containing the user\'s saved OpenFin layout'
+            ]
         ])
     }
 

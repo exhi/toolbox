@@ -1,3 +1,4 @@
+import {useEffect, useContext} from 'react';
 import {hoistElemFactory} from '@xh/hoist/core';
 import {TradesModel} from './TradesModel';
 import {useLocalModel} from '@xh/hoist/core/hooks';
@@ -6,10 +7,16 @@ import {grid} from '@xh/hoist/cmp/grid';
 import {select} from '@xh/hoist/desktop/cmp/input';
 import {filler} from '@xh/hoist/cmp/layout';
 import {storeFilterField} from '@xh/hoist/desktop/cmp/store';
+import {OpenFinWindowContext} from '../../../openfin/window';
 
 export const tradesPanel = hoistElemFactory(() => {
     const model = useLocalModel(TradesModel),
-        {gridModel, loadModel} = model;
+        {gridModel, loadModel} = model,
+        openFinWindowModel = useContext(OpenFinWindowContext);
+
+    useEffect(() => {
+        model.initAsync({openFinWindowModel});
+    });
 
     return panel({
         item: grid({

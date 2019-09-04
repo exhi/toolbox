@@ -4,7 +4,7 @@ import {fmtNumberTooltip, millionsRenderer, numberRenderer} from '@xh/hoist/form
 import {clamp} from 'lodash';
 import {DimensionChooserModel} from '@xh/hoist/cmp/dimensionchooser';
 import {managed} from '@xh/hoist/core/mixins';
-import {bindable} from '@xh/hoist/mobx';
+import {bindable, runInAction} from '@xh/hoist/mobx';
 import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {box} from '@xh/hoist/cmp/layout';
 import {isRunningInOpenFin, createWindowAsync, createChannelAsync} from '@xh/hoist/openfin/utils';
@@ -12,6 +12,7 @@ import {formatPositionId} from '../../common/Misc';
 import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
 import * as Notifications from 'openfin-notifications';
 import {wait} from '@xh/hoist/promise';
+import {throwIf} from '@xh/hoist/utils/js';
 
 @HoistModel
 @LoadSupport
@@ -183,6 +184,9 @@ export class PositionsModel {
 
     @bindable.ref channel;
 
+    /** @member {OpenFinWindowModel} */
+    openFinWindowModel;
+
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
@@ -203,9 +207,18 @@ export class PositionsModel {
         this.initAsync();
     }
 
-    async initAsync() {
+    async initAsync({openFinWindowModel}) {
         if (isRunningInOpenFin()) {
-            this.setChannel(await createChannelAsync('positions-grid'));
+            throwIf(!openFinWindowModel, 'Need to be provided an OpenFinWindowModel when running in OpenFin!');
+
+            runInAction(async () => {
+                this.openFinWindowModel = openFinWindowModel;
+                this.openFinWindowModel.setTitle('Positions');
+                this.openFinWindowModel.setIcon(convertIconToSvg(Icon.portfolio()));
+
+                this.setChannel(await createChannelAsync('positions-grid'));
+            });
+
             this.channel.onConnection((identity, payload) => {
                 console.debug('positions-grid channel connection from', identity, payload);
             });

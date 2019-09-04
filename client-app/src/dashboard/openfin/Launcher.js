@@ -45,6 +45,16 @@ export const launcher = hoistElemFactory(
             ],
             rightItems: [
                 button({
+                    icon: Icon.save(),
+                    text: 'Save Layout',
+                    onClick: () => model.saveLayoutAsync()
+                }),
+                button({
+                    icon: Icon.reset(),
+                    text: 'Restore Layout',
+                    onClick: () => model.restoreLayoutAsync()
+                }),
+                button({
                     icon: Icon.window(),
                     text: 'Bring All to Front',
                     onClick: () => bringAllWindowsToFront()
