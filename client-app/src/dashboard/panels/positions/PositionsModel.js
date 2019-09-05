@@ -63,6 +63,9 @@ export class PositionsModel {
                 width: 24,
                 hidden: !isRunningInOpenFin(),
                 elementRenderer: (v, {record}) => {
+                    if (record.xhIsSummary) return null;
+                    if (record.name.includes('Minor Positions')) return null;
+
                     return box({
                         className: 'widget-dragger',
                         draggable: true,
@@ -147,7 +150,9 @@ export class PositionsModel {
                             Notifications.create({
                                 id,
                                 title: formatPositionId(record.id),
-                                body: `Position ${formatPositionId(record.id)} has ${record.children ? record.children.length : 0} child positions`,
+                                body: `Position ${formatPositionId(record.id)} has ${record.children ?
+                                    record.children.length :
+                                    0} child positions`,
                                 category: 'Positions',
                                 icon: 'https://localhost:3000/public/xh.png'
                             });
@@ -209,7 +214,8 @@ export class PositionsModel {
 
     async initAsync({openFinWindowModel}) {
         if (isRunningInOpenFin()) {
-            throwIf(!openFinWindowModel, 'Need to be provided an OpenFinWindowModel when running in OpenFin!');
+            throwIf(!openFinWindowModel,
+                'Need to be provided an OpenFinWindowModel when running in OpenFin!');
 
             runInAction(async () => {
                 this.openFinWindowModel = openFinWindowModel;

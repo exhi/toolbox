@@ -41,32 +41,39 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
             },
             {
                 field: 'trader',
-                hidden: hiddenCols.includes('trader')
+                hidden: hiddenCols.includes('trader'),
+                width: 108
             },
             {
                 field: 'sector',
-                hidden: hiddenCols.includes('sector')
+                hidden: hiddenCols.includes('sector'),
+                width: 134
             },
             {
                 field: 'fund',
-                hidden: hiddenCols.includes('fund')
+                hidden: hiddenCols.includes('fund'),
+                width: 107
             },
             {
                 field: 'model',
-                hidden: hiddenCols.includes('model')
+                hidden: hiddenCols.includes('model'),
+                width: 70
             },
             {
                 field: 'region',
-                hidden: hiddenCols.includes('region')
+                hidden: hiddenCols.includes('region'),
+                width: 127
             },
             {
                 field: 'symbol',
-                hidden: hiddenCols.includes('symbol')
+                hidden: hiddenCols.includes('symbol'),
+                width: 72
             },
             {
                 field: 'dir',
                 headerName: 'B/S',
-                align: 'center'
+                align: 'center',
+                width: 100
             },
             {
                 field: 'quantity',
@@ -76,14 +83,16 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                 renderer: numberRenderer({
                     precision: 0,
                     ledger: true
-                })
+                }),
+                width: 66
             },
             {
                 field: 'price',
                 align: 'right',
                 renderer: numberRenderer({
                     precision: 4
-                })
+                }),
+                width: 76
             },
             {
                 field: 'commission',
@@ -91,7 +100,8 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                 renderer: numberRenderer({
                     precision: 0,
                     ledger: true
-                })
+                }),
+                width: 97
             },
             {
                 field: 'confidence',
@@ -104,7 +114,8 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                     // TODO: Calculate min/max for all leaf nodes under this for display
                     console.debug('Calculate Min/Max Confidence for', agParams);
                     return 'TODO';
-                }
+                },
+                width: 92
             },
             {
                 field: 'time',
