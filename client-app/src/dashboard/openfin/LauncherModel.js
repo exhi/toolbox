@@ -54,10 +54,14 @@ export class LauncherModel {
 
             // ----------------------------
             // OpenFin Workspace Init
+            /*
             workspaces.setRestoreHandler((workspaceApp) => {
                 console.debug('Workspace Restore', workspaceApp);
                 this.restoreAppWorkspaceAsync(workspaceApp);
             });
+             */
+
+            workspaces.setRestoreHandler(restoreHelpers.standardRestoreHandler);
 
             workspaces.setGenerateHandler(() => {
                 console.debug('Workspace Generate Handler');
