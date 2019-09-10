@@ -11,7 +11,6 @@ import {OpenFinWindowContext} from '../../../openfin/window';
 
 import './PositionsPanel.scss';
 import {toolbarSeparator} from '@xh/hoist/desktop/cmp/toolbar';
-import {button} from '@xh/hoist/desktop/cmp/button';
 
 export const positionsPanel = hoistElemFactory(props => {
     const model = useLocalModel(PositionsModel),
@@ -28,9 +27,6 @@ export const positionsPanel = hoistElemFactory(props => {
         bbar: [
             dimensionChooser({model: dimChooserModel}),
             toolbarSeparator(),
-            button({
-
-            }),
             filler(),
             relativeTimestamp({timestamp: loadTimestamp})
         ],
