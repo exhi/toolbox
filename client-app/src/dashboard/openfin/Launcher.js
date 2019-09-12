@@ -23,7 +23,7 @@ export const launcher = hoistElemFactory(
             ScreenEdge.TOP,
             getWindow(),
             false,
-            {dockedHeight: 68}  // TODO: Magic number!
+            {dockedHeight: 42}  // TODO: Magic number!
         );
 
         const model = useLocalModel(LauncherModel);
