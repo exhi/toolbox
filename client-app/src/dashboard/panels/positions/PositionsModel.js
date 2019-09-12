@@ -208,8 +208,6 @@ export class PositionsModel {
                 channel.publish('position-selected', JSON.stringify(payload));
             }
         });
-
-        this.initAsync();
     }
 
     async initAsync({openFinWindowModel}) {

@@ -16,7 +16,7 @@ export const tradesPanel = hoistElemFactory(() => {
 
     useEffect(() => {
         model.initAsync({openFinWindowModel});
-    });
+    }, [model, openFinWindowModel]);
 
     return panel({
         item: grid({

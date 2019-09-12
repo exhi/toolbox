@@ -11,7 +11,9 @@ export const positionTradesPanel = hoistElemFactory(() => {
 
     const openFinWindowModel = useContext(OpenFinWindowContext);
     if (openFinWindowModel) {
-        useEffect(() => model.openFinWindowModel = openFinWindowModel);
+        useEffect(() => {
+            model.openFinWindowModel = openFinWindowModel;
+        }, [model, openFinWindowModel]);
     }
 
     return panel({

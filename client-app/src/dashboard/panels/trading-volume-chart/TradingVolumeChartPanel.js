@@ -12,7 +12,7 @@ export const tradingVolumeChartPanel = hoistElemFactory(() => {
 
     useEffect(() => {
         model.initAsync({openFinWindowModel});
-    });
+    }, [model, openFinWindowModel]);
 
     return panel({
         item: chart({model: chartModel}),

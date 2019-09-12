@@ -19,7 +19,7 @@ export const positionsPanel = hoistElemFactory(props => {
 
     useEffect(() => {
         model.initAsync({openFinWindowModel});
-    });
+    }, [model, openFinWindowModel]);
 
     return panel({
         className: getClassName('positions-panel', props),
