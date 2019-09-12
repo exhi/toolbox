@@ -4,6 +4,7 @@ import {numberRenderer} from '@xh/hoist/format';
 import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
 import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {isRunningInOpenFin, createWindowAsync} from '@xh/hoist/openfin/utils';
+import moment from 'moment';
 
 export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) {
     return new GridModel({
@@ -135,7 +136,7 @@ export function createTradesGridModel({groupBy = 'fund', hiddenCols = []} = {}) 
                     },
                     actionFn: ({record}) => {
                         const {symbol} = record;
-                        createWindowAsync(`trading-volume-${symbol}-${XH.genId()}`, {
+                        createWindowAsync(`trading-volume-${symbol}-${moment().utc().valueOf()}`, {
                             url: XH.router.buildUrl('default.tradingVolume', {symbol}),
                             frame: false,
                             defaultCentered: true,

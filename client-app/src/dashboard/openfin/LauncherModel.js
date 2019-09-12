@@ -11,6 +11,7 @@ import * as Notifications from 'openfin-notifications';
 import {workspaces, restoreHelpers} from 'openfin-layouts';
 import {wait} from '@xh/hoist/promise';
 import {isEmpty} from 'lodash';
+import moment from 'moment';
 
 @HoistModel
 @LoadSupport
@@ -98,7 +99,7 @@ export class LauncherModel {
     }
 
     async createWindow(route, title, icon) {
-        const win = await createWindowAsync(`${route}_${XH.genId()}`, {
+        const win = await createWindowAsync(`${route}_${moment().utc().valueOf()}`, {
             url: `/dashboard/${route}`,
             frame: false,
             defaultCentered: true,

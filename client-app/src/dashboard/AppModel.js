@@ -69,7 +69,7 @@ export class AppModel {
                     },
                     {
                         name: 'positionTrades',
-                        path: '/positionTrades?:positionId'
+                        path: '/positionTrades?:positionId?:isLinked'
                     },
                     {
                         name: 'tradingVolume',

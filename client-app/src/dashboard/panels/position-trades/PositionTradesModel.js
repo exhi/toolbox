@@ -41,6 +41,11 @@ export class PositionTradesModel {
             run: () => this.loadAsync()
         });
 
+        this.addReaction({
+            track: () => [this.positionId, this.isLinked],
+            run: ([positionId, isLinked]) => XH.router.navigate('default.positionTrades', {positionId, isLinked}, {replace: true})
+        });
+
         this.initAsync();
     }
 
@@ -60,6 +65,8 @@ export class PositionTradesModel {
                     'with payload',
                     payload);
 
+                if (!this.isLinked) return;
+
                 payload = JSON.parse(payload);
                 this.setPositionId(payload.positionId);
             });
@@ -73,9 +80,10 @@ export class PositionTradesModel {
         if (!routerState.name.endsWith('positionTrades')) return;
 
         const {params} = routerState,
-            {positionId} = params;
+            {positionId, isLinked} = params;
 
         this.setPositionId(positionId);
+        this.setIsLinked(isLinked);
     }
 
     async doLoadAsync() {

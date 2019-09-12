@@ -4,6 +4,8 @@ import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {PositionTradesModel} from './PositionTradesModel';
 import {grid} from '@xh/hoist/cmp/grid';
 import {OpenFinWindowContext} from '../../../openfin/window';
+import {switchInput} from '@xh/hoist/desktop/cmp/input';
+import {filler} from '@xh/hoist/cmp/layout';
 
 export const positionTradesPanel = hoistElemFactory(() => {
     const model = useLocalModel(PositionTradesModel),
@@ -20,6 +22,14 @@ export const positionTradesPanel = hoistElemFactory(() => {
         item: grid({
             model: gridModel
         }),
+        bbar: [
+            filler(),
+            switchInput({
+                model,
+                bind: 'isLinked',
+                label: 'Linked'
+            })
+        ],
         mask: loadModel
     });
 });

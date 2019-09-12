@@ -8,9 +8,9 @@ import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {filler} from '@xh/hoist/cmp/layout';
 import {getClassName} from '@xh/hoist/utils/react';
 import {OpenFinWindowContext} from '../../../openfin/window';
+import {toolbarSeparator} from '@xh/hoist/desktop/cmp/toolbar';
 
 import './PositionsPanel.scss';
-import {toolbarSeparator} from '@xh/hoist/desktop/cmp/toolbar';
 
 export const positionsPanel = hoistElemFactory(props => {
     const model = useLocalModel(PositionsModel),

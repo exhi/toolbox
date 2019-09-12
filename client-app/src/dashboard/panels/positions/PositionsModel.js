@@ -13,6 +13,7 @@ import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
 import * as Notifications from 'openfin-notifications';
 import {wait} from '@xh/hoist/promise';
 import {throwIf} from '@xh/hoist/utils/js';
+import moment from 'moment';
 
 @HoistModel
 @LoadSupport
@@ -74,7 +75,7 @@ export class PositionsModel {
                             console.debug('Trades Widget Drag End', e);
 
                             if (isRunningInOpenFin()) {
-                                createWindowAsync(`trades-widget-${record.id}-${XH.genId()}`, {
+                                createWindowAsync(`trades-widget-${moment().utc().valueOf()}`, {
                                     url: XH.router.buildUrl('default.positionTrades',
                                         {positionId: record.id}),
                                     frame: false,
