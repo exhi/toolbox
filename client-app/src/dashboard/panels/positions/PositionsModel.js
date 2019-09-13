@@ -14,9 +14,11 @@ import * as Notifications from 'openfin-notifications';
 import {wait} from '@xh/hoist/promise';
 import {throwIf} from '@xh/hoist/utils/js';
 import moment from 'moment';
+import {SyncSupport, sync} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
+@SyncSupport('positions')
 export class PositionsModel {
 
     dimChooserModel = new DimensionChooserModel({
@@ -190,6 +192,9 @@ export class PositionsModel {
 
     @bindable.ref channel;
 
+    @bindable @sync
+    selectedPositionId;
+
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
@@ -199,6 +204,7 @@ export class PositionsModel {
             run: () => this.loadAsync()
         });
 
+        /*
         this.addReaction({
             track: () => [this.channel, this.gridModel.selectedRecord],
             run: ([channel, record]) => {
@@ -209,6 +215,9 @@ export class PositionsModel {
                 channel.publish('position-selected', JSON.stringify(payload));
             }
         });
+         */
+
+        this.initAsProviderAsync();
     }
 
     async initAsync({openFinWindowModel}) {
@@ -221,12 +230,14 @@ export class PositionsModel {
                 this.openFinWindowModel.setTitle('Positions');
                 this.openFinWindowModel.setIcon(convertIconToSvg(Icon.portfolio()));
 
-                this.setChannel(await createChannelAsync('positions-grid'));
+                // this.setChannel(await createChannelAsync('positions-grid'));
             });
 
+            /*
             this.channel.onConnection((identity, payload) => {
                 console.debug('positions-grid channel connection from', identity, payload);
             });
+             */
         }
     }
 

@@ -4,12 +4,14 @@ import {createTradesGridModel} from '../../common/Trades';
 import {isNil} from 'lodash';
 import {isRunningInOpenFin, connectToChannelAsync} from '@xh/hoist/openfin/utils';
 import {formatPositionId} from '../../common/Misc';
+import {SyncSupport, sync} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
+@SyncSupport('positions')
 export class PositionTradesModel {
 
-    @bindable positionId;
+    @bindable @sync.with('selectedPositionId') positionId;
 
     @bindable isLinked = false;
 
@@ -46,9 +48,12 @@ export class PositionTradesModel {
             run: ([positionId, isLinked]) => XH.router.navigate('default.positionTrades', {positionId, isLinked}, {replace: true})
         });
 
-        this.initAsync();
+        // this.initAsync();
+
+        this.initAsSubscriberAsync();
     }
 
+    /*
     async initAsync() {
         if (isRunningInOpenFin()) {
             this.setChannel(await connectToChannelAsync('positions-grid'));
@@ -74,6 +79,7 @@ export class PositionTradesModel {
             console.debug('register - result:', res);
         }
     }
+     */
 
     syncWithRouterState() {
         const {routerState} = XH;
