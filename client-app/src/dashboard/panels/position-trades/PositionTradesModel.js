@@ -2,7 +2,7 @@ import {XH, HoistModel, LoadSupport} from '@xh/hoist/core';
 import {bindable} from '@xh/hoist/mobx';
 import {createTradesGridModel} from '../../common/Trades';
 import {isNil} from 'lodash';
-import {isRunningInOpenFin, connectToChannelAsync} from '@xh/hoist/openfin/utils';
+import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
 import {formatPositionId} from '../../common/Misc';
 import {SyncSupport, sync} from '@xh/hoist/openfin';
 
@@ -11,7 +11,7 @@ import {SyncSupport, sync} from '@xh/hoist/openfin';
 @SyncSupport('positions')
 export class PositionTradesModel {
 
-    @bindable @sync.with('selectedPositionId') positionId;
+    @bindable @sync.with('selectedPositionIdChanged') positionId;
 
     @bindable isLinked = false;
 

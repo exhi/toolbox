@@ -7,7 +7,7 @@ import {managed} from '@xh/hoist/core/mixins';
 import {bindable, runInAction} from '@xh/hoist/mobx';
 import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {box} from '@xh/hoist/cmp/layout';
-import {isRunningInOpenFin, createWindowAsync, createChannelAsync} from '@xh/hoist/openfin/utils';
+import {isRunningInOpenFin, createWindowAsync} from '@xh/hoist/openfin/utils';
 import {formatPositionId} from '../../common/Misc';
 import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
 import * as Notifications from 'openfin-notifications';
@@ -217,6 +217,12 @@ export class PositionsModel {
         });
          */
 
+        this.addReaction({
+            track: () => this.gridModel.selectedRecord,
+            run: (record) => this.setSelectedPositionId(record.id)
+        });
+
+        console.debug('Initting provider');
         this.initAsProviderAsync();
     }
 
