@@ -6,10 +6,11 @@ import {grid} from '@xh/hoist/cmp/grid';
 import {OpenFinWindowContext} from '../../../openfin/window';
 import {switchInput} from '@xh/hoist/desktop/cmp/input';
 import {filler} from '@xh/hoist/cmp/layout';
+import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 
 export const positionTradesPanel = hoistElemFactory(() => {
     const model = useLocalModel(PositionTradesModel),
-        {gridModel, loadModel} = model;
+        {gridModel, loadModel, loadTimestamp} = model;
 
     const openFinWindowModel = useContext(OpenFinWindowContext);
     if (openFinWindowModel) {
@@ -23,12 +24,13 @@ export const positionTradesPanel = hoistElemFactory(() => {
             model: gridModel
         }),
         bbar: [
-            filler(),
             switchInput({
                 model,
                 bind: 'isLinked',
                 label: 'Linked'
-            })
+            }),
+            filler(),
+            relativeTimestamp({timestamp: loadTimestamp})
         ],
         mask: loadModel
     });

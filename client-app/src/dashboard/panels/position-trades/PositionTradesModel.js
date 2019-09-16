@@ -13,6 +13,8 @@ export class PositionTradesModel {
 
     @bindable @sync.with('selectedPositionId') positionId;
 
+    @bindable @sync loadTimestamp;
+
     @bindable isLinked = false;
 
     gridModel = createTradesGridModel({
@@ -47,39 +49,7 @@ export class PositionTradesModel {
             track: () => [this.positionId, this.isLinked],
             run: ([positionId, isLinked]) => XH.router.navigate('default.positionTrades', {positionId, isLinked}, {replace: true})
         });
-
-        // this.initAsync();
-
-        this.initAsSubscriberAsync();
     }
-
-    /*
-    async initAsync() {
-        if (isRunningInOpenFin()) {
-            this.setChannel(await connectToChannelAsync('positions-grid'));
-
-            console.debug('Channel connected');
-
-            await this.channel.setDefaultAction((action, payload, identity) => {
-                console.debug('Received', action, 'action from', identity, 'with payload', payload);
-            });
-
-            const res = await this.channel.register('position-selected', (payload, identity) => {
-                console.debug('Received position-selected action from',
-                    identity,
-                    'with payload',
-                    payload);
-
-                if (!this.isLinked) return;
-
-                payload = JSON.parse(payload);
-                this.setPositionId(payload.positionId);
-            });
-
-            console.debug('register - result:', res);
-        }
-    }
-     */
 
     syncWithRouterState() {
         const {routerState} = XH;

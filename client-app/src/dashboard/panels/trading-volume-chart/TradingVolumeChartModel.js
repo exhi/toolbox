@@ -6,12 +6,13 @@ import {Highcharts} from '@xh/hoist/kit/highcharts';
 import {isNil} from 'lodash';
 import {convertIconToSvg, Icon} from '@xh/hoist/icon';
 import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
-import {SyncModel} from '@xh/hoist/openfin';
+import {SyncSupport, sync} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
+@SyncSupport('trades')
 export class TradingVolumeChartModel {
-    @bindable symbol;
+    @bindable @sync symbol;
 
     @managed
     chartModel = new ChartModel({
@@ -79,6 +80,7 @@ export class TradingVolumeChartModel {
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
+    /*
     @managed
     syncModel = new SyncModel({
         syncId: 'trades',
@@ -89,6 +91,7 @@ export class TradingVolumeChartModel {
             }
         ]
     });
+    */
 
     constructor() {
         this.addReaction({

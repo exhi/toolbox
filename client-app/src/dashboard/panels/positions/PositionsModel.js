@@ -14,11 +14,11 @@ import * as Notifications from 'openfin-notifications';
 import {wait} from '@xh/hoist/promise';
 import {throwIf} from '@xh/hoist/utils/js';
 import moment from 'moment';
-import {SyncSupport} from '@xh/hoist/openfin';
+import {SyncSupport, sync} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
-@SyncSupport('positions')
+@SyncSupport('positions', true)
 export class PositionsModel {
 
     dimChooserModel = new DimensionChooserModel({
@@ -188,40 +188,30 @@ export class PositionsModel {
     /** @member {PositionSession} */
     @managed session;
 
-    @bindable loadTimestamp;
+    @bindable @sync loadTimestamp;
 
     @bindable.ref channel;
 
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
+    @bindable
+    @sync
+    selectedPositionId;
+
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
             run: () => this.loadAsync()
         });
+    }
 
-        /*
-         this.addReaction({
-         track: () => [this.channel, this.gridModel.selectedRecord],
-         run: ([channel, record]) => {
-         if (!channel) return;
-
-         const payload = {positionId: record ? record.id : null};
-         console.debug('Publishing position-selected action with payload', payload);
-         channel.publish('position-selected', JSON.stringify(payload));
-         }
-         });
-         */
-
-        this.initAsProviderAsync()
-            .then(() => {
-                this.addSyncAction({
-                    action: 'selectedPositionId',
-                    track: () => this.gridModel.selectedRecord,
-                    valueFn: (record) => record.id
-                });
-            });
+    onSyncReady() {
+        this.addSyncAction({
+            action: 'selectedPositionId',
+            track: () => this.gridModel.selectedRecord,
+            valueFn: (record) => record.id
+        });
     }
 
     async initAsync({openFinWindowModel}) {
