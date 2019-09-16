@@ -11,7 +11,7 @@ import {SyncSupport, sync} from '@xh/hoist/openfin';
 @SyncSupport('positions')
 export class PositionTradesModel {
 
-    @bindable @sync.with('selectedPositionIdChanged') positionId;
+    @bindable @sync.with('selectedPositionId') positionId;
 
     @bindable isLinked = false;
 

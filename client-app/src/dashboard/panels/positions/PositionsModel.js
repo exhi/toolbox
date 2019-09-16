@@ -14,7 +14,7 @@ import * as Notifications from 'openfin-notifications';
 import {wait} from '@xh/hoist/promise';
 import {throwIf} from '@xh/hoist/utils/js';
 import moment from 'moment';
-import {SyncSupport, sync} from '@xh/hoist/openfin';
+import {SyncSupport} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
@@ -192,9 +192,6 @@ export class PositionsModel {
 
     @bindable.ref channel;
 
-    @bindable @sync
-    selectedPositionId;
-
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
@@ -205,25 +202,26 @@ export class PositionsModel {
         });
 
         /*
-        this.addReaction({
-            track: () => [this.channel, this.gridModel.selectedRecord],
-            run: ([channel, record]) => {
-                if (!channel) return;
+         this.addReaction({
+         track: () => [this.channel, this.gridModel.selectedRecord],
+         run: ([channel, record]) => {
+         if (!channel) return;
 
-                const payload = {positionId: record ? record.id : null};
-                console.debug('Publishing position-selected action with payload', payload);
-                channel.publish('position-selected', JSON.stringify(payload));
-            }
-        });
+         const payload = {positionId: record ? record.id : null};
+         console.debug('Publishing position-selected action with payload', payload);
+         channel.publish('position-selected', JSON.stringify(payload));
+         }
+         });
          */
 
-        this.addReaction({
-            track: () => this.gridModel.selectedRecord,
-            run: (record) => this.setSelectedPositionId(record.id)
-        });
-
-        console.debug('Initting provider');
-        this.initAsProviderAsync();
+        this.initAsProviderAsync()
+            .then(() => {
+                this.addSyncAction({
+                    action: 'selectedPositionId',
+                    track: () => this.gridModel.selectedRecord,
+                    valueFn: (record) => record.id
+                });
+            });
     }
 
     async initAsync({openFinWindowModel}) {
@@ -240,9 +238,9 @@ export class PositionsModel {
             });
 
             /*
-            this.channel.onConnection((identity, payload) => {
-                console.debug('positions-grid channel connection from', identity, payload);
-            });
+             this.channel.onConnection((identity, payload) => {
+             console.debug('positions-grid channel connection from', identity, payload);
+             });
              */
         }
     }
