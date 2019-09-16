@@ -3,15 +3,33 @@ import {createTradesGridModel} from '../../common/Trades';
 import {convertIconToSvg, Icon} from '@xh/hoist/icon';
 import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
 import {runInAction} from '@xh/hoist/mobx';
+import {SyncModel} from '@xh/hoist/openfin';
+import {managed} from '@xh/hoist/core/mixins';
 
 @HoistModel
 @LoadSupport
 export class TradesModel {
 
+    @managed
     gridModel = createTradesGridModel();
 
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
+
+    @managed
+    syncModel = new SyncModel({
+        syncId: 'trades',
+        isProvider: true,
+        properties: [
+            {
+                name: 'symbol',
+                valueFn: () => {
+                    const {selectedRecord} = this.gridModel;
+                    return selectedRecord ? selectedRecord.symbol : null;
+                }
+            }
+        ]
+    });
 
     async initAsync({openFinWindowModel}) {
         if (isRunningInOpenFin()) {

@@ -4,10 +4,13 @@ import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {chart} from '@xh/hoist/desktop/cmp/chart';
 import {TradingVolumeChartModel} from './TradingVolumeChartModel';
 import {OpenFinWindowContext} from '../../../openfin/window';
+import {frame} from '@xh/hoist/cmp/layout';
+import {isNil} from 'lodash';
+import {mask} from '@xh/hoist/desktop/cmp/mask';
 
 export const tradingVolumeChartPanel = hoistElemFactory(() => {
     const model = useLocalModel(TradingVolumeChartModel),
-        {chartModel, loadModel} = model,
+        {chartModel, loadModel, symbol} = model,
         openFinWindowModel = useContext(OpenFinWindowContext);
 
     useEffect(() => {
@@ -15,7 +18,7 @@ export const tradingVolumeChartPanel = hoistElemFactory(() => {
     }, [model, openFinWindowModel]);
 
     return panel({
-        item: chart({model: chartModel}),
+        item: isNil(symbol) ? frame(mask({isDisplayed: true, message: 'No Symbol'})) : chart({model: chartModel}),
         mask: loadModel
     });
 });

@@ -6,6 +6,7 @@ import {Highcharts} from '@xh/hoist/kit/highcharts';
 import {isNil} from 'lodash';
 import {convertIconToSvg, Icon} from '@xh/hoist/icon';
 import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
+import {SyncModel} from '@xh/hoist/openfin';
 
 @HoistModel
 @LoadSupport
@@ -78,6 +79,17 @@ export class TradingVolumeChartModel {
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
+    @managed
+    syncModel = new SyncModel({
+        syncId: 'trades',
+        target: this,
+        properties: [
+            {
+                name: 'symbol'
+            }
+        ]
+    });
+
     constructor() {
         this.addReaction({
             track: () => XH.routerState,
@@ -110,6 +122,10 @@ export class TradingVolumeChartModel {
 
     async doLoadAsync(loadSpec) {
         const {symbol} = this;
+
+        // Make sure the route params match the current state of the widget
+        XH.router.navigate('default.tradingVolume', {symbol}, {replace: true});
+
         if (isNil(symbol)) {
             this.chartModel.setSeries([]);
             return;
