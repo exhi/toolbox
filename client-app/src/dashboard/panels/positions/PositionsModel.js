@@ -195,10 +195,6 @@ export class PositionsModel {
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
-    @bindable
-    @sync
-    selectedPositionId;
-
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
