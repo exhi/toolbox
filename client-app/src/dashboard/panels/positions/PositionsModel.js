@@ -195,18 +195,16 @@ export class PositionsModel {
     /** @member {OpenFinWindowModel} */
     openFinWindowModel;
 
+    @sync
+    get selectedPositionId() {
+        const {selectedRecord} = this.gridModel;
+        return selectedRecord ? selectedRecord.id : null;
+    }
+
     constructor() {
         this.addReaction({
             track: () => this.dimChooserModel.value,
             run: () => this.loadAsync()
-        });
-    }
-
-    onSyncReady() {
-        this.addSyncAction({
-            action: 'selectedPositionId',
-            track: () => this.gridModel.selectedRecord,
-            valueFn: (record) => record.id
         });
     }
 
