@@ -85,6 +85,9 @@ export class LauncherModel {
         /** @type {Workspace} */
         const layoutConfig = XH.getPref('dashboardLayoutConfig');
         if (!isEmpty(layoutConfig)) {
+            const windows = await getChildWindowsAsync();
+            windows.forEach(wnd => wnd.close());
+
             // The workspace we are restoring here is actually a multi-app workspace. There is no
             // way to restore an app workspace on its own.
             const result = await workspaces.restore(layoutConfig);

@@ -14,7 +14,7 @@ import {OpenFinWindowModel} from '../../../openfin/window';
 export const positionsPanel = hoistCmp.factory({
     model: creates(PositionsModel),
     className: 'positions-panel',
-    render: ({model}) => {
+    render: ({model, className}) => {
         const {gridModel, dimChooserModel, loadModel, loadTimestamp} = model,
             openFinWindowModel = useContextModel(OpenFinWindowModel);
 
@@ -23,6 +23,7 @@ export const positionsPanel = hoistCmp.factory({
         }, [model, openFinWindowModel]);
 
         return panel({
+            className,
             item: grid({model: gridModel}),
             bbar: [
                 dimensionChooser({model: dimChooserModel}),

@@ -4,6 +4,7 @@ import {Icon} from '@xh/hoist/icon/Icon';
 import {button, buttonGroup} from '@xh/hoist/desktop/cmp/button';
 import {vframe, hbox, filler, box} from '@xh/hoist/cmp/layout';
 import {showDevTools, closeWindow} from '@xh/hoist/openfin/utils';
+import {castArray} from 'lodash';
 
 import {WindowState, OpenFinWindowModel} from './OpenFinWindowModel';
 import './OpenFinWindow.scss';
@@ -11,8 +12,10 @@ import './OpenFinWindow.scss';
 export const openFinWindow = hoistCmp.factory({
     model: creates(OpenFinWindowModel),
     className: 'openfin-window',
-    render: ({model, children}) => {
+    render: ({model, className, children = []}) => {
+        children = castArray(children);
         return vframe({
+            className,
             items: [
                 titleBar({model}),
                 ...children
@@ -24,7 +27,7 @@ export const openFinWindow = hoistCmp.factory({
 const titleBar = hoistCmp.factory({
     model: uses(OpenFinWindowModel),
     className: 'title-bar',
-    render: ({model}) => {
+    render: ({model, className}) => {
         const {isDocked, windowState, title, icon} = model;
 
         if (model.isInTabGroup) return null;
@@ -32,6 +35,7 @@ const titleBar = hoistCmp.factory({
         console.debug('Window State:', windowState);
 
         return hbox({
+            className,
             items: [
                 icon && icon.startsWith('<svg') ?
                     <div dangerouslySetInnerHTML={{__html: icon}}/> :
