@@ -3,7 +3,7 @@ import {GridModel} from '@xh/hoist/cmp/grid';
 import {fmtNumberTooltip, millionsRenderer, numberRenderer} from '@xh/hoist/format';
 import {clamp} from 'lodash';
 import {DimensionChooserModel} from '@xh/hoist/cmp/dimensionchooser';
-import {managed} from '@xh/hoist/core/mixins';
+import {managed, RouteSupport} from '@xh/hoist/core/mixins';
 import {bindable, runInAction} from '@xh/hoist/mobx';
 import {Icon, convertIconToSvg} from '@xh/hoist/icon/Icon';
 import {box} from '@xh/hoist/cmp/layout';
@@ -19,6 +19,7 @@ import {SyncSupport, sync} from '@xh/hoist/openfin';
 @HoistModel
 @LoadSupport
 @SyncSupport('positions', true)
+@RouteSupport({name: 'default.positions'})
 export class PositionsModel {
 
     dimChooserModel = new DimensionChooserModel({

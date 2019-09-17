@@ -1,4 +1,4 @@
-import {HoistModel, managed, XH, LoadSupport} from '@xh/hoist/core';
+import {HoistModel, managed, XH, LoadSupport, RouteSupport} from '@xh/hoist/core';
 import {bindable} from '@xh/hoist/mobx';
 import {ChartModel} from '@xh/hoist/desktop/cmp/chart';
 import {fmtDate} from '@xh/hoist/format';
@@ -7,12 +7,14 @@ import {isNil} from 'lodash';
 import {convertIconToSvg, Icon} from '@xh/hoist/icon';
 import {isRunningInOpenFin} from '@xh/hoist/openfin/utils';
 import {SyncSupport, sync} from '@xh/hoist/openfin';
+import {routeParam} from '@xh/hoist/core/mixins';
 
 @HoistModel
 @LoadSupport
 @SyncSupport('trades')
+@RouteSupport({name: 'default.tradingVolume'})
 export class TradingVolumeChartModel {
-    @bindable @sync symbol;
+    @bindable @sync @routeParam symbol;
 
     @managed
     chartModel = new ChartModel({

@@ -1,4 +1,4 @@
-import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
+import {HoistModel, LoadSupport, XH, RouteSupport} from '@xh/hoist/core';
 import {
     getChildWindowsAsync,
     createWindowAsync,
@@ -15,6 +15,7 @@ import moment from 'moment';
 
 @HoistModel
 @LoadSupport
+@RouteSupport({name: 'default.launcher'})
 export class LauncherModel {
 
     @bindable.ref windows = [];
