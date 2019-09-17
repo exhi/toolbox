@@ -1,35 +1,36 @@
-import {useContext, useEffect} from 'react';
-import {useLocalModel, hoistElemFactory} from '@xh/hoist/core';
+import {useEffect} from 'react';
+import {hoistCmp, creates, useContextModel} from '@xh/hoist/core';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {PositionsModel} from './PositionsModel';
 import {grid} from '@xh/hoist/cmp/grid';
 import {dimensionChooser} from '@xh/hoist/desktop/cmp/dimensionchooser';
 import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {filler} from '@xh/hoist/cmp/layout';
-import {getClassName} from '@xh/hoist/utils/react';
-import {OpenFinWindowContext} from '../../../openfin/window';
 import {toolbarSeparator} from '@xh/hoist/desktop/cmp/toolbar';
 
 import './PositionsPanel.scss';
+import {OpenFinWindowModel} from '../../../openfin/window';
 
-export const positionsPanel = hoistElemFactory(props => {
-    const model = useLocalModel(PositionsModel),
-        {gridModel, dimChooserModel, loadModel, loadTimestamp} = model,
-        openFinWindowModel = useContext(OpenFinWindowContext);
+export const positionsPanel = hoistCmp.factory({
+    model: creates(PositionsModel),
+    className: 'positions-panel',
+    render: ({model}) => {
+        const {gridModel, dimChooserModel, loadModel, loadTimestamp} = model,
+            openFinWindowModel = useContextModel(OpenFinWindowModel);
 
-    useEffect(() => {
-        model.initAsync({openFinWindowModel});
-    }, [model, openFinWindowModel]);
+        useEffect(() => {
+            model.initAsync({openFinWindowModel});
+        }, [model, openFinWindowModel]);
 
-    return panel({
-        className: getClassName('positions-panel', props),
-        item: grid({model: gridModel}),
-        bbar: [
-            dimensionChooser({model: dimChooserModel}),
-            toolbarSeparator(),
-            filler(),
-            relativeTimestamp({timestamp: loadTimestamp})
-        ],
-        mask: loadModel
-    });
+        return panel({
+            item: grid({model: gridModel}),
+            bbar: [
+                dimensionChooser({model: dimChooserModel}),
+                toolbarSeparator(),
+                filler(),
+                relativeTimestamp({timestamp: loadTimestamp})
+            ],
+            mask: loadModel
+        });
+    }
 });

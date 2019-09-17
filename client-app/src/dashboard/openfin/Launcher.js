@@ -1,4 +1,3 @@
-import {hoistElemFactory} from '@xh/hoist/core';
 import {appBar, appBarSeparator} from '@xh/hoist/desktop/cmp/appbar';
 import {Icon} from '@xh/hoist/icon';
 import {ScreenEdge, useDockWindow} from 'openfin-react-hooks';
@@ -10,10 +9,11 @@ import {
 } from '@xh/hoist/openfin/utils';
 import {button} from '@xh/hoist/desktop/cmp/button';
 import {LauncherModel} from './LauncherModel';
-import {useLocalModel} from '@xh/hoist/core/hooks';
+import {creates, hoistCmp} from '@xh/hoist/core';
 
-export const launcher = hoistElemFactory(
-    () => {
+export const launcher = hoistCmp.factory({
+    model: creates(LauncherModel),
+    render: ({model}) => {
         if (!isRunningInOpenFin()) {
             return 'Not running in OpenFin!';
         }
@@ -25,8 +25,6 @@ export const launcher = hoistElemFactory(
             false,
             {dockedHeight: 42}  // TODO: Magic number!
         );
-
-        const model = useLocalModel(LauncherModel);
 
         return appBar({
             title: 'Hoist + OpenFin',
@@ -84,4 +82,5 @@ export const launcher = hoistElemFactory(
                 })
             ]
         });
-    });
+    }
+});
