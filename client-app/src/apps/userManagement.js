@@ -6,9 +6,9 @@ import {AppModel} from '../userManagement/AppModel';
 XH.renderApp({
     clientAppCode: 'user-management',
     clientAppName: 'User Management',
-    componentClass: App,
-    modelClass: AppModel,
-    containerClass: AppContainer,
+    component: App,
+    model: AppModel,
+    container: AppContainer,
     isMobile: false,
     isSSO: false,
     webSocketsEnabled: true,

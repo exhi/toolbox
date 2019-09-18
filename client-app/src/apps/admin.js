@@ -7,9 +7,9 @@ import {AppContainer} from '@xh/hoist/desktop/appcontainer';
 XH.renderApp({
     clientAppCode: 'admin',
     clientAppName: 'Toolbox Admin',
-    componentClass: App,
-    modelClass: AppModel,
-    containerClass: AppContainer,
+    component: App,
+    model: AppModel,
+    container: AppContainer,
     isMobile: false,
     isSSO: false,
     webSocketsEnabled: true,

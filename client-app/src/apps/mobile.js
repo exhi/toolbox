@@ -6,9 +6,9 @@ import {AppContainer} from '@xh/hoist/mobile/appcontainer';
 XH.renderApp({
     clientAppCode: 'mobile',
     clientAppName: 'Toolbox Mobile',
-    componentClass: App,
-    modelClass: AppModel,
-    containerClass: AppContainer,
+    component: App,
+    model: AppModel,
+    container: AppContainer,
     isMobile: true,
     isSSO: false,
     checkAccess: 'APP_READER',

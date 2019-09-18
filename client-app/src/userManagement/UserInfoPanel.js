@@ -53,7 +53,7 @@ const userInfo = hoistCmp.factory({
                 ),
                 vframe(
                     span({className: 'email', item: email}),
-                    span({className: 'phone', item: phone}),
+                    span({className: 'phone', item: phone})
 
                 )
             ]

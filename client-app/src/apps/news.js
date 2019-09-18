@@ -6,9 +6,9 @@ import {AppContainer} from '@xh/hoist/desktop/appcontainer';
 XH.renderApp({
     clientAppCode: 'news',
     clientAppName: 'News Feed',
-    componentClass: App,
-    modelClass: AppModel,
-    containerClass: AppContainer,
+    component: App,
+    model: AppModel,
+    container: AppContainer,
     isMobile: false,
     isSSO: false,
     idleDetectionEnabled: true,
