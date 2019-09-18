@@ -6,7 +6,7 @@ import {UserInfoModel} from './UserInfoModel';
 import {mask} from '@xh/hoist/desktop/cmp/mask';
 import {vframe, hframe, span} from '@xh/hoist/cmp/layout';
 
-export const userInfoPanel = hoistCmp.factory({
+export const [UserInfoPanel, userInfoPanel] = hoistCmp.withFactory({
     model: uses(UserInfoModel, {createDefault: true}),
     render({model}) {
         const {loadModel} = model;

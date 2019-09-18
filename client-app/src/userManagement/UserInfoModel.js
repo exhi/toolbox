@@ -1,11 +1,13 @@
 import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
 import {bindable} from '@xh/hoist/mobx';
 import {isNil} from 'lodash';
+import {RouteSupport, routeParam} from '@xh/hoist/core/mixins';
 
 @HoistModel
 @LoadSupport
+@RouteSupport({name: 'default.userInfo'})
 export class UserInfoModel {
-    @bindable userId;
+    @bindable @routeParam userId;
     @bindable userInfo;
 
     constructor() {

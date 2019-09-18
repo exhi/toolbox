@@ -1,10 +1,10 @@
 import {hoistCmp, XH} from '@xh/hoist/core';
 import {AppModel} from './AppModel';
 import {uses} from '@xh/hoist/core/modelspec';
-import {userListPanel} from './UserListPanel';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {vframe} from '@xh/hoist/cmp/layout';
 import {Icon} from '@xh/hoist/icon/Icon';
+import {tabContainer} from '@xh/hoist/cmp/tab';
 
 export const App = hoistCmp({
     model: uses(AppModel),
@@ -14,6 +14,6 @@ export const App = hoistCmp({
             title: XH.clientAppName,
             hideRefreshButton: true
         }),
-        userListPanel()
+        tabContainer()
     )
 });
