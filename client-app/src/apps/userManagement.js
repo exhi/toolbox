@@ -1,11 +1,11 @@
 import {XH} from '@xh/hoist/core';
 import {AppContainer} from '@xh/hoist/desktop/appcontainer';
-import {App} from '../master-detail/App';
-import {AppModel} from '../master-detail/AppModel';
+import {App} from '../userManagement/App';
+import {AppModel} from '../userManagement/AppModel';
 
 XH.renderApp({
-    clientAppCode: 'dashboard',
-    clientAppName: 'Dashboard',
+    clientAppCode: 'user-management',
+    clientAppName: 'User Management',
     componentClass: App,
     modelClass: AppModel,
     containerClass: AppContainer,

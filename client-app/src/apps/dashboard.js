@@ -3,7 +3,7 @@ import {AppContainer} from '@xh/hoist/desktop/appcontainer';
 import {App} from '../dashboard/App';
 import {AppModel} from '../dashboard/AppModel';
 import {isRunningInOpenFin, getWindow} from '@xh/hoist/openfin/utils';
-import {ChildWindowAppContainer} from '@xh/hoist/openfin/appcontainer';
+import {ChildAppContainer} from '@xh/hoist/openfin/appcontainer';
 
 XH.renderApp({
     clientAppCode: 'dashboard',
@@ -22,7 +22,7 @@ XH.renderApp({
 function getContainerClass() {
     if (isRunningInOpenFin()) {
         const isMainWnd = getWindow().isMainWindow();
-        return isMainWnd ? AppContainer : ChildWindowAppContainer;
+        return isMainWnd ? AppContainer : ChildAppContainer;
     }
 
     return AppContainer;
