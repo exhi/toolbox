@@ -11,8 +11,7 @@ export const App = hoistCmp({
     render: () => vframe(
         appBar({
             icon: Icon.user({size: '2x'}),
-            title: XH.clientAppName,
-            hideRefreshButton: true
+            title: XH.clientAppName
         }),
         tabContainer()
     )

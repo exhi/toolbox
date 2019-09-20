@@ -4,6 +4,8 @@ import {managed} from '@xh/hoist/core/mixins';
 import {UserInfoModel} from './UserInfoModel';
 import {actionCol, calcActionColWidth} from '@xh/hoist/desktop/cmp/grid/columns';
 import {Icon} from '@xh/hoist/icon/Icon';
+import {ChildContainer} from '@xh/hoist/desktop/appcontainer/child/ChildContainer';
+import {UserInfoPanel} from './UserInfoPanel';
 
 @HoistModel
 @LoadSupport
@@ -35,7 +37,12 @@ export class UserListModel {
                         icon: Icon.openExternal(),
                         intent: 'primary',
                         actionFn: ({record}) => {
-                            window.open(XH.router.buildUrl('default.userInfo', {userId: record.id}), '_blank');
+                            // window.open(`/userDetails?userId=${record.id}`, '_blank', 'height=300,width=300,menubar=no');
+                            XH.openChildWindow({
+                                container: ChildContainer,
+                                component: UserInfoPanel,
+                                model: UserInfoModel
+                            });
                         }
                     }
                 ]
