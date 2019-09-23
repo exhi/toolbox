@@ -1,4 +1,4 @@
-import {HoistModel, LoadSupport, XH, RouteSupport} from '@xh/hoist/core';
+import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
 import {GridModel, emptyFlexCol} from '@xh/hoist/cmp/grid';
 import {managed} from '@xh/hoist/core/mixins';
 import {UserInfoModel} from './UserInfoModel';
@@ -9,7 +9,6 @@ import {UserInfoPanel} from './UserInfoPanel';
 
 @HoistModel
 @LoadSupport
-@RouteSupport({name: 'default.users'})
 export class UserListModel {
     @managed
     gridModel = new GridModel({
@@ -31,14 +30,21 @@ export class UserListModel {
             {
                 ...actionCol,
                 actionsShowOnHoverOnly: true,
-                width: calcActionColWidth(1),
+                width: calcActionColWidth(2),
                 actions: [
                     {
                         icon: Icon.openExternal(),
                         intent: 'primary',
                         actionFn: ({record}) => {
                             // window.open(`/userDetails?userId=${record.id}`, '_blank', 'height=300,width=300,menubar=no');
-                            XH.openChildWindow({
+                            XH.openChildWindow(XH.router.buildUrl('userInfo', {userId: record.id}));
+                        }
+                    },
+                    {
+                        icon: Icon.openExternal(),
+                        intent: 'warning',
+                        actionFn: ({record}) => {
+                            XH.openSlaveWindow({
                                 container: ChildContainer,
                                 component: UserInfoPanel,
                                 model: UserInfoModel
@@ -48,10 +54,10 @@ export class UserListModel {
                 ]
             }
         ]
-    });
+    })
 
     @managed
-    detailModel = new UserInfoModel();
+    detailModel = new UserInfoModel()
 
     constructor() {
         this.addReaction({

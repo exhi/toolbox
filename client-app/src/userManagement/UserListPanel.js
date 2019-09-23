@@ -7,14 +7,20 @@ import {grid} from '@xh/hoist/cmp/grid';
 import {userInfoPanel} from './UserInfoPanel';
 import {Icon} from '@xh/hoist/icon/Icon';
 
-export const UserListPanel = hoistCmp({
+export const userListPanel = hoistCmp.factory({
     model: creates(UserListModel),
     render: ({model}) => panel({
         icon: Icon.users(),
         title: 'Users',
         item: vframe(
             grid(),
-            userInfoPanel()
+            panel({
+                model: {
+                    side: 'bottom',
+                    defaultSize: 400
+                },
+                item: userInfoPanel()
+            })
         ),
         mask: model.loadModel
     })

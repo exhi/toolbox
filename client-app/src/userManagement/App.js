@@ -4,7 +4,7 @@ import {uses} from '@xh/hoist/core/modelspec';
 import {appBar} from '@xh/hoist/desktop/cmp/appbar';
 import {vframe} from '@xh/hoist/cmp/layout';
 import {Icon} from '@xh/hoist/icon/Icon';
-import {tabContainer} from '@xh/hoist/cmp/tab';
+import {userListPanel} from './UserListPanel';
 
 export const App = hoistCmp({
     model: uses(AppModel),
@@ -13,6 +13,6 @@ export const App = hoistCmp({
             icon: Icon.user({size: '2x'}),
             title: XH.clientAppName
         }),
-        tabContainer()
+        userListPanel()
     )
 });

@@ -5,7 +5,7 @@ import {RouteSupport, routeParam} from '@xh/hoist/core/mixins';
 
 @HoistModel
 @LoadSupport
-@RouteSupport({name: 'default.userInfo'})
+@RouteSupport({name: 'userInfo'})
 export class UserInfoModel {
     @bindable @routeParam userId;
     @bindable userInfo;

@@ -15,10 +15,6 @@ export const [UserInfoPanel, userInfoPanel] = hoistCmp.withFactory({
             title: 'User Info',
             compactHeader: true,
             item: userInfo(),
-            model: {
-                defaultSize: 400,
-                side: 'bottom'
-            },
             mask: loadModel
         });
     }

@@ -1,14 +1,14 @@
 import {XH} from '@xh/hoist/core';
+import {UserInfoModel} from '../userManagement/UserInfoModel';
+import {UserInfoPanel} from '../userManagement/UserInfoPanel';
 import {AppContainer} from '@xh/hoist/desktop/appcontainer';
-import {App} from '../userManagement/App';
-import {AppModel} from '../userManagement/AppModel';
 import {UserService} from '../userManagement/UserService';
 
 XH.renderApp({
-    clientAppCode: 'user-management',
-    clientAppName: 'User Management',
-    component: App,
-    model: AppModel,
+    clientAppCode: 'user-info',
+    clientAppName: 'User Info',
+    component: UserInfoPanel,
+    model: UserInfoModel,
     container: AppContainer,
     isMobile: false,
     isSSO: false,
