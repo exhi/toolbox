@@ -5,7 +5,7 @@ import {filler} from '@xh/hoist/cmp/layout';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {refreshButton} from '@xh/hoist/desktop/cmp/button';
 import {storeFilterField} from '@xh/hoist/desktop/cmp/store';
-import {dataView, DataViewModel} from '@xh/hoist/desktop/cmp/dataview';
+import {dataView, DataViewModel} from '@xh/hoist/cmp/dataview';
 
 import {wrapper} from '../../common/Wrapper';
 import {dataViewItem} from './DataViewItem';
@@ -53,10 +53,11 @@ class Model {
 
     @managed
     dataViewModel = new DataViewModel({
+        sortBy: 'name',
         store: {
             fields: ['name', 'city', 'value']
         },
-        sortBy: {colId: 'name', sort: 'asc'},
+        sortBy: 'name',
         emptyText: 'No companies found...',
         itemRenderer: (v, {record}) => dataViewItem({record})
     });

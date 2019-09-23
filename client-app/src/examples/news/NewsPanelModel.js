@@ -1,7 +1,7 @@
 import {XH, HoistModel, managed, LoadSupport} from '@xh/hoist/core';
 import {action, observable, bindable} from '@xh/hoist/mobx';
 import {uniq, isEmpty} from 'lodash';
-import {DataViewModel} from '@xh/hoist/desktop/cmp/dataview';
+import {DataViewModel} from '@xh/hoist/cmp/dataview';
 import {newsPanelItem} from './NewsPanelItem';
 import {fmtCompactDate} from '@xh/hoist/format';
 
@@ -13,6 +13,7 @@ export class NewsPanelModel {
 
     @managed
     viewModel = new DataViewModel({
+        sortBy: 'published',
         store: {
             fields: ['title', 'source', 'text', 'url', 'imageUrl', 'author', 'published'],
             idSpec: 'url'
