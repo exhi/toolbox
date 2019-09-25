@@ -1,15 +1,20 @@
-import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
-import {GridModel, emptyFlexCol} from '@xh/hoist/cmp/grid';
+import {HoistModel, LoadSupport, XH, RouteSupport} from '@xh/hoist/core';
+import {GridModel} from '@xh/hoist/cmp/grid';
 import {managed} from '@xh/hoist/core/mixins';
-import {UserInfoModel} from './UserInfoModel';
 import {actionCol, calcActionColWidth} from '@xh/hoist/desktop/cmp/grid/columns';
 import {Icon} from '@xh/hoist/icon/Icon';
 import {ChildContainer} from '@xh/hoist/desktop/appcontainer/child/ChildContainer';
-import {UserInfoPanel} from './UserInfoPanel';
+import {UserInfoPanel} from '../../cmp/userinfo/UserInfoPanel';
+import {UserInfoModel} from '../../cmp/userinfo/UserInfoModel';
+import {bindable} from '@xh/hoist/mobx';
+import {WindowModel} from '@xh/hoist/window/WindowModel';
 
 @HoistModel
 @LoadSupport
+@RouteSupport({name: 'userManagement.users'})
 export class UserListModel {
+    childWindowModel = new WindowModel();
+
     @managed
     gridModel = new GridModel({
         colDefaults: {
@@ -24,9 +29,9 @@ export class UserListModel {
             },
             {
                 field: 'email',
-                width: 300
+                minWidth: 200,
+                flex: true
             },
-            emptyFlexCol,
             {
                 ...actionCol,
                 actionsShowOnHoverOnly: true,
@@ -35,9 +40,12 @@ export class UserListModel {
                     {
                         icon: Icon.openExternal(),
                         intent: 'primary',
-                        actionFn: ({record}) => {
+                        actionFn: async ({record}) => {
                             // window.open(`/userDetails?userId=${record.id}`, '_blank', 'height=300,width=300,menubar=no');
-                            XH.openChildWindow(XH.router.buildUrl('userInfo', {userId: record.id}));
+                            this.childWindowModel.open({
+                                title: 'User Info',
+                                url: this.getUserInfoUrl(record)
+                            });
                         }
                     },
                     {
@@ -54,22 +62,40 @@ export class UserListModel {
                 ]
             }
         ]
-    })
+    });
 
     @managed
-    detailModel = new UserInfoModel()
+    detailModel = new UserInfoModel();
+
+    @bindable.ref
+    fetchUsersFn = async () => XH.userService.listUsersAsync();
 
     constructor() {
+
         this.addReaction({
             track: () => this.gridModel.selectedRecord,
-            run: (record) => this.detailModel.setUserId(record ? record.id : null)
+            run: (record) => {
+                this.detailModel.setUserId(record ? record.id : null);
+                if (!this.childWindowModel.isClosed) {
+                    this.childWindowModel.navigate('userInfo', {userId: record.id}, {replace: true});
+                    this.childWindowModel.setTitle(`User Info - ${record.name}`);
+                }
+            }
         });
 
-        this.loadAsync();
+        this.addReaction({
+            track: () => this.fetchUsersFn,
+            run: () => this.loadAsync()
+        });
+    }
+
+    getUserInfoUrl(record) {
+        return XH.router.buildUrl('userInfo', {userId: record.id});
     }
 
     async doLoadAsync() {
-        const data = await XH.userService.listUsersAsync();
+        const data = await this.fetchUsersFn();
+        console.log('Fetched users', data);
         this.gridModel.loadData(data);
     }
 }

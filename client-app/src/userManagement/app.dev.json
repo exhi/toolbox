@@ -1,0 +1,38 @@
+{
+    "devtools_port": 9090,
+    "startup_app": {
+        "name": "User Management",
+        "description": "Application for managing users and roles",
+        "url": "http://localhost:3000/userManagement",
+        "icon": "http://localhost:3000/public/trayicon.png",
+        "uuid": "xh-user-management",
+        "autoShow": true,
+        "frame": true,
+        "showTaskbarIcon": true
+    },
+    "runtime": {
+        "arguments": "--enable-aggressive-domstorage-flushing",
+        "version": "stable"
+    },
+    "services": [
+        {
+            "name": "layouts",
+            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/1.0.6/app.json",
+            "config": {
+                "tabstrip": {
+                    "url": "http://localhost:3000/openfin-tabstrip",
+                    "height": 42
+                }
+            }
+        },
+        {
+            "name": "notifications"
+        }
+    ],
+    "shortcut": {
+        "company": "Extremely Heavy Industries",
+        "description": "User Management",
+        "name": "User Management"
+    },
+    "splashScreenImage": "http://localhost:3000/public/xh.png"
+}

@@ -1,8 +1,8 @@
 import {XH} from '@xh/hoist/core';
-import {UserInfoModel} from '../userManagement/UserInfoModel';
-import {UserInfoPanel} from '../userManagement/UserInfoPanel';
 import {AppContainer} from '@xh/hoist/desktop/appcontainer';
 import {UserService} from '../userManagement/UserService';
+import {UserInfoPanel} from '../userManagement/cmp/userinfo/UserInfoPanel';
+import {UserInfoModel} from '../userManagement/cmp/userinfo/UserInfoModel';
 
 XH.renderApp({
     clientAppCode: 'user-info',

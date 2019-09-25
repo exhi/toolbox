@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "@xh/hoist": "^28.0.0-SNAPSHOT",
+    "openfin-layouts": "^1.1.0",
+    "openfin-notifications": "^0.11.0",
+    "openfin-react-hooks": "^1.1.1",
     "react": "~16.8.6",
     "react-dom": "~16.8.6",
     "react-dom-factories": "~1.0.2"

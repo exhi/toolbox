@@ -1,20 +1,30 @@
 import {HoistService} from '@xh/hoist/core';
 import {resolve} from '@xh/hoist/promise';
-import {pick} from 'lodash';
+import {pick, toNumber} from 'lodash';
 
 @HoistService
 export class UserService {
     async listUsersAsync() {
-        return resolve(data.map(it => pick(it, ['id', 'name', 'username', 'email'])));
+        return resolve(userData.map(it => pick(it, ['id', 'name', 'username', 'email'])));
     }
 
     async getUserAsync(userId) {
-        return resolve(data.find(it => it.id == userId));
+        return resolve(userData.find(it => it.id == userId));
+    }
+
+    async listRolesAsync() {
+        return resolve(roleData);
+    }
+
+    async getUsersWithRoleAsync(roleId) {
+        const users = userData.filter(it => it.roles.includes(toNumber(roleId)));
+        console.log('Getting users with role', roleId, users);
+        return resolve(users);
     }
 }
 
 // https://jsonplaceholder.typicode.com/users
-const data = [
+const userData = [
     {
         'id': 1,
         'name': 'Leanne Graham',
@@ -36,7 +46,8 @@ const data = [
             'name': 'Romaguera-Crona',
             'catchPhrase': 'Multi-layered client-server neural-net',
             'bs': 'harness real-time e-markets'
-        }
+        },
+        roles: [0]
     },
     {
         'id': 2,
@@ -59,7 +70,8 @@ const data = [
             'name': 'Deckow-Crist',
             'catchPhrase': 'Proactive didactic contingency',
             'bs': 'synergize scalable supply-chains'
-        }
+        },
+        roles: [0, 1]
     },
     {
         'id': 3,
@@ -82,7 +94,8 @@ const data = [
             'name': 'Romaguera-Jacobson',
             'catchPhrase': 'Face to face bifurcated interface',
             'bs': 'e-enable strategic applications'
-        }
+        },
+        roles: [1]
     },
     {
         'id': 4,
@@ -105,7 +118,8 @@ const data = [
             'name': 'Robel-Corkery',
             'catchPhrase': 'Multi-tiered zero tolerance productivity',
             'bs': 'transition cutting-edge web services'
-        }
+        },
+        roles: [0]
     },
     {
         'id': 5,
@@ -128,7 +142,8 @@ const data = [
             'name': 'Keebler LLC',
             'catchPhrase': 'User-centric fault-tolerant solution',
             'bs': 'revolutionize end-to-end systems'
-        }
+        },
+        roles: [0]
     },
     {
         'id': 6,
@@ -151,7 +166,8 @@ const data = [
             'name': 'Considine-Lockman',
             'catchPhrase': 'Synchronised bottom-line interface',
             'bs': 'e-enable innovative applications'
-        }
+        },
+        roles: [0]
     },
     {
         'id': 7,
@@ -174,7 +190,8 @@ const data = [
             'name': 'Johns Group',
             'catchPhrase': 'Configurable multimedia task-force',
             'bs': 'generate enterprise e-tailers'
-        }
+        },
+        roles: [0]
     },
     {
         'id': 8,
@@ -197,7 +214,8 @@ const data = [
             'name': 'Abernathy Group',
             'catchPhrase': 'Implemented secondary concept',
             'bs': 'e-enable extensible e-tailers'
-        }
+        },
+        roles: [0, 1]
     },
     {
         'id': 9,
@@ -220,7 +238,8 @@ const data = [
             'name': 'Yost and Sons',
             'catchPhrase': 'Switchable contextually-based project',
             'bs': 'aggregate real-time technologies'
-        }
+        },
+        roles: [2]
     },
     {
         'id': 10,
@@ -243,6 +262,25 @@ const data = [
             'name': 'Hoeger LLC',
             'catchPhrase': 'Centralized empowering task-force',
             'bs': 'target end-to-end models'
-        }
+        },
+        roles: [0, 1, 2]
+    }
+];
+
+const roleData = [
+    {
+        id: 0,
+        name: 'USER',
+        description: 'Basic user role'
+    },
+    {
+        id: 1,
+        name: 'MANAGER',
+        description: 'More power than a user'
+    },
+    {
+        id: 2,
+        name: 'ADMIN',
+        description: 'Ultimate Power'
     }
 ];
