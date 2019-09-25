@@ -42,7 +42,8 @@ export class TreeGridPageModel {
                 headerName: 'Name',
                 field: 'name',
                 isTreeColumn: true,
-                flex: true
+                flex: true,
+                tooltip: () => 'Hello World!'
             },
             {
                 headerName: 'P&L',

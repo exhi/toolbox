@@ -14,14 +14,19 @@ export const [UserListPanel, userListPanel] = hoistCmp.withFactory({
         title: 'Users',
         item: vframe(
             grid(),
-            panel({
-                model: {
-                    side: 'bottom',
-                    defaultSize: 400
-                },
-                item: userInfoPanel()
-            })
+            infoPanel()
         ),
         mask: model.loadModel
     })
 });
+
+const infoPanel = hoistCmp.factory(
+    ({model}) => panel({
+        omit: model.childWindowModel.isOpen,
+        model: {
+            side: 'bottom',
+            defaultSize: 400
+        },
+        item: userInfoPanel()
+    })
+);

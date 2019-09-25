@@ -7,13 +7,13 @@ import {ChildContainer} from '@xh/hoist/desktop/appcontainer/child/ChildContaine
 import {UserInfoPanel} from '../../cmp/userinfo/UserInfoPanel';
 import {UserInfoModel} from '../../cmp/userinfo/UserInfoModel';
 import {bindable} from '@xh/hoist/mobx';
-import {WindowModel} from '@xh/hoist/window/WindowModel';
+import {ChildWindowModel} from '@xh/hoist/window/ChildWindowModel';
 
 @HoistModel
 @LoadSupport
 @RouteSupport({name: 'userManagement.users'})
 export class UserListModel {
-    childWindowModel = new WindowModel();
+    childWindowModel = new ChildWindowModel({name: 'user-info-popout'});
 
     @managed
     gridModel = new GridModel({
@@ -41,7 +41,6 @@ export class UserListModel {
                         icon: Icon.openExternal(),
                         intent: 'primary',
                         actionFn: async ({record}) => {
-                            // window.open(`/userDetails?userId=${record.id}`, '_blank', 'height=300,width=300,menubar=no');
                             this.childWindowModel.open({
                                 title: 'User Info',
                                 url: this.getUserInfoUrl(record)
@@ -76,7 +75,7 @@ export class UserListModel {
             track: () => this.gridModel.selectedRecord,
             run: (record) => {
                 this.detailModel.setUserId(record ? record.id : null);
-                if (!this.childWindowModel.isClosed) {
+                if (this.childWindowModel.isOpen) {
                     this.childWindowModel.navigate('userInfo', {userId: record.id}, {replace: true});
                     this.childWindowModel.setTitle(`User Info - ${record.name}`);
                 }

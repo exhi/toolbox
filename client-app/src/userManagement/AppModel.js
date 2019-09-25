@@ -4,7 +4,7 @@ import {UserListPanel} from './tabs/users/UserListPanel';
 import {RoleListPanel} from './tabs/roles/RoleListPanel';
 
 @HoistModel
-@RouteSupport({name: 'userManagement', forwardTo: 'userManagement.roles'})
+@RouteSupport({name: 'userManagement', forwardTo: 'userManagement.users'})
 export class AppModel {
     @managed
     tabModel = new TabContainerModel({
