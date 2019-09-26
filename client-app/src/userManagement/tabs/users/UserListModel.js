@@ -51,10 +51,10 @@ export class UserListModel {
                         icon: Icon.openExternal(),
                         intent: 'warning',
                         actionFn: ({record}) => {
-                            XH.openSlaveWindow({
+                            XH.openSlaveWindowAsync({
                                 container: ChildContainer,
                                 component: UserInfoPanel,
-                                model: UserInfoModel
+                                model: this.detailModel
                             });
                         }
                     }
