@@ -146,7 +146,8 @@ export class AppModel {
                             {name: 'fileChooser', path: '/fileChooser'},
                             {name: 'timestamp', path: '/timestamp'},
                             {name: 'jsx', path: '/jsx'},
-                            {name: 'popups', path: '/popups'}
+                            {name: 'popups', path: '/popups'},
+                            {name: 'styles', path: '/styles'}
                         ]
                     },
                     {

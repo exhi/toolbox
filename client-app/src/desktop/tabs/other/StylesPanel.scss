@@ -1,0 +1,16 @@
+
+.styles-panel {
+  .container {
+    margin: var(--xh-pad-half-px);
+    padding: var(--xh-pad-half-px);
+
+    > *:not(:last-child) {
+      margin-bottom: var(--xh-pad-half-px);
+    }
+  }
+
+  .control-label {
+    width: 100%;
+    padding: var(--xh-pad-half-px);
+  }
+}

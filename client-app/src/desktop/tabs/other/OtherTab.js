@@ -6,6 +6,7 @@ import {JsxPanel} from './JsxPanel';
 import {LeftRightChooserPanel} from './LeftRightChooserPanel';
 import {RelativeTimestampPanel} from './RelativeTimestampPanel';
 import {PopupsPanel} from './PopupsPanel';
+import {StylesPanel} from './StylesPanel';
 
 export const OtherTab = hoistCmp(
     () => tabContainer({
@@ -18,7 +19,8 @@ export const OtherTab = hoistCmp(
                 {id: 'leftRightChooser', title: 'LeftRightChooser', content: LeftRightChooserPanel},
                 {id: 'fileChooser', title: 'FileChooser', content: FileChooserPanel},
                 {id: 'timestamp', title: 'Timestamp', content: RelativeTimestampPanel},
-                {id: 'jsx', title: 'Factories vs. JSX', content: JsxPanel}
+                {id: 'jsx', title: 'Factories vs. JSX', content: JsxPanel},
+                {id: 'styles', title: 'Styles', content: StylesPanel}
             ]
         },
         className: 'toolbox-tab'
