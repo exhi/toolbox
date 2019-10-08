@@ -14,6 +14,7 @@ import {gridStyleSwitches} from './GridStyleSwitches';
 import {SampleGridModel} from './SampleGridModel';
 
 import './SampleGrid.scss';
+import {InlineNumberEditor} from './editors/InlineNumberEditor';
 
 export const [SampleGrid, sampleGrid] = hoistCmp.withFactory({
     model: uses(SampleGridModel, {createDefault: true}),
@@ -34,7 +35,13 @@ export const [SampleGrid, sampleGrid] = hoistCmp.withFactory({
             items: [
                 hframe(
                     vframe(
-                        grid(),
+                        grid({
+                            agOptions: {
+                                frameworkComponents: {
+                                    inlineNumberEditor: InlineNumberEditor
+                                }
+                            }
+                        }),
                         hbox({
                             items: [Icon.info(), selText],
                             className: 'tbox-samplegrid__selbar',

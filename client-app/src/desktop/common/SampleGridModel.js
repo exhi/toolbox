@@ -7,16 +7,16 @@ import {StoreContextMenu} from '@xh/hoist/desktop/cmp/contextmenu';
 import {actionCol, calcActionColWidth} from '@xh/hoist/desktop/cmp/grid';
 import {fmtNumberTooltip, millionsRenderer, numberRenderer} from '@xh/hoist/format';
 import {Icon} from '@xh/hoist/icon';
-import {action, observable} from '@xh/hoist/mobx';
+import {action, bindable, observable} from '@xh/hoist/mobx';
 import {wait} from '@xh/hoist/promise';
 
 import './SampleGrid.scss';
-
 
 @HoistModel
 @LoadSupport
 export class SampleGridModel {
     @observable groupBy = false;
+    @bindable editable = true; // TODO: will probably need a reaction to reset the columns if this is to change
 
     panelRef = createRef();
 
@@ -152,6 +152,10 @@ export class SampleGridModel {
                     ledger: true,
                     colorSpec: true
                 }),
+                agOptions: {
+                    editable: true,
+                    cellEditor: 'inlineNumberEditor'
+                },
                 exportFormat: ExportFormat.LEDGER_COLOR
             },
             {
