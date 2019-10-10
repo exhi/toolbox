@@ -17,15 +17,16 @@ import {numberRenderer} from '@xh/hoist/format';
 import {Icon} from '@xh/hoist/icon';
 import {action, observable} from '@xh/hoist/mobx';
 import {createRef} from 'react';
-import {getLayoutProps} from '@xh/hoist/utils/react';
 import {gridStyleSwitches} from './GridStyleSwitches';
 
 export const sampleColumnGroupsGrid = hoistCmp.factory({
     model: creates(() => new Model()),
 
-    render({model, className, ...props}) {
+    render({model, ...props}) {
+        const {gridModel} = model;
+
         return panel({
-            item: hframe(grid(), gridStyleSwitches()),
+            item: hframe(grid(), gridStyleSwitches({model: gridModel.agGridModel})),
             ref: model.panelRef,
             mask: 'onLoad',
             tbar: [
@@ -42,8 +43,7 @@ export const sampleColumnGroupsGrid = hoistCmp.factory({
                 colChooserButton(),
                 exportButton()
             ],
-            className,
-            ...getLayoutProps(props)
+            ...props
         });
     }
 });
