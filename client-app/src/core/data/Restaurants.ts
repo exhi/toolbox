@@ -1,3 +1,8 @@
+type Restaurant = {
+    name: string,
+    location: string
+}
+
 export const restaurants = [
     { name: 'Osteria Francescana', location: 'Italy'},
     { name: 'El Celler de Can Roca', location: 'Spain'},
@@ -49,4 +54,9 @@ export const restaurants = [
     { name: 'Hiša Franko', location: 'Romania'},
     { name: 'Nahm', location: 'Thailand'},
     { name: 'The Test Kitchen', location: 'South Africa'}
-].map(restaurant => ({label: `${restaurant.name} (${restaurant.location})`, value: restaurant.name}));
+].map((restaurant: Restaurant) => {
+    return {
+        label: `${restaurant.name} (${restaurant.location})`,
+        value: restaurant.name
+    };
+});

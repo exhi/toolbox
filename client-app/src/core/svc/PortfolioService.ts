@@ -8,6 +8,8 @@ export class PortfolioService {
 
     MAX_POSITIONS = 950;
 
+    lookups: object[];
+
     async initAsync() {
         this.lookups = await XH.fetchJson({url: 'portfolio/lookups'});
     }
