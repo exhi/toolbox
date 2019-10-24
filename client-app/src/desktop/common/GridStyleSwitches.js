@@ -1,59 +1,51 @@
-import {fragment} from '@xh/hoist/cmp/layout';
-import {elemFactory, HoistComponent} from '@xh/hoist/core';
+import {hoistCmp, uses} from '@xh/hoist/core';
 import {switchInput} from '@xh/hoist/desktop/cmp/input';
-import {toolbarSep} from '@xh/hoist/desktop/cmp/toolbar';
-import {Component} from 'react';
+import {panel} from '@xh/hoist/desktop/cmp/panel';
+import {Icon} from '@xh/hoist/icon';
+import {AgGridModel} from '@xh/hoist/cmp/ag-grid';
 
-@HoistComponent
-export class GridStyleSwitches extends Component {
+export const gridStyleSwitches = hoistCmp.factory({
+    model: uses(AgGridModel),
 
     render() {
-        const {gridModel, forToolbar} = this.props;
-
-        return fragment(
-            switchInput({
-                model: gridModel,
-                bind: 'compact',
-                label: 'Compact',
-                labelAlign: 'left'
-            }),
-            toolbarSep({omit: !forToolbar}),
-            switchInput({
-                model: gridModel,
-                bind: 'stripeRows',
-                label: 'Striped',
-                labelAlign: 'left'
-            }),
-            toolbarSep({omit: !forToolbar}),
-            switchInput({
-                model: gridModel,
-                bind: 'rowBorders',
-                label: 'Row Borders',
-                labelAlign: 'left'
-            }),
-            toolbarSep({omit: !forToolbar}),
-            switchInput({
-                model: gridModel,
-                bind: 'cellBorders',
-                label: 'Cell Borders',
-                labelAlign: 'left'
-            }),
-            toolbarSep({omit: !forToolbar}),
-            switchInput({
-                model: gridModel,
-                bind: 'showHover',
-                label: 'Hover',
-                labelAlign: 'left'
-            }),
-            toolbarSep({omit: !forToolbar}),
-            switchInput({
-                model: gridModel,
-                bind: 'showCellFocus',
-                label: 'Cell focus',
-                labelAlign: 'left'
-            })
-        );
+        return panel({
+            title: 'Display Options',
+            icon: Icon.settings(),
+            className: 'tbox-display-opts',
+            compactHeader: true,
+            model: {side: 'right', defaultSize: 160, resizable: false},
+            items: [
+                switchInput({
+                    bind: 'compact',
+                    label: 'Compact',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'stripeRows',
+                    label: 'Striped',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'rowBorders',
+                    label: 'Row Borders',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'cellBorders',
+                    label: 'Cell Borders',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'showHover',
+                    label: 'Hover',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'showCellFocus',
+                    label: 'Cell focus',
+                    labelAlign: 'left'
+                })
+            ]
+        });
     }
-}
-
-export const gridStyleSwitches = elemFactory(GridStyleSwitches);
+});
