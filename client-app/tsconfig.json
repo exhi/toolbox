@@ -4,24 +4,20 @@
     "target": "esnext",
     // Search under node_modules for non-relative imports.
     "moduleResolution": "node",
+    // Allow Typescript to handle .tsx files
+    "jsx": "react",
+    // Support decorators
+    "experimentalDecorators": true,
+    // Allow default imports from modules with no default export. (i.e. many vendor libs, incl. React)
+    "allowSyntheticDefaultImports": true,
 
+    // Todo: Decide on one of the two approaches
+    // 1) Don't emit; allow Babel to transform files.
+    // "noEmit": true,
 
-    // Don't emit; allow Babel to transform files.
-//    "noEmit": true,
-
-
-    // Generate definition files?
+    // 2) Only emit definition files. Babel is still responsible for transforming files, but definition files are automatically generated
     "declaration": true,
-    "emitDeclarationOnly": true,
-
-
-    "experimentalDecorators": true
-    // Enable strictest settings like strictNullChecks & noImplicitAny.
-//    "strict": true,
-    // Disallow features that require cross-file information for emit.
-//    "isolatedModules": true,
-    // Import non-ES modules as default imports.
-//    "esModuleInterop": true
+    "emitDeclarationOnly": true
   },
   "include": [
     "src/"
