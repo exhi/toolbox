@@ -1,4 +1,3 @@
-
 .openfin-window {
   border: var(--xh-border-solid);
 
@@ -7,13 +6,11 @@
     background: var(--xh-bg-alt);
     border-bottom: var(--xh-border-solid);
     padding-left: var(--xh-pad-half-px);
-
     align-items: center;
 
     &--title {
       padding: var(--xh-pad-half-px);
       font-size: var(--xh-title-font-size-px);
-
       align-items: center;
     }
 
