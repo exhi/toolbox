@@ -25,7 +25,7 @@ export const [SampleTreeGrid, sampleTreeGrid] = hoistCmp.withFactory({
     render({model, ...props}) {
         const {gridModel} = model;
         return panel({
-            item: hframe(grid(), gridStyleSwitches({model: gridModel.agGridModel})),
+            item: hframe(model.hide ? null : grid(), gridStyleSwitches({model: gridModel.agGridModel})),
             tbar: [
                 refreshButton(),
                 toolbarSep(),
@@ -53,6 +53,11 @@ export const [SampleTreeGrid, sampleTreeGrid] = hoistCmp.withFactory({
                 switchInput({
                     bind: 'filterIncludeChildren',
                     label: 'Filter w/Children',
+                    labelAlign: 'left'
+                }),
+                switchInput({
+                    bind: 'hide',
+                    label: 'Hide',
                     labelAlign: 'left'
                 })
             ],

@@ -18,7 +18,9 @@ export class SampleTreeGridModel {
 
     @bindable
     filterIncludeChildren = false;
-    
+    @bindable
+    hide = false;
+
     @managed
     dimChooserModel = new DimensionChooserModel({
         dimensions: [
