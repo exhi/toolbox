@@ -115,7 +115,8 @@ export class AppModel {
                         children: [
                             {name: 'form', path: '/form'},
                             {name: 'inputs', path: '/inputs'},
-                            {name: 'toolbarForm', path: '/toolbarForm'}
+                            {name: 'toolbarForm', path: '/toolbarForm'},
+                            {name: 'inputsTab', path: '/inputsTab'}
                         ]
                     },
                     {
