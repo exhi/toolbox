@@ -1,0 +1,36 @@
+.input-test-panel-input {
+  margin: var(--xh-pad-px);
+  border: var(--xh-border-solid);
+  background: var(--xh-bg);
+
+  &_value {
+    flex: none;
+    margin: var(--xh-pad-px);
+    font-size: var(--xh-font-size-small-px);
+    font-family: var(--xh-font-family-mono);
+    background-color: var(--xh-bg-alt);
+    border: var(--xh-border-solid);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.input-test-panel-param {
+  &_display {
+    height: 100%;
+    margin: var(--xh-pad-px);
+    font-size: var(--xh-font-size-small-px);
+    font-family: var(--xh-font-family-mono);
+    background-color: var(--xh-bg-alt);
+    border: var(--xh-border-solid);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_control {
+    margin: auto;
+    margin-right: var(--xh-pad-px);
+  }
+}

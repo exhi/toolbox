@@ -114,9 +114,20 @@ export class AppModel {
                         path: '/forms',
                         children: [
                             {name: 'form', path: '/form'},
-                            {name: 'inputs', path: '/inputs'},
-                            {name: 'toolbarForm', path: '/toolbarForm'},
-                            {name: 'inputsTab', path: '/inputsTab'}
+                            {name: 'inputs', path: '/inputs', children: [
+                                {name: 'buttonGroupInput', path: '/buttonGroupInput'},
+                                {name: 'checkbox', path: '/checkbox'},
+                                {name: 'dateInput', path: '/dateInput'},
+                                {name: 'jsonInput', path: '/jsonInput'},
+                                {name: 'numberInput', path: '/numberInput'},
+                                {name: 'radioInput', path: '/radioInput'},
+                                {name: 'select', path: '/select'},
+                                {name: 'slider', path: '/slider'},
+                                {name: 'switchInput', path: '/switchInput'},
+                                {name: 'textArea', path: '/textArea'},
+                                {name: 'textInput', path: '/textInput'}
+                            ]},
+                            {name: 'toolbarForm', path: '/toolbarForm'}
                         ]
                     },
                     {

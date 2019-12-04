@@ -1,92 +1,87 @@
+import {hoistCmp, uses} from '@xh/hoist/core';
+import {switchInput, select, textInput, numberInput} from '@xh/hoist/desktop/cmp/input';
+import {hbox, span, vbox} from '@xh/hoist/cmp/layout';
+import {InputTestModel} from './InputTestModel';
 import {wrapper} from '../../../common';
-import React from 'react';
-import {hoistCmp} from '@xh/hoist/core';
-import {form, FormModel} from '@xh/hoist/cmp/form';
-import {useLocalModel} from '@xh/hoist/core/hooks';
-import {switchInput, textArea} from '@xh/hoist/desktop/cmp/input';
-import {formField} from '@xh/hoist/desktop/cmp/form';
-import {box, div, vbox} from '@xh/hoist/cmp/layout';
 
-export const [InputTestPanel, inputTestPanel] = hoistCmp.withFactory({
+import './InputTestPanel.scss';
 
-    render({options=[]}) {
+export const inputTestPanel = hoistCmp.factory({
 
-        const model = useLocalModel(() => new FormModel({
-            fields: [...options.map(option => {return {name: option}}), {name: 'field'}]
-        }));
+    model: uses(InputTestModel),
 
+    render({model}) {
         return wrapper({
-            description: [
-                <p>
-                    <code>HoistInput</code>s are core Components used to display editable data in applications.
-                    They present a consistent API for editing data with MobX, React, and the underlying widgets
-                    provided by libraries such as Blueprint and Onsen. At its simplest, any HoistInput can be bound to a
-                    data source using the <code>bind</code> and <code>model</code> props.
-                </p>,
-                <p>
-                    For more complex uses <code>HoistInput</code>s may also be hosted in <code>Form</code>s. Forms
-                    provide
-                    support for validation, data submission, and dirty state management.
-                </p>
-            ],
-            links: [
-                {url: '$TB/client-app/src/desktop/tabs/forms/InputsPanel.js', notes: 'This example.'},
-                {url: '$HR/cmp/input/HoistInput.js', notes: 'HoistInput Base Class'},
-                {url: '$HR/desktop/cmp/input', notes: 'Hoist Inputs'}
-            ],
-            item:
-                box({
+            description: model.description,
+            item: hbox(
+                vbox({
+                    className: 'input-test-panel-input',
                     items: [
-                        fieldDisplay({
-                            fieldModel: model.fields['field']
-                        }),
-                        form({
-                            model: model,
-                            items: [
-                                formField({
-                                    field: 'field',
-                                    item: textArea({
-                                        selectOnFocus: model.fields['selectOnFocus'].value
-                                    })
-                                }),
-                                optionsBox(options)
-                            ]
-                        })
+                        displayValue(model.fmtVal, model.value),
+                        model.input({bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})
                     ]
-                })
+                }),
+                controls()
+            )
         });
     }
 });
 
-const optionsBox = function(options) {
-    return vbox({
-        items:
-            options.map(option =>
-                formField({
-                    field: option,
-                    item: switchInput({
-                        inline: false,
-                        label: option
-                    })
-                })
-            )
-    });
-};
+const controls = hoistCmp.factory({
 
-const fieldDisplay = hoistCmp.factory(
-    ({fieldModel, fmtVal}) => {
-        let displayVal = fieldModel.value;
-        if (displayVal == null) {
-            displayVal = 'null';
-        } else {
-            displayVal = fmtVal ? fmtVal(displayVal) : displayVal.toString();
-            if (displayVal.trim() === '') {
-                displayVal = displayVal.length ? '[Blank String]' : '[Empty String]';
-            }
-        }
-        return div({
-            className: 'inputs-panel-field-display',
-            item: displayVal
+    render({model}) {
+
+        return vbox({
+            items: model.userParams.map(param => {
+                const {value, description, options, type, name} = param,
+                    onCommit = (newValue) => setValue(model, param, newValue);
+
+                let control = (() => {
+                    switch (type) {
+                        case 'bool':
+                            return switchInput({value, onCommit});
+                        case 'text':
+                            return textInput({value, onCommit, textAlign: 'right', placeholder: 'text'});
+                        case 'select':
+                            return select({value, onCommit, options});
+                        case 'number':
+                            return numberInput({value, onCommit, placeholder: 'number'});
+                    }
+                })();
+
+                return hbox({
+                    title: description,
+                    className: 'input-test-panel-param',
+                    items: [
+                        span({className: 'input-test-panel-param_display', item: name}),
+                        span({className: 'input-test-panel-param_control', item: control})
+                    ]
+                });
+            })
         });
     }
-);
+});
+
+function displayValue(fmtVal, value) {
+    let res = fmtVal ? fmtVal(value) : String(value);
+    if (value == null) {
+        res = 'null';
+    } else {
+        if (res.trim() === '') {
+            res = res.length ? '[Blank String]' : '[Empty String]';
+        }
+    }
+
+    return span({className: 'input-test-panel-input_value', item: res});
+}
+
+function setValue(model, param, newValue) {
+    param.value = newValue;
+    model.setUserParams([...model.userParams]);
+}
+
+function getParams(params) {
+    const ret = {};
+    params.forEach(param => ret[param.name] = param.value);
+    return ret;
+}
