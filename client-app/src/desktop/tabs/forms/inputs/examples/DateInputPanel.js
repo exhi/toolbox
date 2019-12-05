@@ -23,6 +23,20 @@ function createModel() {
             {name: 'enableTextInput', value: false, type: 'bool'},
             {name: 'enableClear', value: false, type: 'bool'},
             {name: 'formatString', value: 'YYYY-MM-DD HH:mm:ss', type: 'text'},
+            {name: 'placeholder', value: undefined, type: 'text'},
+            {name: 'popoverPosition', value: 'auto', type: 'select',
+                options: [
+                    'top-left', 'top', 'top-right',
+                    'right-top', 'right', 'right-bottom',
+                    'bottom-right', 'bottom', 'bottom-left',
+                    'left-bottom', 'left', 'left-top',
+                    'auto'
+                ]
+            },
+            {name: 'showActionsBar', value: false, type: 'bool'},
+            {name: 'strictInputParsing', value: false, type: 'bool'},
+            {name: 'textAlign', value: 'left', type: 'select',
+                options: ['left', 'right']},
             {name: 'timePrecision', value: undefined, type: 'select',
                 options: [undefined, 'second', 'minute']}
         ],

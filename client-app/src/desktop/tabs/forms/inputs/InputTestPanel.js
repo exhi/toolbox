@@ -17,8 +17,14 @@ export const inputTestPanel = hoistCmp.factory({
                 vbox({
                     className: 'input-test-panel-input',
                     items: [
-                        displayValue(model.fmtVal, model.value),
-                        model.input({bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})
+                        span({
+                            className: 'input-test-panel-input_value',
+                            item: displayValue(model.fmtVal, model.value)
+                        }),
+                        span({
+                            className: 'input-test-panel-input_input',
+                            item: model.input({bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})
+                        })
                     ]
                 }),
                 controls()
@@ -72,7 +78,7 @@ function displayValue(fmtVal, value) {
         }
     }
 
-    return span({className: 'input-test-panel-input_value', item: res});
+    return res;
 }
 
 function setValue(model, param, newValue) {

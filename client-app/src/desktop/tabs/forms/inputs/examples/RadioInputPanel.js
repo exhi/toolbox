@@ -11,12 +11,17 @@ export const RadioInputPanel = hoistCmp({
     }
 });
 
-
 function createModel() {
 
     return new InputTestModel({
         input: radioInput,
-        fixedParams: {options: ['hello', 'world']},
+        userParams: [
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'inline', value: false, type: 'bool'},
+            {name: 'labelAlign', value: 'left', type: 'select',
+                options: ['left', 'right']}
+        ],
+        fixedParams: {options: ['lemon', 'lime', 'orange', 'grapefruit']},
         description: 'radio input description.'
     });
 }

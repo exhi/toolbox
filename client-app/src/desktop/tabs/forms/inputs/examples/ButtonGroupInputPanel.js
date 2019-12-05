@@ -16,6 +16,9 @@ function createModel() {
 
     return new InputTestModel({
         input: buttonGroupInput,
+        userParams: [
+            {name: 'disabled', value: false, type: 'bool'}
+        ],
         description: 'description for thing'
     });
 }

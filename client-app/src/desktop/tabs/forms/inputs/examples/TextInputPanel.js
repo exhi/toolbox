@@ -16,6 +16,14 @@ function createModel() {
 
     return new InputTestModel({
         input: textInput,
+        userParams: [
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'commitOnChange', value: false, type: 'bool'},
+            {name: 'enableClear', value: false, type: 'bool'},
+            {name: 'round', value: false, type: 'bool'},
+            {name: 'spellCheck', value: true, type: 'bool'},
+            {name: 'placeholder', value: undefined, type: 'text'}
+        ],
         description: 'textinput description.'
     });
 }

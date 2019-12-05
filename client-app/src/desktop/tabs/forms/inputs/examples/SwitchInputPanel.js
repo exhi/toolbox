@@ -16,6 +16,12 @@ function createModel() {
 
     return new InputTestModel({
         input: switchInput,
+        userParams: [
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'label', value: undefined, type: 'text'},
+            {name: 'labelAlign', value: 'left', type: 'select',
+                options: ['left', 'right']}
+        ],
         description: 'switchinput description.'
     });
 }

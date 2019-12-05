@@ -1,10 +1,11 @@
 .input-test-panel-input {
-  margin: var(--xh-pad-px);
+  min-width: 100px;
+  align-self: flex-start;
+  margin-right: var(--xh-pad-px);
   border: var(--xh-border-solid);
   background: var(--xh-bg);
 
   &_value {
-    flex: none;
     margin: var(--xh-pad-px);
     font-size: var(--xh-font-size-small-px);
     font-family: var(--xh-font-family-mono);
@@ -14,12 +15,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &_input {
+    margin: var(--xh-pad-px);
+  }
 }
 
 .input-test-panel-param {
+  border: var(--xh-border-solid);
+  background: var(--xh-bg);
+
   &_display {
-    height: 100%;
     margin: var(--xh-pad-px);
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: var(--xh-font-size-small-px);
     font-family: var(--xh-font-family-mono);
     background-color: var(--xh-bg-alt);
@@ -30,7 +39,7 @@
   }
 
   &_control {
-    margin: auto;
-    margin-right: var(--xh-pad-px);
+    margin: var(--xh-pad-px);
+    margin-left: auto;
   }
 }

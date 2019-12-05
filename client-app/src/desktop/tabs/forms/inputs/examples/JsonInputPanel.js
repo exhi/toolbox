@@ -16,7 +16,8 @@ function createModel() {
 
     return new InputTestModel({
         input: jsonInput,
-        userParams: [{name: 'commitOnChange', value: false, type: 'bool'}],
+        userParams: [
+        ],
         description: 'jsoninput description.'
     });
 }

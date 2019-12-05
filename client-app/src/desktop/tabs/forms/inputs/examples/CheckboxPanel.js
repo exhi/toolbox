@@ -18,8 +18,8 @@ function createModel() {
         input: checkbox,
         userParams: [
             {name: 'disabled', value: false, type: 'bool'},
-            {name: 'displayUnsetState', value: false, type: 'bool'},
             {name: 'label', value: null, type: 'text'},
+            {name: 'displayUnsetState', value: true, type: 'bool'},
             {name: 'labelAlign', value: 'left', type: 'select',
                 options: ['left', 'right']}
         ],

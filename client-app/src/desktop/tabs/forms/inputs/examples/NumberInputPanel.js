@@ -17,12 +17,14 @@ function createModel() {
     return new InputTestModel({
         input: numberInput,
         userParams: [
-            {name: 'disabled', type: 'bool'},
-            {name: 'displayWithCommas', type: 'bool'},
-            {name: 'enableShorthandUnits', type: 'bool'},
-            {name: 'precision', type: 'number'},
-            {name: 'selectOnFocus', type: 'bool', description: 'Toggle selecting all text when input selected'},
-            {name: 'placeholder', type: 'text'}
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'commitOnChange', value: false, type: 'bool'},
+            {name: 'displayWithCommas', value: false, type: 'bool'},
+            {name: 'enableShorthandUnits', value: false, type: 'bool'},
+            {name: 'precision', value: undefined, type: 'number'},
+            {name: 'selectOnFocus', value: true, type: 'bool', description: 'Toggle selecting all text when input selected'},
+            {name: 'placeholder', value: undefined, type: 'text'},
+            {name: 'zeroPad', value: false, type: 'bool'}
         ],
         description: 'An input to for numbers.'
     });
