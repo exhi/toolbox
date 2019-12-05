@@ -23,7 +23,10 @@ function createModel() {
             {name: 'enableClear', value: false, type: 'bool'},
             {name: 'round', value: false, type: 'bool'},
             {name: 'spellCheck', value: true, type: 'bool'},
-            {name: 'placeholder', value: undefined, type: 'text'}
+            {name: 'placeholder', value: undefined, type: 'text'},
+            {name: 'textAlign', value: 'left', type: 'select',
+                options: ['left', 'right']
+            }
         ],
         description: [
             p('A single-line text input with additional support for embedded icons/elements.')
