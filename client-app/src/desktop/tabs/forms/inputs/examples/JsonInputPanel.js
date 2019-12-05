@@ -11,12 +11,14 @@ export const JsonInputPanel = hoistCmp({
     }
 });
 
-
 function createModel() {
 
     return new InputTestModel({
         input: jsonInput,
         userParams: [
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'commitOnChange', value: false, type: 'bool'},
+            {name: 'showActionButtons', value: true, type: 'bool'}
         ],
         description: 'jsoninput description.'
     });

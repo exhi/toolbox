@@ -12,7 +12,6 @@ export const DateInputPanel = hoistCmp({
     }
 });
 
-
 function createModel() {
 
     return new InputTestModel({

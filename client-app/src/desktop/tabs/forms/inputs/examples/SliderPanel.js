@@ -18,9 +18,7 @@ export const SliderPanel = hoistCmp({
     }
 });
 
-
-function createOneHandleSliderModel() {
-
+function createSliderModel(value) {
     return new InputTestModel({
         input: slider,
         userParams: [
@@ -32,22 +30,14 @@ function createOneHandleSliderModel() {
             {name: 'showTrackFill', value: true, type: 'bool'}
         ],
         description: 'slider description.',
-        value: 0
+        value: value
     });
 }
 
+function createOneHandleSliderModel() {
+    return createSliderModel(0);
+}
+
 function createTwoHandleSliderModel() {
-    return new InputTestModel({
-        input: slider,
-        userParams: [
-            {name: 'disabled', value: false, type: 'bool'},
-            {name: 'min', value: 0, type: 'number'},
-            {name: 'max', value: 5, type: 'number'},
-            {name: 'labelStepSize', value: 1, type: 'number'},
-            {name: 'stepSize', value: 1, type: 'number'},
-            {name: 'showTrackFill', value: true, type: 'bool'}
-        ],
-        description: 'This slider selects a range between the handles.',
-        value: [0, 2]
-    });
+    return createSliderModel([0, 2]);
 }

@@ -27,7 +27,9 @@ function createModel() {
                 options: ['auto', 'top', 'bottom']},
             {name: 'placeholder', value: undefined, type: 'text'}
         ],
-        fixedParams: {options: usStates},
+        fixedParams: {
+            options: usStates
+        },
         description: 'checkbox description.'
     });
 }
