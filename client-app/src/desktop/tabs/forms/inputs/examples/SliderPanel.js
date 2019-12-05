@@ -2,7 +2,7 @@ import {hoistCmp, useLocalModel} from '@xh/hoist/core';
 import {slider} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
-import {vbox} from '@xh/hoist/cmp/layout';
+import {p, vbox} from '@xh/hoist/cmp/layout';
 
 export const SliderPanel = hoistCmp({
 
@@ -18,7 +18,8 @@ export const SliderPanel = hoistCmp({
     }
 });
 
-function createSliderModel(value) {
+
+function createOneHandleSliderModel() {
     return new InputTestModel({
         input: slider,
         userParams: [
@@ -29,15 +30,27 @@ function createSliderModel(value) {
             {name: 'stepSize', value: 1, type: 'number'},
             {name: 'showTrackFill', value: true, type: 'bool'}
         ],
-        description: 'slider description.',
-        value: value
+        description: [
+            p('A slider input to edit a single number.')
+        ],
+        value: 0
     });
 }
 
-function createOneHandleSliderModel() {
-    return createSliderModel(0);
-}
-
 function createTwoHandleSliderModel() {
-    return createSliderModel([0, 2]);
+    return new InputTestModel({
+        input: slider,
+        userParams: [
+            {name: 'disabled', value: false, type: 'bool'},
+            {name: 'min', value: 0, type: 'number'},
+            {name: 'max', value: 5, type: 'number'},
+            {name: 'labelStepSize', value: 1, type: 'number'},
+            {name: 'stepSize', value: 1, type: 'number'},
+            {name: 'showTrackFill', value: true, type: 'bool'}
+        ],
+        description: [
+            p('A slider input to edit an array of two numbers (for a range).')
+        ],
+        value: [0, 2]
+    });
 }

@@ -2,6 +2,7 @@ import {hoistCmp, useLocalModel} from '@xh/hoist/core';
 import {checkbox} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
+import {p} from '@xh/hoist/cmp/layout';
 
 export const CheckboxPanel = hoistCmp({
 
@@ -23,6 +24,9 @@ function createModel() {
             {name: 'labelAlign', value: 'left', type: 'select',
                 options: ['left', 'right']}
         ],
-        description: 'checkbox description.'
+        description: [
+            p('Checkbox control for boolean values.'),
+            p('Renders null with an "indeterminate" [-] display.')
+        ]
     });
 }

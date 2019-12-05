@@ -3,6 +3,7 @@ import {dateInput} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {fmtDateTime} from '@xh/hoist/format';
+import {p} from '@xh/hoist/cmp/layout';
 
 export const DateInputPanel = hoistCmp({
 
@@ -39,7 +40,12 @@ function createModel() {
             {name: 'timePrecision', value: undefined, type: 'select',
                 options: [undefined, 'second', 'minute']}
         ],
-        description: 'dateInput description.',
+        description: [
+            p('A Calendar Control for choosing a Date.'),
+            p('By default this control emits dates with the time component cleared (set to midnight), but this' +
+            'can be customized via the timePrecision prop to support editing of a date and time together.'),
+            p('The calendar popover can be opened via the built-in button or up/down arrow keyboard shortcuts.')
+        ],
         fmtVal: fmtDateTime
     });
 }

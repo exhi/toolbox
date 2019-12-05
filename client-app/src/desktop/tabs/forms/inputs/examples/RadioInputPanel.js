@@ -2,6 +2,7 @@ import {hoistCmp, useLocalModel} from '@xh/hoist/core';
 import {radioInput} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
+import {p} from '@xh/hoist/cmp/layout';
 
 export const RadioInputPanel = hoistCmp({
 
@@ -22,6 +23,8 @@ function createModel() {
                 options: ['left', 'right']}
         ],
         fixedParams: {options: ['lemon', 'lime', 'orange', 'grapefruit']},
-        description: 'radio input description.'
+        description: [
+            p('An input for managing Radio Buttons.')
+        ]
     });
 }

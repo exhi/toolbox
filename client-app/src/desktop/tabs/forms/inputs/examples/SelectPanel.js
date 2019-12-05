@@ -3,6 +3,7 @@ import {select} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {usStates} from '../../../../../core/data';
+import {li, p, ul} from '@xh/hoist/cmp/layout';
 
 export const SelectPanel = hoistCmp({
 
@@ -30,6 +31,15 @@ function createModel() {
         fixedParams: {
             options: usStates
         },
-        description: 'checkbox description.'
+        description: [
+            p('A managed wrapper around the React-Select combobox/dropdown component.'),
+            p('Supports advanced options such as:'),
+            ul(
+                li('Asynchronous queries'),
+                li('Multiple selection'),
+                li('Custom dropdown option renderers'),
+                li('User-created ad-hoc entries')
+            )
+        ]
     });
 }

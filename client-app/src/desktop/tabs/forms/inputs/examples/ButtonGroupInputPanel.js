@@ -4,6 +4,7 @@ import {inputTestPanel} from '../InputTestPanel';
 import {buttonGroupInput} from '@xh/hoist/desktop/cmp/input';
 import {button} from '@xh/hoist/desktop/cmp/button';
 import {Icon} from '@xh/hoist/icon/Icon';
+import {p} from '@xh/hoist/cmp/layout';
 
 export const ButtonGroupInputPanel = hoistCmp({
 
@@ -51,6 +52,11 @@ function createModel() {
             {name: 'vertical', value: false, type: 'bool'},
             {name: 'enableClear', value: true, type: 'bool'}
         ],
-        description: 'description for thing'
+        description: [
+            p('A segmented group of buttons, one of which is depressed to indicate the input\'s current value.'),
+            p('Should receive a list of Buttons as a children. Each Button requires a \'value\' prop.'),
+            p('The buttons are automatically configured to set this value on click and appear pressed if the' +
+                'ButtonGroupInput\'s value matches.')
+        ]
     });
 }
