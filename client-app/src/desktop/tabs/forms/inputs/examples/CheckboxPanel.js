@@ -20,6 +20,7 @@ function createModel() {
         userParams: [
             {name: 'disabled', value: false, type: 'bool',
                 description: 'True to disable user interaction.'},
+            // TODO: decide whether or not autofocus is sensible to have.
             {name: 'autoFocus', value: true, type: 'bool',
                 description: 'True to focus the control on render.'},
             {name: 'label', value: null, type: 'text',

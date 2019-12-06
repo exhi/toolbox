@@ -42,7 +42,7 @@ function createModel() {
                 options: [
                     null,
                     {label: 'rocket', value: Icon.rocket()},
-                    {label: 'bookmark', value: Icon.bookmark()}
+                    {label: 'bullhorn', value: Icon.bullhorn()}
                 ],
                 description: 'Icon to display inline on the left side of the input.'}
         ],

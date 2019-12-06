@@ -1,12 +1,14 @@
 .input-test-panel-input {
   min-width: 100px;
   align-self: flex-start;
+  padding: var(--xh-pad-px);
   margin-right: var(--xh-pad-px);
   border: var(--xh-border-solid);
   background: var(--xh-bg);
 
   &_value {
-    margin: var(--xh-pad-px);
+    margin: auto;
+    margin-bottom: var(--xh-pad-px);
     font-size: var(--xh-font-size-small-px);
     font-family: var(--xh-font-family-mono);
     background-color: var(--xh-bg-alt);
@@ -17,7 +19,7 @@
   }
 
   &_input {
-    margin: var(--xh-pad-px);
+    margin: auto;
   }
 }
 
@@ -27,8 +29,6 @@
 
   &_display {
     margin: var(--xh-pad-px);
-    margin-top: auto;
-    margin-bottom: auto;
     font-size: var(--xh-font-size-small-px);
     font-family: var(--xh-font-family-mono);
     background-color: var(--xh-bg-alt);
@@ -39,7 +39,7 @@
   }
 
   &_control {
-    margin: var(--xh-pad-px);
-    margin-left: auto;
+    margin: auto;
+    margin-right: var(--xh-pad-px);
   }
 }

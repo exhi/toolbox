@@ -4,6 +4,9 @@ import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {box, p} from '@xh/hoist/cmp/layout';
 
+/*
+ * TODO: make this look better. Pretty weird at the moment.
+ */
 export const SliderPanel = hoistCmp({
 
     render() {
