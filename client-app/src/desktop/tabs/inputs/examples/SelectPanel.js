@@ -2,7 +2,7 @@ import {hoistCmp, useLocalModel} from '@xh/hoist/core';
 import {select} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
-import {usStates} from '../../../../../core/data';
+import {usStates} from '../../../../core/data';
 import {li, p, ul} from '@xh/hoist/cmp/layout';
 
 export const SelectPanel = hoistCmp({

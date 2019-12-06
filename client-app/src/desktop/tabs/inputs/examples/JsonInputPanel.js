@@ -4,7 +4,6 @@ import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {p} from '@xh/hoist/cmp/layout';
 
-// TODO: figure out what's going on with this thing! Why does it need an explicitly passed panel?
 export const JsonInputPanel = hoistCmp({
 
     render() {

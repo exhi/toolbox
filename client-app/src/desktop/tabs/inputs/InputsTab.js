@@ -8,14 +8,15 @@ import {DateInputPanel} from './examples/DateInputPanel';
 import {JsonInputPanel} from './examples/JsonInputPanel';
 import {RadioInputPanel} from './examples/RadioInputPanel';
 import {SelectPanel} from './examples/SelectPanel';
-import {SliderPanel} from './examples/SliderPanel';
+import {OneHandleSliderPanel} from './examples/OneHandleSliderPanel';
 import {SwitchInputPanel} from './examples/SwitchInputPanel';
 import {TextInputPanel} from './examples/TextInputPanel';
+import {TwoHandleSliderPanel} from './examples/TwoHandleSliderPanel';
 
 export const InputsTab = hoistCmp(
     () => tabContainer({
         model: {
-            route: 'default.forms.inputs',
+            route: 'default.inputs',
             switcherPosition: 'left',
             tabs: [
                 {id: 'buttonGroupInput', title: 'ButtonGroupInput', content: ButtonGroupInputPanel},
@@ -25,7 +26,8 @@ export const InputsTab = hoistCmp(
                 {id: 'numberInput', title: 'NumberInput', content: NumberInputPanel},
                 {id: 'radioInput', title: 'RadioInput', content: RadioInputPanel},
                 {id: 'select', title: 'Select', content: SelectPanel},
-                {id: 'slider', title: 'Slider', content: SliderPanel},
+                {id: 'slider', title: 'Slider', content: OneHandleSliderPanel},
+                {id: 'sliderRange', title: 'Slider (range)', content: TwoHandleSliderPanel},
                 {id: 'switchInput', title: 'SwitchInput', content: SwitchInputPanel},
                 {id: 'textArea', title: 'TextArea', content: TextAreaPanel},
                 {id: 'textInput', title: 'TextInput', content: TextInputPanel}

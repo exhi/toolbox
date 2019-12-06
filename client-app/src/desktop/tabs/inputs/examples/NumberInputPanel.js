@@ -3,7 +3,6 @@ import {numberInput} from '@xh/hoist/desktop/cmp/input';
 import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {li, p, ul} from '@xh/hoist/cmp/layout';
-import {Icon} from '@xh/hoist/icon/Icon';
 
 export const NumberInputPanel = hoistCmp({
 
@@ -12,7 +11,6 @@ export const NumberInputPanel = hoistCmp({
         return inputTestPanel({model});
     }
 });
-
 
 function createModel() {
 
@@ -44,17 +42,17 @@ function createModel() {
             {name: 'minorStepSize', value: 0.1, type: 'number',
                 description: 'Minor step size for increment/decrement handling.'},
             {name: 'min', value: undefined, type: 'number',
-                description: 'Minimum value.'},
+                description: 'Minimum value for increment/decrememnt.'},
             {name: 'max', value: undefined, type: 'number',
-                description: 'Maximum value'},
-            // TODO: figure out how min and max behave. Is their behavior expected here?
-            {name: 'leftIcon', value: null, type: 'select',
+                description: 'Maximum value for increment/decrememnt.'}
+            // TODO: figure out why these icons don't display
+            /*  {name: 'leftIcon', value: null, type: 'select',
                 options: [
                     null,
                     {label: '$', value: Icon.dollarSign()},
                     {label: 'gears', value: Icon.gears()}
                 ],
-                description: 'Icon to display inline on the left side of the input.'}
+                description: 'Icon to display inline on the left side of the input.'}*/
         ],
         description: [
             p('Number input, with optional support for formatted of display value, shorthand units, and more.'),

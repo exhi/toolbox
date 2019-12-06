@@ -3,7 +3,6 @@ import {tabContainer} from '@xh/hoist/cmp/tab';
 
 import {FormPanel} from './FormPanel';
 import {ToolbarFormPanel} from './ToolbarFormPanel';
-import {InputsTab} from './inputs/InputsTab';
 
 export const FormsTab = hoistCmp(
     () => tabContainer({
@@ -12,7 +11,6 @@ export const FormsTab = hoistCmp(
             switcherPosition: 'left',
             tabs: [
                 {id: 'form', title: 'FormModel', content: FormPanel},
-                {id: 'inputs', title: 'Inputs', content: InputsTab},
                 {id: 'toolbarForm', title: 'Toolbar Forms', content: ToolbarFormPanel}
             ]
         },

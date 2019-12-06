@@ -2,7 +2,7 @@ import {hoistCmp, uses} from '@xh/hoist/core';
 import {switchInput, select, textInput, numberInput} from '@xh/hoist/desktop/cmp/input';
 import {hbox, span, vbox} from '@xh/hoist/cmp/layout';
 import {InputTestModel} from './InputTestModel';
-import {wrapper} from '../../../common';
+import {wrapper} from '../../common';
 
 import './InputTestPanel.scss';
 
@@ -14,36 +14,38 @@ export const inputTestPanel = hoistCmp.factory({
         return wrapper({
             description: model.description,
             item: hbox(
-                vbox({
-                    className: 'input-test-panel-input',
-                    items: [
-                        span({
-                            className: 'input-test-panel-input_value',
-                            item: displayValue(model.fmtVal, model.value)
-                        }),
-                        span({
-                            className: 'input-test-panel-input_input',
-                            /*
-                             * TODO: Find out why JsonInput can't get the model from context!
-                             * I shouldn't have to pass in a model here.
-                             */
-                            item: model.input({model, bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})
-                        })
-                    ]
-                }),
+                mainInput(),
                 controls()
             )
         });
     }
 });
 
-const controls = hoistCmp.factory({
-
+const mainInput = hoistCmp.factory({
     render({model}) {
+        return vbox({
+            className: 'input-test-panel-input',
+            items: [
+                span({
+                    className: 'input-test-panel-input_value',
+                    item: displayValue(model.fmtVal, model.value)
+                }),
+                span({
+                    className: 'input-test-panel-input_input',
+                    item: model.input({bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})
+                })
+            ]
+        });
+    }
+});
 
+// TODO: make this scrollable
+const controls = hoistCmp.factory({
+    render({model}) {
         return vbox({
             items: model.userParams.map(param => {
                 const {value, description, options, type, name} = param,
+                    // TODO: make this validate before accepting value, not throw an error
                     onCommit = (newValue) => setValue(model, param, newValue);
 
                 let control = (() => {
