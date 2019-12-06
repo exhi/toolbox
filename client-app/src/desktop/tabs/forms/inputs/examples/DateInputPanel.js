@@ -4,6 +4,7 @@ import {InputTestModel} from '../InputTestModel';
 import {inputTestPanel} from '../InputTestPanel';
 import {fmtDateTime} from '@xh/hoist/format';
 import {p} from '@xh/hoist/cmp/layout';
+import {Icon} from '@xh/hoist/icon/Icon';
 
 export const DateInputPanel = hoistCmp({
 
@@ -56,7 +57,14 @@ function createModel() {
                 options: [undefined, 'second', 'minute'],
                 description:
                     'The precision of time selection that accompanies the calendar.' +
-                    'If undefined, control will not show time. Ignored when valueType is localDate.'}
+                    'If undefined, control will not show time. Ignored when valueType is localDate.'},
+            {name: 'leftIcon', value: null, type: 'select',
+                options: [
+                    null,
+                    {label: 'envelope', value: Icon.envelope()},
+                    {label: 'clock', value: Icon.clock()}
+                ],
+                description: 'Icon to display inline on the left side of the input.'}
         ],
         description: [
             p('A Calendar Control for choosing a Date.'),

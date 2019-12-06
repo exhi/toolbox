@@ -21,6 +21,10 @@ function createModel() {
         userParams: [
             {name: 'disabled', value: false, type: 'bool',
                 description: 'True to disable user interaction.'},
+            {name: 'autoFocus', value: true, type: 'bool',
+                description: 'True to focus the control on render.'},
+            {name: 'selectOnFocus', value: false, type: 'bool',
+                description: 'True to select contents when control receives focus.'},
             {name: 'enableClear', value: false, type: 'bool',
                 description: 'True to show a "clear" button at the right of the control.'},
             {name: 'enableFilter', value: false, type: 'bool',
