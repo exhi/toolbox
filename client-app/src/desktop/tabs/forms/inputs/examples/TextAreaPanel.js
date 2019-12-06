@@ -18,10 +18,14 @@ function createModel() {
     return new InputTestModel({
         input: textArea,
         userParams: [
-            {name: 'disabled', value: false, type: 'bool'},
-            {name: 'commitOnChange', value: false, type: 'bool'},
-            {name: 'spellCheck', value: true, type: 'bool'},
-            {name: 'placeholder', value: undefined, type: 'text'}
+            {name: 'disabled', value: false, type: 'bool',
+                description: 'True to disable user interaction.'},
+            {name: 'commitOnChange', value: false, type: 'bool',
+                description: 'True to commit on every change/keystroke.'},
+            {name: 'spellCheck', value: true, type: 'bool',
+                description: 'True to allow browser spell check.'},
+            {name: 'placeholder', value: undefined, type: 'text',
+                description: 'Text to display when control is empty.'}
         ],
         description: [
             p('A multi-line text input.')

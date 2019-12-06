@@ -47,10 +47,14 @@ function createModel() {
             ]
         },
         userParams: [
-            {name: 'disabled', value: false, type: 'bool'},
-            {name: 'minimal', value: false, type: 'bool'},
-            {name: 'vertical', value: false, type: 'bool'},
-            {name: 'enableClear', value: true, type: 'bool'}
+            {name: 'disabled', value: false, type: 'bool',
+                description: 'True to disable user interaction.'},
+            {name: 'minimal', value: false, type: 'bool',
+                description: 'True to render each button with minimal surrounding chrome (default false).'},
+            {name: 'vertical', value: false, type: 'bool',
+                description: 'True to render in a vertical orientation.'},
+            {name: 'enableClear', value: false, type: 'bool',
+                description: 'True to allow buttons to be unselected (aka inactivated). Defaults to false.'}
         ],
         description: [
             p('A segmented group of buttons, one of which is depressed to indicate the input\'s current value.'),

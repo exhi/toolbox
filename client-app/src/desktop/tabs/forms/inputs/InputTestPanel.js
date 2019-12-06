@@ -24,7 +24,7 @@ export const inputTestPanel = hoistCmp.factory({
                         span({
                             className: 'input-test-panel-input_input',
                             /*
-                             * Find out why JsonInput can't get the model from context!
+                             * TODO: Find out why JsonInput can't get the model from context!
                              * I shouldn't have to pass in a model here.
                              */
                             item: model.input({model, bind: 'value', ...model.fixedParams, ...getParams(model.userParams)})

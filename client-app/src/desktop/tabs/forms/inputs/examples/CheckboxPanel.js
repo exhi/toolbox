@@ -18,11 +18,16 @@ function createModel() {
     return new InputTestModel({
         input: checkbox,
         userParams: [
-            {name: 'disabled', value: false, type: 'bool'},
-            {name: 'label', value: null, type: 'text'},
-            {name: 'displayUnsetState', value: true, type: 'bool'},
-            {name: 'labelAlign', value: 'left', type: 'select',
-                options: ['left', 'right']}
+            {name: 'disabled', value: false, type: 'bool',
+                description: 'True to disable user interaction.'},
+            {name: 'label', value: null, type: 'text',
+                description: 'Label text displayed adjacent to the control itself.'},
+            {name: 'displayUnsetState', value: true, type: 'bool',
+                description: 'True to render null or undefined as a distinct visual state.  If false,' +
+                              'these values will appear unchecked and visually indistinct from false.'},
+            {name: 'labelAlign', value: 'right', type: 'select',
+                options: ['left', 'right'],
+                description: 'Alignment of the inline label relative to the control itself, default right.'}
         ],
         description: [
             p('Checkbox control for boolean values.'),

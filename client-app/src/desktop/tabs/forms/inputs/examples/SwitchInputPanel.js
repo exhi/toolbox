@@ -18,10 +18,13 @@ function createModel() {
     return new InputTestModel({
         input: switchInput,
         userParams: [
-            {name: 'disabled', value: false, type: 'bool'},
-            {name: 'label', value: undefined, type: 'text'},
+            {name: 'disabled', value: false, type: 'bool',
+                description: 'True to disable user interaction.'},
+            {name: 'label', value: undefined, type: 'text',
+                description: 'Label text displayed adjacent to the control itself.'},
             {name: 'labelAlign', value: 'left', type: 'select',
-                options: ['left', 'right']}
+                options: ['left', 'right'],
+                description: 'Alignment of the inline label relative to the control itself.'}
         ],
         description: [
             p('Switch (toggle) control for non-nullable boolean values.')
