@@ -8,7 +8,7 @@ export declare class PortfolioPanelModel {
     gridPanelModel: GridPanelModel;
     mapPanelModel: MapPanelModel;
     detailPanelModel: DetailPanelModel;
-    readonly selectedPosition: any;
+    get selectedPosition(): any;
     constructor();
     doLoadAsync(loadSpec: any): Promise<void>;
     selectedPositionReaction(): {

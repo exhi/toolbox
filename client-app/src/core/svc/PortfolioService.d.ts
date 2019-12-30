@@ -37,7 +37,7 @@ export declare class PortfolioService {
         animation: boolean;
         data: any;
     }>;
-    getOLHCChartSeriesAsync(symbol: any): Promise<{
+    getOHLCChartSeriesAsync(symbol: any): Promise<{
         name: any;
         type: string;
         color: string;

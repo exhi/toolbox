@@ -1,17 +1,6 @@
 export declare class AppModel {
-    renderMode: string;
-    readonly useCompactGrids: boolean;
-    getAppOptions(): ({
-        name: string;
-        formField: {
-            item: any;
-            label?: undefined;
-        };
-        valueGetter: () => string;
-        valueSetter: (v: any) => any;
-        prefName?: undefined;
-        reloadRequired?: undefined;
-    } | {
+    get useCompactGrids(): boolean;
+    getAppOptions(): {
         name: string;
         prefName: string;
         formField: {
@@ -19,8 +8,6 @@ export declare class AppModel {
             item: any;
         };
         reloadRequired: boolean;
-        valueGetter?: undefined;
-        valueSetter?: undefined;
-    })[];
+    }[];
     initAsync(): Promise<void>;
 }

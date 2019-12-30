@@ -102,7 +102,7 @@ export class PortfolioService {
         };
     }
 
-    async getOLHCChartSeriesAsync(symbol) {
+    async getOHLCChartSeriesAsync(symbol) {
         const mktData = await XH.fetchJson({url: `portfolio/prices/${symbol}`});
         return {
             name: symbol,
