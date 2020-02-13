@@ -29,7 +29,8 @@
     "@xh/hoist": "^30.0.0-SNAPSHOT",
     "react": "~16.8.6",
     "react-dom": "~16.8.6",
-    "react-dom-factories": "~1.0.2"
+    "react-dom-factories": "~1.0.2",
+    "react-view": "~2.1.0"
   },
   "devDependencies": {
     "@xh/hoist-dev-utils": "4.4.0",

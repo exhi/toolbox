@@ -17,6 +17,7 @@ import {gridsTab} from './tabs/grids/GridsTab';
 import {homeTab} from './tabs/home/HomeTab';
 import {otherTab} from './tabs/other/OtherTab';
 import {panelsTab} from './tabs/panels/PanelsTab';
+import {inputsTab} from './tabs/inputs/InputsTab';
 
 @HoistAppModel
 export class AppModel {
@@ -29,7 +30,8 @@ export class AppModel {
             {id: 'grids', icon: Icon.grid(), content: gridsTab},
             {id: 'panels', icon: Icon.window(), content: panelsTab},
             {id: 'containers', icon: Icon.box(), content: containersTab},
-            {id: 'forms', icon: Icon.edit(), content: formsTab},
+            {id: 'forms', icon: Icon.clipboard(), content: formsTab},
+            {id: 'inputs', icon: Icon.edit(), content: inputsTab},
             {id: 'charts', icon: Icon.chartLine(), content: chartsTab},
             {id: 'other', icon: Icon.boxFull(), content: otherTab},
             {id: 'examples', icon: Icon.books(), content: examplesTab}
@@ -89,6 +91,25 @@ export class AppModel {
                             {name: 'sizing', path: '/sizing'},
                             {name: 'mask', path: '/mask'},
                             {name: 'loadingIndicator', path: '/loadingIndicator'}
+                        ]
+                    },
+                    {
+                        name: 'inputs',
+                        path: '/inputs',
+                        children: [
+                            {name: 'buttonGroupInput', path: '/buttonGroupInput'},
+                            {name: 'checkbox', path: '/checkbox'},
+                            {name: 'dateInput', path: '/dateInput'},
+                            {name: 'jsonInput', path: '/jsonInput'},
+                            {name: 'numberInput', path: '/numberInput'},
+                            {name: 'radioInput', path: '/radioInput'},
+                            {name: 'select', path: '/select'},
+                            {name: 'selectQuery', path: '/selectQuery'},
+                            {name: 'slider', path: '/slider'},
+                            {name: 'sliderRange', path: '/sliderRange'},
+                            {name: 'switchInput', path: '/switchInput'},
+                            {name: 'textArea', path: '/textArea'},
+                            {name: 'textInput', path: '/textInput'}
                         ]
                     },
                     {
