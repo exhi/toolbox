@@ -1,5 +1,6 @@
 package io.xh.toolbox
 
+import grails.gorm.transactions.Transactional
 import io.xh.hoist.config.AppConfig
 import io.xh.hoist.util.Utils
 import io.xh.toolbox.user.User
@@ -37,6 +38,7 @@ class BootStrap {
     //------------------------
     // Implementation
     //------------------------
+    @Transactional
     private void ensureRequiredConfigsCreated() {
         def adminUsername = getInstanceConfig('adminUsername')
 
@@ -131,7 +133,6 @@ class BootStrap {
             autoRefreshConfig.value = serializePretty([app: 30, mobile: 60])
             autoRefreshConfig.save()
         }
-
     }
 
     private void ensureRequiredPrefsCreated() {
@@ -208,6 +209,7 @@ class BootStrap {
         ])
     }
 
+    @Transactional
     private void ensureMonitorsCreated() {
         createMonitorIfNeeded(
             code: 'pricesAgeMs',
@@ -301,6 +303,7 @@ class BootStrap {
         if (!monitor) new Monitor(data).save()
     }
 
+    @Transactional
     private void ensureUsersCreated() {
         String adminUsername = getInstanceConfig('adminUsername')
         String adminPassword = getInstanceConfig('adminPassword')
@@ -344,6 +347,7 @@ class BootStrap {
         if (!user) new User(data).save()
     }
 
+    @Transactional
     private void resetGuestUserPassword () {
         def user = User.findByEmail(guestUserEmail)
         user.setPassword(guestUserPwd)
