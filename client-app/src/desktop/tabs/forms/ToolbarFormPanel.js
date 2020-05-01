@@ -12,7 +12,6 @@ import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {button} from '@xh/hoist/desktop/cmp/button';
 import {form} from '@xh/hoist/cmp/form';
 import {formField} from '@xh/hoist/desktop/cmp/form';
-import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
 import {
     buttonGroupInput,
     checkbox,
@@ -23,6 +22,8 @@ import {
     switchInput,
     textInput
 } from '@xh/hoist/desktop/cmp/input';
+import {toolbar, toolbarSep} from '@xh/hoist/desktop/cmp/toolbar';
+
 import {usStates} from '../../../core/data';
 import {wrapper} from '../../common';
 import {ToolbarFormPanelModel} from './ToolbarFormPanelModel';
@@ -148,6 +149,7 @@ export const toolbarFormPanel = hoistCmp.factory({
                                 placeholder: 'Select a state...'
                             })
                         }),
+                        toolbarSep(),
                         formField({
                             label: null,
                             field: 'option3',
