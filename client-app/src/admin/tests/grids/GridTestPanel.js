@@ -6,10 +6,11 @@ import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {storeFilterField} from '@xh/hoist/cmp/store';
 import {toolbarSep} from '@xh/hoist/desktop/cmp/toolbar';
 import {numberInput, switchInput} from '@xh/hoist/desktop/cmp/input';
-import {button, refreshButton} from '@xh/hoist/desktop/cmp/button';
+import {button, refreshButton, colAutosizeButton} from '@xh/hoist/desktop/cmp/button';
 import {grid} from '@xh/hoist/cmp/grid';
 import {tooltip} from '@xh/hoist/kit/blueprint';
 import {GridTestModel} from './GridTestModel';
+import {withDebug} from '@xh/hoist/utils/js';
 
 export const GridTestPanel = hoistCmp({
 
@@ -17,7 +18,7 @@ export const GridTestPanel = hoistCmp({
 
     render({model}) {
         const {gridModel} = model;
-        
+
         const formatRunTimes = () => {
             const fmt = (v) => v ? fmtNumber(v, {precision: 0, label: 'ms', labelCls: null}) : 'N/A',
                 {gridLoadTime: lt, avgGridLoadTime: avgLt, gridUpdateTime: ut, avgGridUpdateTime: avgUt} = model;
@@ -75,6 +76,12 @@ export const GridTestPanel = hoistCmp({
                     text: 'Scroll to Selected',
                     icon: Icon.crosshairs(),
                     onClick: () => model.gridModel.ensureSelectionVisible()
+                }),
+                colAutosizeButton({
+                    text: 'Autosize Columns',
+                    onClick: () => {
+                        withDebug('Autosizing Grid', () => model.gridModel.autosizeColumnsAsync(), 'GridTestPanel');
+                    }
                 }),
                 toolbarSep(),
                 tooltip({
