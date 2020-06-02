@@ -185,6 +185,7 @@ export class SampleGridModel {
                 hidden: true,
                 excludeFromChooser: true
             },
+            {field: 'longText', width: 400},
             {
                 field: 'city',
                 minWidth: 150,
@@ -239,6 +240,10 @@ export class SampleGridModel {
         const {trades, summary} = await XH.fetchJson({url: 'trade'}),
             gridModel = this.gridModel;
 
+        trades.forEach(it => {
+            it.longText = this.lorem;
+        });
+
         gridModel.loadData(trades, summary);
         if (gridModel.isReady && !gridModel.hasSelection) gridModel.selectFirst();
     }
@@ -277,4 +282,6 @@ export class SampleGridModel {
         this.gridModel.setGroupBy(groupByArr);
         wait(1).then(() => this.gridModel.selectFirst());
     }
+
+    lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 }
