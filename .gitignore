@@ -28,3 +28,4 @@ toolbox-logs/
 .DS_Store?
 ehthumbs.db
 Thumbs.db
+/client-app/cypress/snapshots/toolbox.js/__diff_output__/

@@ -3,6 +3,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "cy:open": "cypress open",
     "build": "webpack --env.prodBuild",
     "buildAndAnalyze": "webpack --env.prodBuild --env.analyzeBundles",
     "hoistVer": "cat node_modules/@xh/hoist/package.json | grep version",
@@ -38,10 +39,12 @@
   "devDependencies": {
     "@xh/hoist-dev-utils": "^6.0.0-SNAPSHOT",
     "cross-env": "~7.0.2",
+    "cypress": "^4.10.0",
     "husky": "~4.2.1",
     "lint-staged": "~10.2.10",
     "stylelint": "~13.6.0",
     "stylelint-config-standard": "~20.0.0",
-    "stylelint-scss": "~3.18.0"
+    "stylelint-scss": "~3.18.0",
+    "cypress-image-snapshot": "^3.1.1"
   }
 }
