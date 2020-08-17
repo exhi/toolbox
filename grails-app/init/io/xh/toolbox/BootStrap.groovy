@@ -160,6 +160,27 @@ class BootStrap {
                 defaultValue: false,
                 groupName: 'Toolbox',
                 note: 'True to expand the docked linked panel by default, false to start collapsed.'
+            ],
+            prefExampleColor: [
+                    type: 'string',
+                    defaultValue: 'default',
+                    local: true,
+                    groupName: 'Toolbox',
+                    note: 'For use in User Preferences Example'
+            ],
+            prefExampleIcon: [
+                    type: 'string',
+                    defaultValue: 'user',
+                    local: true,
+                    groupName: 'Toolbox',
+                    note: 'For use in User Preferences Example'
+            ],
+            prefExamplePanelState: [
+                    type: 'json',
+                    defaultValue: [:],
+                    local: true,
+                    groupName: 'Toolbox',
+                    note: 'For use in User Preferences Example'
             ]
         ])
     }

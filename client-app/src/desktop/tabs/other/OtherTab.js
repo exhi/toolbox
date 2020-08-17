@@ -12,6 +12,7 @@ import {pinPadPanel} from './PinPadPanel';
 import {popupsPanel} from './PopupsPanel';
 import {relativeTimestampPanel} from './RelativeTimestampPanel';
 import {appNotificationsPanel} from './AppNotificationsPanel';
+import {preferenceExamplePanel} from './PreferenceExamplePanel';
 
 export const otherTab = hoistCmp.factory(
     () => tabContainer({
@@ -30,6 +31,7 @@ export const otherTab = hoistCmp.factory(
                 {id: 'numberFormats', content: numberFormatsPanel},
                 {id: 'pinPad', title: 'PIN Pad', content: pinPadPanel},
                 {id: 'popups', content: popupsPanel},
+                {id: 'preferences', title: 'User Preferences', content: preferenceExamplePanel},
                 {id: 'timestamp', content: relativeTimestampPanel}
             ]
         },
