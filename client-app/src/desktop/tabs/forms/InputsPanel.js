@@ -105,10 +105,9 @@ const formContents = hoistCmp.factory(
                     row({
                         label: 'TextArea',
                         field: 'text4',
-                        info: 'fill, placeholder, selectOnFocus',
+                        info: 'placeholder, selectOnFocus',
                         layout: {height: 150},
                         item: textArea({
-                            fill: true,
                             placeholder: 'Tell us your thoughts...',
                             selectOnFocus: true
                         })
@@ -129,7 +128,6 @@ const formContents = hoistCmp.factory(
                         field: 'number1',
                         info: 'stepSizes',
                         item: numberInput({
-                            fill: true,
                             stepSize: 1000,
                             majorStepSize: 100000,
                             minorStepSize: 100
@@ -140,7 +138,6 @@ const formContents = hoistCmp.factory(
                         field: 'number2',
                         info: 'enableShorthandUnits, displayWithCommas, selectOnFocus',
                         item: numberInput({
-                            fill: true,
                             enableShorthandUnits: true,
                             displayWithCommas: true,
                             selectOnFocus: true
