@@ -12,6 +12,9 @@ import './SampleGrid.scss';
 @HoistModel
 @LoadSupport
 export class SampleGridModel {
+
+    loadCount = 0;
+
     @observable groupBy = false;
 
     panelRef = createRef();
@@ -201,7 +204,11 @@ export class SampleGridModel {
                 field: 'city',
                 minWidth: 150,
                 maxWidth: 200,
-                tooltip: (val, {record}) => `${record.data.company} is located in ${val}`,
+                tooltip: (val, {record}) => {
+                    // if (val == 'New York') return 'My kind of town!';
+                    if (val == 'New York') return null;
+                    return `${record.data.company} is located in ${val}`;
+                },
                 cellClass: (val) => {
                     return val === 'New York' ? 'xh-text-color-accent' : '';
                 }
@@ -246,6 +253,10 @@ export class SampleGridModel {
         const {trades, summary} = await XH.fetchJson({url: 'trade'}),
             gridModel = this.gridModel;
 
+        if (this.loadCount == 0) {
+            trades.forEach(it => it.city = 'New York');
+            this.loadCount++;
+        }
         gridModel.loadData(trades, summary);
         if (gridModel.isReady && !gridModel.hasSelection) gridModel.selectFirst();
     }
