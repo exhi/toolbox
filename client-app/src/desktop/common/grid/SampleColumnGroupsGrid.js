@@ -26,12 +26,15 @@ export const sampleColumnGroupsGrid = hoistCmp.factory({
         const {gridModel} = model;
 
         return panel({
-            item: hframe(grid({
-                agOptions: {
-                    groupUseEntireRow: false,
-                    groupSuppressAutoColumn: true
-                }
-            }), gridOptionsPanel({model: gridModel})),
+            item: hframe(
+                grid({
+                    agOptions: {
+                        groupUseEntireRow: false,
+                        groupSuppressAutoColumn: true
+                    }
+                }), 
+                gridOptionsPanel({model: gridModel})
+            ),
             ref: model.panelRef,
             mask: 'onLoad',
             tbar: [
