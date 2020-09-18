@@ -26,7 +26,12 @@ export const sampleColumnGroupsGrid = hoistCmp.factory({
         const {gridModel} = model;
 
         return panel({
-            item: hframe(grid(), gridOptionsPanel({model: gridModel})),
+            item: hframe(grid({
+                agOptions: {
+                    groupUseEntireRow: false,
+                    groupSuppressAutoColumn: true
+                }
+            }), gridOptionsPanel({model: gridModel})),
             ref: model.panelRef,
             mask: 'onLoad',
             tbar: [
@@ -131,6 +136,15 @@ class Model {
                 });
             },
             columns: [
+                {
+                    colId: 'stateGroup',
+                    headerName: 'State Group',
+                    agOptions: {
+                        showRowGroup: true,
+                        cellRenderer: 'agGroupCellRenderer'
+                    },
+                    width: 120
+                },
                 {
                     groupId: 'demographics',
                     children: [
