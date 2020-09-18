@@ -1,50 +1,56 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-
-import {XH, HoistModel} from '@xh/hoist/core';
-import {GridModel} from '@xh/hoist/mobile/cmp/grid';
-import {PendingTaskModel} from '@xh/hoist/utils/async';
-import {LocalStore} from '@xh/hoist/data';
-import {numberRenderer} from '@xh/hoist/format';
-
-import {companyTrades} from '../../core/data';
+import {HoistModel, LoadSupport, managed, XH} from '@xh/hoist/core';
+import {GridModel} from '@xh/hoist/cmp/grid';
+import {numberRenderer, thousandsRenderer} from '@xh/hoist/format';
+import {bindable} from '@xh/hoist/mobx';
+import {wait} from '@xh/hoist/promise';
 
 @HoistModel
+@LoadSupport
 export class GridPageModel {
 
-    loadModel = new PendingTaskModel();
+    @bindable.ref
+    dateLoaded = null;
 
+    @managed
     gridModel = new GridModel({
-        store: new LocalStore({
-            fields: ['company', 'profit_loss']
-        }),
-        leftColumn: {
-            headerName: 'Company',
-            field: 'company'
-        },
-        rightColumn: {
-            headerName: 'P&L',
-            field: 'profit_loss',
-            valueFormatter: numberRenderer({
-                precision: 0,
-                ledger: true,
-                colorSpec: true,
-                asElement: true
-            })
-        }
+        persistWith: {localStorageKey: 'toolboxSampleGrid'},
+        sortBy: ['profit_loss|desc|abs'],
+        enableColChooser: true,
+        columns: [
+            {
+                field: 'company',
+                pinned: true,
+                hideable: false,
+                width: 170,
+                autosizeMaxWidth: 200
+            },
+            {
+                field: 'city',
+                width: 120
+            },
+            {
+                headerName: 'P&L',
+                field: 'profit_loss',
+                width: 120,
+                align: 'right',
+                absSort: true,
+                renderer: numberRenderer({precision: 0, ledger: true, colorSpec: true})
+            },
+            {
+                headerName: 'Volume',
+                field: 'trade_volume',
+                width: 90,
+                align: 'right',
+                renderer: thousandsRenderer({precision: 1, label: true})
+            }
+        ]
     });
 
-    constructor() {
-        this.gridModel.loadData(companyTrades);
-    }
-
-    destroy() {
-        XH.safeDestroy(this.gridModel);
-        XH.safeDestroy(this.loadModel);
+    async doLoadAsync(loadSpec) {
+        await wait(500);
+        const customers = await XH.fetchJson({url: 'customer'});
+        this.gridModel.loadData(customers);
+        this.setDateLoaded(new Date());
     }
 
 }

@@ -1,40 +1,38 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
-import {tabContainer, TabContainerModel} from '@xh/hoist/desktop/cmp/tab';
+import {tabContainer} from '@xh/hoist/cmp/tab';
+import {hoistCmp} from '@xh/hoist/core';
+import {buttonsPanel} from './Buttons';
+import {clockPanel} from './ClockPanel';
+import {fileChooserPanel} from './FileChooserPanel';
+import {dateFormatsPanel} from './formats/DateFormatsPanel';
+import {numberFormatsPanel} from './formats/NumberFormatsPanel';
+import {iconsPanel} from './IconsPanel';
+import {jsxPanel} from './JsxPanel';
+import {leftRightChooserPanel} from './LeftRightChooserPanel';
+import {pinPadPanel} from './PinPadPanel';
+import {popupsPanel} from './PopupsPanel';
+import {relativeTimestampPanel} from './RelativeTimestampPanel';
+import {appNotificationsPanel} from './AppNotificationsPanel';
 
-import {LeftRightChooserPanel} from './LeftRightChooserPanel';
-import {MaskPanel} from './MaskPanel';
-import {RelativeTimestampPanel} from './RelativeTimestampPanel';
-import {JsxPanel} from './JsxPanel';
-
-@HoistComponent
-export class OtherTab extends Component {
-
-    localModel = new TabContainerModel({
-        route: 'default.other',
-        tabs: [
-            {id: 'mask', title: 'Mask', content: MaskPanel},
-            {id: 'leftRightChooser', title: 'LeftRightChooser', content: LeftRightChooserPanel},
-            {id: 'timestamp', title: 'Timestamp', content: RelativeTimestampPanel},
-            {id: 'jsx', title: 'Factories vs. JSX', content: JsxPanel}
-        ]
-    });
-    
-    async loadAsync() {
-        this.model.requestRefresh();
-    }
-
-    render() {
-        return tabContainer({
-            model: this.model,
+export const otherTab = hoistCmp.factory(
+    () => tabContainer({
+        model: {
+            route: 'default.other',
             switcherPosition: 'left',
-            className: 'toolbox-tab'
-        });
-    }
-}
+            tabs: [
+                {id: 'appNotifications', content: appNotificationsPanel},
+                {id: 'buttons', content: buttonsPanel},
+                {id: 'clock', content: clockPanel},
+                {id: 'dateFormats', content: dateFormatsPanel},
+                {id: 'jsx', title: 'Factories vs. JSX', content: jsxPanel},
+                {id: 'fileChooser', title: 'FileChooser', content: fileChooserPanel},
+                {id: 'icons', content: iconsPanel},
+                {id: 'leftRightChooser', title: 'LeftRightChooser', content: leftRightChooserPanel},
+                {id: 'numberFormats', content: numberFormatsPanel},
+                {id: 'pinPad', title: 'PIN Pad', content: pinPadPanel},
+                {id: 'popups', content: popupsPanel},
+                {id: 'timestamp', content: relativeTimestampPanel}
+            ]
+        },
+        className: 'toolbox-tab'
+    })
+);

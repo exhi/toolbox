@@ -1,31 +1,66 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-
-import {Component} from 'react';
-import {HoistComponent, elemFactory} from '@xh/hoist/core';
-import {page} from '@xh/hoist/mobile/cmp/page';
-import {grid} from '@xh/hoist/mobile/cmp/grid';
-
+import {creates, hoistCmp, XH} from '@xh/hoist/core';
+import {panel} from '@xh/hoist/mobile/cmp/panel';
+import {grid} from '@xh/hoist/cmp/grid';
+import {filler} from '@xh/hoist/cmp/layout';
+import {colAutosizeButton, colChooserButton} from '@xh/hoist/mobile/cmp/button';
+import {Icon} from '@xh/hoist/icon';
+import {label, select, switchInput} from '@xh/hoist/mobile/cmp/input';
+import {storeFilterField} from '@xh/hoist/cmp/store';
+import {relativeTimestamp} from '@xh/hoist/cmp/relativetimestamp';
 import {GridPageModel} from './GridPageModel';
 
-@HoistComponent
-export class GridPage extends Component {
-    localModel = new GridPageModel();
+export const gridPage = hoistCmp.factory({
 
-    render() {
-        const {model} = this,
-            {gridModel, loadModel} = model;
+    model: creates(GridPageModel),
 
-        return page({
-            loadModel: loadModel,
-            item: grid({model: gridModel})
+    render({model}) {
+        const {gridModel} = model;
+        return panel({
+            title: 'Grids',
+            icon: Icon.gridPanel(),
+            mask: 'onLoad',
+            headerItems: [
+                relativeTimestamp({
+                    bind: 'dateLoaded',
+                    options: {prefix: 'Loaded'}
+                })
+            ],
+            item: grid({
+                onRowClicked: (e) => {
+                    const {id} = e.data.raw;
+                    XH.appendRoute('gridDetail', {id});
+                }
+            }),
+            tbar: [
+                label('Size:'),
+                select({
+                    width: 120,
+                    model: gridModel,
+                    bind: 'sizingMode',
+                    options: [
+                        {label: 'Large', value: 'large'},
+                        {label: 'Standard', value: 'standard'},
+                        {label: 'Compact', value: 'compact'},
+                        {label: 'Tiny', value: 'tiny'}
+                    ]
+                }),
+                label('Borders:'),
+                switchInput({
+                    model: gridModel,
+                    bind: 'rowBorders'
+                }),
+                label('Stripes:'),
+                switchInput({
+                    model: gridModel,
+                    bind: 'stripeRows'
+                })
+            ],
+            bbar: [
+                storeFilterField(),
+                filler(),
+                colAutosizeButton(),
+                colChooserButton()
+            ]
         });
     }
-
-}
-
-export const gridPage = elemFactory(GridPage);
+});

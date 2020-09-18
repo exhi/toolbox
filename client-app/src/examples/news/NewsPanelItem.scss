@@ -1,0 +1,54 @@
+.toolbox-news-panel {
+  .news-item {
+    p,
+    span {
+      /* BOTH of the following are required for text-overflow */
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .text-container {
+      margin-left: var(--xh-pad-px);
+      display: flex;
+      flex: 2;
+      flex-direction: column;
+      line-height: 26px;
+    }
+
+    .overflow-ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &--title {
+      font-size: var(--xh-font-size-large-px);
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    &--text {
+      opacity: 0.8;
+      color: var(--xh-grid-text-color);
+      margin-bottom: 0;
+    }
+
+    .img-container {
+      flex: 1;
+      padding: var(--xh-pad-half-px) var(--xh-pad-px);
+    }
+
+    &--img {
+      display: flex;
+      align-items: flex-start;
+      overflow: hidden;
+    }
+
+    img {
+      width: 80%;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+  }
+}

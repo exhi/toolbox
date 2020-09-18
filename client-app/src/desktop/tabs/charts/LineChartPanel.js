@@ -1,49 +1,36 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
-import {wrapper} from '../../common/Wrapper';
-import {vframe} from '@xh/hoist/cmp/layout';
+import {chart} from '@xh/hoist/cmp/chart';
+import {box, vframe} from '@xh/hoist/cmp/layout';
+import {creates, hoistCmp} from '@xh/hoist/core';
+import {select} from '@xh/hoist/desktop/cmp/input';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
-import {comboBox, label} from '@xh/hoist/desktop/cmp/form';
-import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
-import {chart} from '@xh/hoist/desktop/cmp/chart';
+import {Icon} from '@xh/hoist/icon';
+import {wrapper} from '../../common';
 import {LineChartModel} from './LineChartModel';
 
-@HoistComponent
-export class LineChartPanel extends Component {
-    localModel = new LineChartModel();
+export const lineChartPanel = hoistCmp.factory({
+    model: creates(LineChartModel),
 
-    render() {
-        const model = this.model,
-            {companyMap} = model;
+    render({model}) {
         return wrapper(
             panel({
                 className: 'toolbox-linechart-panel',
-                title: 'Line Chart',
+                title: 'Charts › Line',
+                icon: Icon.chartLine(),
                 width: 800,
                 height: 600,
-                item: this.renderExample(),
-                tbar: toolbar(
-                    label('Company: '),
-                    comboBox({
-                        model,
-                        options: Object.keys(companyMap),
-                        field: 'currentCompany'
-                    }),
-                )
+                item: vframe({
+                    className: 'toolbox-example-container',
+                    item: chart()
+                }),
+                tbar: [
+                    box('Symbol: '),
+                    select({
+                        bind: 'currentSymbol',
+                        options: model.symbols,
+                        enableFilter: false
+                    })
+                ]
             })
         );
     }
-
-    renderExample() {
-        return vframe({
-            className: 'toolbox-example-container',
-            item: chart({model: this.model.chartModel})
-        });
-    }
-}
+});

@@ -1,45 +1,46 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-
-import {HoistModel} from '@xh/hoist/core';
-import {ChartModel} from '@xh/hoist/desktop/cmp/chart';
-import {observable, action} from '@xh/hoist/mobx';
+import {HoistModel, LoadSupport, XH} from '@xh/hoist/core';
+import {ChartModel} from '@xh/hoist/cmp/chart';
+import {bindable} from '@xh/hoist/mobx';
 import Highcharts from 'highcharts/highstock';
-import moment from 'moment';
-import Amazon from '../../../core/data/rest/charts/amazonPricing';
-import Facebook from '../../../core/data/rest/charts/facebookPricing';
-import Yahoo from '../../../core/data/rest/charts/yahooPricing';
 
 @HoistModel
+@LoadSupport
 export class LineChartModel {
-    @observable currentCompany = 'Amazon';
-    companyMap = {Amazon, Facebook, Yahoo};
-    chartModel = new ChartModel({config: this.getChartModelCfg()});
+    @bindable currentSymbol = '';
+    @bindable.ref symbols = null;
+    numCompanies = 3;
+    chartModel = new ChartModel({highchartsConfig: this.getChartModelCfg()});
 
     constructor() {
-        this.addAutorun(() => this.loadChart());
+        this.addReaction({
+            track: () => this.currentSymbol,
+            run: () => this.loadAsync()
+        });
     }
+    
+    async doLoadAsync(loadSpec) {
+        if (!this.symbols) {
+            let symbols = await XH.portfolioService.getSymbolsAsync({loadSpec});
+            symbols = symbols.slice(0, this.numCompanies);
+            this.setSymbols(symbols);
+        }
 
-    @action
-    setCurrentCompany(currentCompany) {
-        this.currentCompany = currentCompany;
-    }
+        if (!this.currentSymbol) {
+            this.setCurrentSymbol(this.symbols[0]);
+        }
 
-    loadChart() {
-        const company = this.currentCompany,
-            data = this.companyMap[company];
+        let series = await XH.portfolioService.getLineChartSeriesAsync({
+            symbol: this.currentSymbol,
+            dimension: 'close',
+            loadSpec
+        }).catchDefault() ?? {};
 
-        const prices = data.map(it => {
-            const date = moment(it.valueDate).valueOf();
-            return [date, it.close];
+        Object.assign(series, {
+            type: 'area',
+            animation: true
         });
 
-        const series = this.createChartSeries(company, prices);
-        this.chartModel.setSeries(series);
+        this.chartModel.setSeries([series]);
     }
 
     getChartModelCfg() {
@@ -84,7 +85,7 @@ export class LineChartModel {
                         },
                         stops: [
                             [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            [1, new Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                         ]
                     },
                     marker: {
@@ -98,17 +99,10 @@ export class LineChartModel {
                     },
                     threshold: null
                 }
+            },
+            exporting: {
+                enabled: true
             }
         };
-    }
-
-    createChartSeries(name, data) {
-        return [
-            {
-                name: name,
-                type: 'area',
-                data: data
-            }
-        ];
     }
 }

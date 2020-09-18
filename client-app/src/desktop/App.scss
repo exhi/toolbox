@@ -1,8 +1,10 @@
-@import './helpers';
-
-body {
-  --panel-bg: var(--xh-bg);
-  --panel-border-width: 1;
+// Tweak vertical alignment on custom Toolbox icon/logo title image.
+.xh-appbar-icon {
+  img {
+    height: 25px;
+    display: block;
+    margin-left: var(--xh-pad-px);
+  }
 }
 
 .toolbox-tab > .xh-tab-switcher--left > .bp3-tab-list {
@@ -10,7 +12,26 @@ body {
   border-right: var(--xh-border-solid);
 }
 
-.toolbox-multiselect {
-  max-width: 240px;
-  max-height: 60px;
+.tbox-display-opts {
+  .xh-panel-header {
+    color: var(--xh-text-color);
+    background-color: var(--xh-bg-alt);
+
+    .xh-button--minimal {
+      color: var(--xh-text-color) !important;
+    }
+  }
+
+  .xh-vframe {
+    padding: var(--xh-pad-half-px);
+
+    .xh-input,
+    .xh-button {
+      margin: var(--xh-pad-half-px);
+    }
+
+    label {
+      margin: 0 var(--xh-pad-half-px);
+    }
+  }
 }

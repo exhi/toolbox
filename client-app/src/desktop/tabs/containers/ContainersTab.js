@@ -1,40 +1,25 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
-import {tabContainer, TabContainerModel} from '@xh/hoist/desktop/cmp/tab';
-
-import {HBoxContainerPanel} from './HBoxContainerPanel';
-import {VBoxContainerPanel} from './VBoxContainerPanel';
-import {PanelContainerPanel} from './PanelContainerPanel';
-import {TabPanelContainerPanel} from './TabPanelContainerPanel';
-import {ToolbarPanel} from './ToolbarPanel';
-
+import {tabContainer} from '@xh/hoist/cmp/tab';
+import {hoistCmp} from '@xh/hoist/core';
+import {dashContainerPanel} from './dash/DashContainerPanel';
+import {dockContainerPanel} from './DockContainerPanel';
+import {hboxContainerPanel} from './HBoxContainerPanel';
+import {tabPanelContainerPanel} from './TabPanelContainerPanel';
+import {vboxContainerPanel} from './VBoxContainerPanel';
 import './ContainersTab.scss';
 
-@HoistComponent
-export class ContainersTab extends Component {
-
-    localModel = new TabContainerModel({
-        route: 'default.containers',
-        tabs: [
-            {id: 'hbox', title: 'HBox', content: HBoxContainerPanel},
-            {id: 'vbox', title: 'VBox', content: VBoxContainerPanel},
-            {id: 'panel', content: PanelContainerPanel},
-            {id: 'tabPanel', title: 'TabContainer', content: TabPanelContainerPanel},
-            {id: 'toolbar', content: ToolbarPanel}
-        ]
-    });
-
-    render() {
-        return tabContainer({
-            model: this.model,
+export const containersTab = hoistCmp.factory(
+    () => tabContainer({
+        model: {
+            route: 'default.containers',
             switcherPosition: 'left',
-            className: 'toolbox-tab'
-        });
-    }
-}
+            tabs: [
+                {id: 'tabPanel', title: 'TabContainer', content: tabPanelContainerPanel},
+                {id: 'dock', title: 'DockContainer', content: dockContainerPanel},
+                {id: 'dash', title: 'DashContainer', content: dashContainerPanel},
+                {id: 'hbox', title: 'HBox', content: hboxContainerPanel},
+                {id: 'vbox', title: 'VBox', content: vboxContainerPanel}
+            ]
+        },
+        className: 'toolbox-tab'
+    })
+);

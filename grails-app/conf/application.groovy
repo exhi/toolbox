@@ -1,19 +1,10 @@
 hoistDefaults()
 
 // See also runtime.groovy for additional instance-specific configuration
-
 grails {
     project.groupId = 'io.xh.toolbox'
     app.context = '/'
     resources.pattern = '/**'
-}
-
-dataSource {
-    dbCreate = "update"
-    url = "jdbc:h2:mem:testDb;MVCC=TRUE"
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
 }
 
 //------------------------------------------------------------
@@ -21,16 +12,20 @@ dataSource {
 //-------------------------------------------------------------
 private void hoistDefaults() {
 
+    // Uncomment to enable built-in spring boot admin endpoints (beans, metrics, etc)
+    // management.security.enabled = false
+
     grails {
         cors.enabled = true
         spring {
-            transactionManagement.proxies = false    // use @Transaction for services
+            transactionManagement.proxies = false // use @Transaction for services
             groovy.template.'check-template-location' = false
             bean.packages = []
         }
 
         endpoints {
-            enabled = false    // selectively enable these, after lockdown
+            // Set to true to enable built-in spring boot admin endpoints (beans, metrics, etc)
+            enabled = false
         }
 
         mime {
@@ -53,16 +48,24 @@ private void hoistDefaults() {
             ]
         }
 
+        controllers {
+            defaultScope = 'singleton'
+
+            // Increase limits to 20mb to support large grid exports, other file uploads.
+            upload {
+                maxFileSize = 20971520
+                maxRequestSize = 20971520
+            }
+        }
+
         views.default.codec = 'none'
         views.gsp.encoding = 'UTF-8'
 
         urlmapping.cache.maxsize = 1000
-        controllers.defaultScope = 'singleton'          // 'prototype' (default), recommended for closure actions,
-        // 'singleton is recommended for method actions
         converters.encoding = 'UTF-8'
         enable.native2ascii = true
         web.disable.multipart = false
-        exceptionresolver.params.exclude = ['password']
+        exceptionresolver.params.exclude = ['password', 'pin']
 
         gorm {
             failOnError = true

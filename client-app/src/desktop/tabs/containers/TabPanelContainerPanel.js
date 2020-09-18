@@ -1,24 +1,19 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import React, {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
-import {panel} from '@xh/hoist/desktop/cmp/panel';
-import {tabContainer, TabContainerModel} from '@xh/hoist/desktop/cmp/tab';
-import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
+import {div, hspacer, span} from '@xh/hoist/cmp/layout';
+import {tabContainer, TabContainerModel} from '@xh/hoist/cmp/tab';
+import {creates, hoistCmp, HoistModel, managed} from '@xh/hoist/core';
 import {button} from '@xh/hoist/desktop/cmp/button';
+import {switchInput, textInput} from '@xh/hoist/desktop/cmp/input';
+import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {Icon} from '@xh/hoist/icon';
+import {find} from 'lodash';
+import React from 'react';
 import {wrapper} from '../../common/Wrapper';
 
-@HoistComponent
-export class TabPanelContainerPanel extends Component {
-    topModel =  this.createTopModel()
+export const tabPanelContainerPanel = hoistCmp.factory({
+    model: creates(() => new Model()),
 
-    render() {
-        const {topModel} = this;
+    render({model}) {
+        const {stateTabModel, detachedTabModel, noTabsModel} = model;
 
         return wrapper({
             description: [
@@ -32,96 +27,156 @@ export class TabPanelContainerPanel extends Component {
                     or omitted entirely via the <code>switcherPosition</code> prop.
                 </p>
             ],
+            links: [
+                {url: '$TB/client-app/src/desktop/tabs/containers/TabPanelContainerPanel.js', notes: 'This example.'},
+                {url: '$TB/client-app/src/desktop/AppModel.js', notes: 'Toolbox AppModel with top-level TabContainerModel.'},
+                {url: '$HR/cmp/tab/TabContainer.js', notes: 'Hoist container component.'},
+                {url: '$HR/cmp/tab/TabContainerModel.js', notes: 'Hoist container model - primary API and configuration point for tabs.'},
+                {url: '$HR/cmp/tab/TabModel.js', notes: 'Hoist tab model - created by TabContainerModel in its ctor from provided configs.'}
+            ],
             item: panel({
-                title: 'Containers > Tabs',
+                title: 'Containers › Tabs',
                 icon: Icon.tab(),
                 className: 'toolbox-containers-tabs',
                 width: 700,
                 height: 400,
-                item: tabContainer({model: topModel})
+                item: tabContainer({
+                    model: {
+                        tabs: [
+                            {
+                                id: 'top',
+                                title: 'Top Tabs',
+                                content: () => div(
+                                    `This overall example is a standard TabContainer with its switcher located in the default,
+                                    top position. Change the tabs above to see examples of other TabContainer configurations.`
+                                )
+                            },
+                            {
+                                id: 'bottom',
+                                title: 'Bottom Tabs',
+                                content: () => tabContainer({
+                                    className: 'child-tabcontainer',
+                                    model: model.createContainerModelConfig({switcherPosition: 'bottom'})
+                                })
+                            },
+                            {
+                                id: 'left',
+                                title: 'Left Tabs',
+                                content: () => tabContainer({
+                                    className: 'child-tabcontainer',
+                                    model: model.createContainerModelConfig({switcherPosition: 'left'})
+                                })
+                            },
+                            {
+                                id: 'right',
+                                title: 'Right Tabs',
+                                content: () => tabContainer({
+                                    className: 'child-tabcontainer',
+                                    model: model.createContainerModelConfig({switcherPosition: 'right'})
+                                })
+                            },
+                            {
+                                id: 'custom',
+                                title: 'Custom Switcher',
+                                content: () => panel({
+                                    className: 'child-tabcontainer',
+                                    tbar: model.detachedTabModel.tabs.map(childModel => button({
+                                        intent: childModel.isActive ? 'primary' : 'default',
+                                        text: childModel.title,
+                                        onClick: () => {
+                                            detachedTabModel.setActiveTabId(childModel.id);
+                                        }
+                                    })),
+                                    item: tabContainer({model: detachedTabModel})
+                                })
+                            },
+                            {
+                                id: 'state',
+                                title: 'Tab State',
+                                content: () => {
+                                    const {tabs} = stateTabModel,
+                                        peopleTab = find(tabs, {id: 'people'}),
+                                        placesTab = find(tabs, {id: 'places'});
+
+                                    return panel({
+                                        className: 'child-tabcontainer',
+                                        bbar: [
+                                            switchInput({
+                                                model: peopleTab,
+                                                bind: 'disabled',
+                                                label: 'People Disabled?'
+                                            }),
+                                            hspacer(10),
+                                            'Places Tab Title: ',
+                                            textInput({
+                                                model: placesTab,
+                                                bind: 'title'
+                                            })
+                                        ],
+                                        item: tabContainer({model: stateTabModel})
+                                    });
+                                }
+                            },
+                            {
+                                id: 'empty',
+                                title: 'Empty (no tabs)',
+                                content: () => {
+                                    return panel({
+                                        className: 'child-tabcontainer',
+                                        bbar: [
+                                            span('In this example, all tabs have been omitted and the default emptyText is shown.')
+                                        ],
+                                        item: tabContainer({model: noTabsModel})
+                                    });
+                                }
+                            }
+                        ]
+                    }
+                })
             })
         });
     }
+});
 
-    createTopModel() {
-        const detachedModel = this.createContainerModel();
 
-        const intro = `
-            This overall example is a standard TabContainer with its switcher located in the default,
-            top position. Change the tabs above to see examples of other TabContainer configurations.
-        `;
+@HoistModel
+class Model {
 
-        return new TabContainerModel({
+    @managed
+    detachedTabModel = new TabContainerModel(this.createContainerModelConfig({switcherPosition: 'none'}));
+
+    @managed
+    stateTabModel = new TabContainerModel(this.createContainerModelConfig({}));
+
+    @managed
+    noTabsModel = new TabContainerModel({
+        tabs: [
+            {id: 'omitted1', content: () => 'Not rendered!', omit: true},
+            {id: 'omitted2', content: () => 'Not rendered!', omit: true}
+        ]
+    });
+
+    createContainerModelConfig(args) {
+        const tabTxt = title => div(`This is the ${title} tab`);
+        return {
             tabs: [
                 {
-                    id: 'top',
-                    title: 'Top Tabs',
-                    content: () => intro
+                    id: 'people',
+                    icon: Icon.user(),
+                    content: () => tabTxt('People')
                 },
                 {
-                    id: 'bottom',
-                    title: 'Bottom Tabs',
-                    content: () => {
-                        return tabContainer({
-                            className: 'child-tabcontainer',
-                            model: this.createContainerModel(),
-                            switcherPosition: 'bottom'
-                        });
-                    }
+                    id: 'places',
+                    icon: Icon.home(),
+                    content: () => tabTxt('Places')
                 },
                 {
-                    id: 'left',
-                    title: 'Left Tabs',
-                    content: () => {
-                        return tabContainer({
-                            className: 'child-tabcontainer',
-                            model: this.createContainerModel(),
-                            switcherPosition: 'left'
-                        });
-                    }
-                },
-                {
-                    id: 'right',
-                    title: 'Right Tabs',
-                    content: () => {
-                        return tabContainer({
-                            className: 'child-tabcontainer',
-                            model: this.createContainerModel(),
-                            switcherPosition: 'right'
-                        });
-                    }
-                },
-                {
-                    id: 'custom',
-                    title: 'Custom Switcher',
-                    content: () => {
-                        return panel({
-                            className: 'child-tabcontainer',
-                            tbar: toolbar(
-                                detachedModel.tabs.map(childModel => button({
-                                    intent: childModel.isActive ? 'primary' : 'default',
-                                    text: childModel.title,
-                                    onClick: () => {
-                                        detachedModel.setActiveTabId(childModel.id);
-                                    }
-                                }))
-                            ),
-                            item: tabContainer({model: detachedModel, switcherPosition: 'none'})
-                        });
-                    }
+                    id: 'things',
+                    icon: Icon.portfolio(),
+                    content: () => tabTxt('Things')
                 }
-            ]
-        });
-    }
-
-    createContainerModel() {
-        const tabTxt = title => `This is the ${title} tab`;
-        return new TabContainerModel({
-            tabs: [
-                {id: 'people', content: () => tabTxt('People')},
-                {id: 'places', content: () => tabTxt('Places')},
-                {id: 'things', content: () => tabTxt('Things')}
-            ]
-        });
+            ],
+            ...args
+        };
     }
 }

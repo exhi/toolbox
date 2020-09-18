@@ -6,22 +6,42 @@
     "build": "webpack --env.prodBuild",
     "buildAndAnalyze": "webpack --env.prodBuild --env.analyzeBundles",
     "hoistVer": "cat node_modules/@xh/hoist/package.json | grep version",
-    "lint": "eslint lint .",
-    "refreshHoist": "rimraf -rf node_modules/@xh/hoist && yarn upgrade @xh/hoist && yarn install --check-files",
-    "start": "webpack-dev-server",
-    "startOnDevice": "webpack-dev-server --env.inlineHoist --env.devHost=$(hostname)",
-    "startAndAnalyze": "webpack-dev-server --env.analyzeBundles",
-    "startWithHoist": "cd ../../hoist-react && yarn install && cd ../toolbox/client-app && webpack-dev-server --env.inlineHoist"
+    "lint": "yarn lint:js",
+    "lint:all": "yarn lint:js && yarn lint:styles",
+    "lint:js": "eslint --ext .js,.jsx .",
+    "lint:styles": "stylelint \"**/*.s?(a|c)ss\"",
+    "refreshHoist": "echo 'This script has been removed - run `yarn upgrade` instead to get the latest snapshot.'",
+    "start": "yarn install && cross-env NODE_OPTIONS=--max_old_space_size=3072 webpack-dev-server",
+    "startOnDevice": "yarn install && webpack-dev-server --env.inlineHoist --env.devHost=$(hostname)",
+    "startAndAnalyze": "yarn install && webpack-dev-server --env.analyzeBundles",
+    "startWithHoist": "cd ../../hoist-react && yarn install && cd ../toolbox/client-app && yarn install && cross-env NODE_OPTIONS=--max_old_space_size=3072 webpack-dev-server --env.inlineHoist"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint",
+    "*.s?(a|c)ss": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
-    "@xh/hoist": "^15.0.0-SNAPSHOT",
-    "babel-runtime": "~6.26.0",
-    "prop-types": "~15.6.2",
-    "react": "~16.5.2",
-    "react-dom": "~16.5.2",
+    "@ag-grid-community/react": "~23.2.0",
+    "@ag-grid-enterprise/all-modules": "~23.2.0",
+    "@fortawesome/free-brands-svg-icons": "~5.14.0",
+    "@xh/hoist": "^37.0.0-SNAPSHOT",
+    "highcharts": "~8.2.0",
+    "react": "~16.13.1",
+    "react-dom": "~16.13.1",
     "react-dom-factories": "~1.0.2"
   },
   "devDependencies": {
-    "@xh/hoist-dev-utils": "~2.3.0"
+    "@xh/hoist-dev-utils": "^6.0.0-SNAPSHOT",
+    "cross-env": "~7.0.2",
+    "husky": "~4.2.1",
+    "lint-staged": "~10.2.10",
+    "stylelint": "~13.6.0",
+    "stylelint-config-standard": "~20.0.0",
+    "stylelint-scss": "~3.18.0"
   }
 }

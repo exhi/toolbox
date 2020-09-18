@@ -1,38 +1,19 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import React, {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
+import React from 'react';
+import {creates, hoistCmp, HoistModel, LoadSupport, managed, XH} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon';
 import {filler} from '@xh/hoist/cmp/layout';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
-import {button} from '@xh/hoist/desktop/cmp/button';
-import {toolbar} from '@xh/hoist/desktop/cmp/toolbar';
-import {storeFilterField} from '@xh/hoist/desktop/cmp/store';
-import {dataView, DataViewModel} from '@xh/hoist/desktop/cmp/dataview';
-import {LocalStore} from '@xh/hoist/data';
-
-import {App} from '../../App';
+import {refreshButton} from '@xh/hoist/desktop/cmp/button';
+import {storeFilterField} from '@xh/hoist/cmp/store';
+import {dataView, DataViewModel} from '@xh/hoist/cmp/dataview';
 import {wrapper} from '../../common/Wrapper';
 import {dataViewItem} from './DataViewItem';
-import './DataViewItem.scss';
+import {shuffle, take} from 'lodash';
 
-@HoistComponent
-export class DataViewPanel extends Component {
+export const dataViewPanel = hoistCmp.factory({
+    model: creates(() => new Model()),
 
-    localModel = new DataViewModel({
-        store: new LocalStore({
-            fields: ['id', 'name', 'city', 'value']
-        }),
-        itemRenderer: (v, {record}) => dataViewItem({record})
-    });
-
-    render() {
-        const {model} = this;
-
+    render({model})  {
         return wrapper({
             description: [
                 <p>
@@ -42,50 +23,62 @@ export class DataViewPanel extends Component {
             ],
             item: panel({
                 className: 'toolbox-dataview-panel',
-                title: 'Grids > DataView',
+                title: 'Grids › DataView',
                 icon: Icon.addressCard(),
                 width: 700,
                 height: 400,
-                item: dataView({
-                    model,
-                    rowCls: 'dataview-item',
-                    itemHeight: 70
-                }),
-                bbar: toolbar({
-                    items: [
-                        storeFilterField({
-                            store: model.store,
-                            fields: ['name', 'city']
-                        }),
-                        filler(),
-                        button({
-                            text: 'Reload Data',
-                            icon: Icon.refresh(),
-                            onClick: this.loadData
-                        })
-                    ]
-                })
+                item: dataView(),
+                bbar: [
+                    refreshButton({
+                        text: 'Load new (random) records',
+                        model
+                    }),
+                    filler(),
+                    storeFilterField({store: model.dataViewModel.store})
+                ]
             })
         });
     }
+});
 
-    componentDidMount() {
-        this.loadData();
-    }
+@HoistModel
+@LoadSupport
+class Model {
 
-    loadData = () => {
-        const {store} = this.model,
-            companies = App.companyService.randomCompanies,
-            min = -1000,
+    @managed
+    dataViewModel = new DataViewModel({
+        store: {
+            fields: ['name', 'city', 'value']
+        },
+        sortBy: 'name',
+        emptyText: 'No companies found...',
+        elementRenderer: (v, {record}) => dataViewItem({record}),
+        contextMenu: [
+            'copyCell'
+        ],
+        itemHeight: 70,
+        rowClassFn: () => 'dataview-item',
+        stripeRows: true
+    });
+
+    async doLoadAsync(loadSpec) {
+        const {dataViewModel} = this,
+            allCustomers = await XH.fetchJson({url: 'customer'}),
+            customers = take(shuffle(allCustomers), 100);
+
+        const min = -1000,
             max = 1000;
 
-        store.loadData(companies.map(it => {
+        await dataViewModel.store.loadData(customers.map(it => {
             const randVal = Math.random() * (max - min) + min;
             return {
-                name: it.name,
+                id: it.id,
+                name: it.company,
                 city: it.city,
                 value: randVal
             };
         }));
+
+        dataViewModel.selectFirst();
     }
 }

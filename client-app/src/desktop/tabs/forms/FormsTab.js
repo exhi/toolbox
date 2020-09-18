@@ -1,33 +1,20 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-import {Component} from 'react';
-import {HoistComponent} from '@xh/hoist/core';
-import {tabContainer, TabContainerModel} from '@xh/hoist/desktop/cmp/tab';
+import {hoistCmp} from '@xh/hoist/core';
+import {tabContainer} from '@xh/hoist/cmp/tab';
+import {inputsPanel} from './InputsPanel';
+import {formPanel} from './FormPanel';
+import {toolbarFormPanel} from './ToolbarFormPanel';
 
-import {ControlsPanel} from './ControlsPanel';
-import {ValidationPanel} from './ValidationPanel';
-
-
-@HoistComponent
-export class FormsTab extends Component {
-
-    localModel = new TabContainerModel({
-        route: 'default.forms',
-        tabs: [
-            {id: 'controls', title: 'Controls', content: ControlsPanel},
-            {id: 'validation', title: 'Validation', content: ValidationPanel}
-        ]
-    });
-
-    render() {
-        return tabContainer({
-            model: this.model,
+export const formsTab = hoistCmp.factory(
+    () => tabContainer({
+        model: {
+            route: 'default.forms',
             switcherPosition: 'left',
-            className: 'toolbox-tab'
-        });
-    }
-}
+            tabs: [
+                {id: 'form', title: 'FormModel', content: formPanel},
+                {id: 'inputs', title: 'Hoist Inputs', content: inputsPanel},
+                {id: 'toolbarForm', title: 'Toolbar Forms', content: toolbarFormPanel}
+            ]
+        },
+        className: 'toolbox-tab'
+    })
+);

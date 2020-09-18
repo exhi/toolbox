@@ -1,80 +1,85 @@
-/*
- * This file belongs to Hoist, an application development toolkit
- * developed by Extremely Heavy Industries (www.xh.io | info@xh.io)
- *
- * Copyright © 2018 Extremely Heavy Industries Inc.
- */
-
-import {Component} from 'react';
-import {HoistComponent, elemFactory} from '@xh/hoist/core';
+import {hoistCmp, XH} from '@xh/hoist/core';
 import {div} from '@xh/hoist/cmp/layout';
-import {page} from '@xh/hoist/mobile/cmp/page';
+import {panel} from '@xh/hoist/mobile/cmp/panel';
 import {button} from '@xh/hoist/mobile/cmp/button';
 import {Icon} from '@xh/hoist/icon';
 
-import {App} from '../App';
-import {gridPage} from '../grids/GridPage';
-import {formPage} from '../form/FormPage';
-import {containersPage} from '../containers/ContainersPage';
-import {popupsPage} from '../popups/PopupsPage';
-import {iconPage} from '../icons/IconPage';
-
-@HoistComponent
-export class HomePage extends Component {
-
+export const homePage = hoistCmp.factory({
     render() {
-        return page({
-            className: 'toolbox-page',
+        return panel({
+            scrollable: true,
+            className: 'toolbox-page xh-tiled-bg',
             items: [
-                this.renderSummaryCard({
+                summaryCard({
                     title: 'Grids',
                     icon: Icon.gridPanel(),
-                    summary: 'Show a collection of data bound to a store. Can specify 2 columns: leftColumn and rightColumn.',
-                    pageFactory: gridPage
+                    summary: 'Grids are at the heart of many Hoist React projects, and Grid, GridModel, and related helper components are key elements of the framework.',
+                    route: 'grids'
                 }),
-                this.renderSummaryCard({
+                summaryCard({
+                    title: 'Tree Grids',
+                    icon: Icon.grid(),
+                    summary: 'Hoist\'s Grid supports the display of hierarchical tree data. Applications provide standard record data with children nodes containing their sub-records',
+                    route: 'treegrids'
+                }),
+                summaryCard({
+                    title: 'Dataview',
+                    icon: Icon.addressCard(),
+                    summary: 'The DataView component leverages an underlying Grid / GridModel instance to display individual component "cards" for each rendered item.',
+                    route: 'dataview'
+                }),
+                summaryCard({
                     title: 'Form',
                     icon: Icon.edit(),
                     summary: 'Form fields can be bound to a model.',
-                    pageFactory: formPage
+                    route: 'form'
                 }),
-                this.renderSummaryCard({
+                summaryCard({
                     title: 'Containers',
                     icon: Icon.box(),
                     summary: 'Layout children in Tabs, or flexed horizontally or vertically.',
-                    pageFactory: containersPage
+                    route: 'containers'
                 }),
-                this.renderSummaryCard({
+                summaryCard({
+                    title: 'Panels',
+                    icon: Icon.window(),
+                    summary: 'Core building block component with support for header and toolbars.',
+                    route: 'panels'
+                }),
+                summaryCard({
                     title: 'Popups',
                     icon: Icon.comment(),
                     summary: 'Dialogs and Toasts.',
-                    pageFactory: popupsPage
+                    route: 'popups'
                 }),
-                this.renderSummaryCard({
+                summaryCard({
                     title: 'Icons',
                     icon: Icon.rocket(),
                     summary: 'A collection of FontAwesome SVG icons, available in 3 variants.',
-                    pageFactory: iconPage
+                    route: 'icons'
+                }),
+                summaryCard({
+                    title: 'PinPad',
+                    icon: Icon.unlock(),
+                    summary: 'A specialized PIN input, used for lightweight authentication of users.',
+                    route: 'pinPad'
                 })
             ]
         });
     }
+});
 
-    renderSummaryCard({title, icon, summary, pageFactory}) {
-        return div({
-            className: 'toolbox-card',
-            items: [
-                div({className: 'toolbox-card__title', item: title}),
-                div({className: 'toolbox-card__body', item: summary}),
-                button({
-                    icon: icon,
-                    text: `Go to ${title}`,
-                    onClick: () => App.navigate(title, pageFactory)
-                })
-            ]
-        });
-    }
-
-}
-
-export const homePage = elemFactory(HomePage);
+const summaryCard = hoistCmp.factory(
+    ({title, icon, summary, route}) => div({
+        className: 'toolbox-card',
+        items: [
+            div({className: 'toolbox-card__title', item: title}),
+            div({className: 'toolbox-card__body', item: summary}),
+            button({
+                icon: icon,
+                text: `Go to ${title}`,
+                onClick: () => XH.appendRoute(route)
+            })
+        ]
+    })
+);
