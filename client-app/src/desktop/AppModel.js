@@ -135,6 +135,7 @@ export class AppModel {
                             {name: 'clock', path: '/clock'},
                             {name: 'dateFormats', path: '/dateFormats'},
                             {name: 'jsx', path: '/jsx'},
+                            {name: 'exceptions', path: '/exceptions'},
                             {name: 'fileChooser', path: '/fileChooser'},
                             {name: 'icons', path: '/icons'},
                             {name: 'leftRightChooser', path: '/leftRightChooser'},
