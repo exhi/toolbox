@@ -2,7 +2,7 @@ import {creates, hoistCmp, XH} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon';
 import {filler, span, vframe} from '@xh/hoist/cmp/layout';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
-import {numberInput, select} from '@xh/hoist/desktop/cmp/input';
+import {numberInput, textInput} from '@xh/hoist/desktop/cmp/input';
 import {chart} from '@xh/hoist/cmp/chart';
 import {button} from '@xh/hoist/desktop/cmp/button/index';
 import {OHLCChartModel} from './OHLCChartModel';
@@ -40,11 +40,8 @@ const example = hoistCmp.factory(
 const tbar = hoistCmp.factory(
     ({model}) => toolbar(
         span('Symbol: '),
-        select({
-            bind: 'currentSymbol',
-            options: model.symbols,
-            enableFilter: false,
-            width: 120
+        textInput({
+            bind: 'currentSymbol'
         }),
         toolbarSep(),
         span('Aspect Ratio: '),
