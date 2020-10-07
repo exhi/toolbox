@@ -233,7 +233,7 @@ const formContents = hoistCmp.factory(
                         layout: {width: 150},
                         item: select({
                             options: usStates,
-                            enableFilter: false,
+                            enableFilter: true,
                             placeholder: 'Select a state...'
                         })
                     }),

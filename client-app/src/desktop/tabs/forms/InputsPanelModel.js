@@ -4,12 +4,19 @@ import {bindable} from '@xh/hoist/mobx';
 import {LocalDate} from '@xh/hoist/utils/datetime';
 import moment from 'moment';
 import {random} from 'lodash';
+import {wait} from '@xh/hoist/promise';
 
 @HoistModel
 export class InputsPanelModel {
 
     @bindable commitOnChange = false;
 
+    constructor() {
+        wait(5000).then(() => {
+            this.formModel.setValues({option1: 'MA'});
+        });
+    }
+  
     formModel = new FormModel({
         fields: [
             {name: 'text1'},
