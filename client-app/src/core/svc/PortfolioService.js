@@ -1,5 +1,6 @@
 import {HoistService, XH} from '@xh/hoist/core';
 import {LocalDate} from '@xh/hoist/utils/datetime';
+import {wait} from '@xh/hoist/promise';
 import {PositionSession} from '../positions/PositionSession';
 
 @HoistService
@@ -90,6 +91,7 @@ export class PortfolioService {
     }
 
     async getLineChartSeriesAsync({symbol, dimension = 'volume', loadSpec}) {
+        await wait(5000);
         const mktData = await XH.fetchJson({url: `portfolio/prices/${symbol}`, loadSpec});
         return {
             name: symbol,
