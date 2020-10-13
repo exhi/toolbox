@@ -10,7 +10,11 @@ export class OHLCChartModel {
     @bindable.ref symbols = null;
     numCompanies = 3;
 
-    @managed chartModel = new ChartModel({highchartsConfig: this.getChartModelCfg()});
+    @managed chartModel1 = new ChartModel({highchartsConfig: this.getChartModelCfg()});
+    @managed chartModel2 = new ChartModel({highchartsConfig: this.getChartModelCfg()});
+    @managed chartModel3 = new ChartModel({highchartsConfig: this.getChartModelCfg()});
+    @managed chartModel4 = new ChartModel({highchartsConfig: this.getChartModelCfg()});
+
     @bindable aspectRatio = null;
     
     constructor() {
@@ -44,7 +48,10 @@ export class OHLCChartModel {
             }
         });
 
-        this.chartModel.setSeries([series]);
+        this.chartModel1.setSeries([series]);
+        this.chartModel2.setSeries([series]);
+        this.chartModel3.setSeries([series]);
+        this.chartModel4.setSeries([series]);
     }
 
     getChartModelCfg() {

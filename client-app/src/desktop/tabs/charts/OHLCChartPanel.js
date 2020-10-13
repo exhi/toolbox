@@ -1,41 +1,54 @@
 import {creates, hoistCmp, XH} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon';
-import {filler, span, vframe} from '@xh/hoist/cmp/layout';
+import {div, filler, span, hframe} from '@xh/hoist/cmp/layout';
 import {panel} from '@xh/hoist/desktop/cmp/panel';
 import {numberInput, select} from '@xh/hoist/desktop/cmp/input';
 import {chart} from '@xh/hoist/cmp/chart';
 import {button} from '@xh/hoist/desktop/cmp/button/index';
 import {OHLCChartModel} from './OHLCChartModel';
-import {wrapper} from '../../common/Wrapper';
 import {toolbar, toolbarSep} from '@xh/hoist/desktop/cmp/toolbar';
 
 export const ohlcChartPanel = hoistCmp.factory({
     model: creates(OHLCChartModel),
 
-    render() {
-        return wrapper({
-            style: {paddingTop: 0},
+    render({model}) {
+        return div({
+            style: {  
+                width: '75%',
+                margin: 'auto'
+                // display: 'flex',
+                // position: 'relative',
+                // flex: '1 1 auto'
+            },
             item: panel({
-                className: 'toolbox-ohlcchart-panel',
-                title: 'Charts › OHLC',
+                tbar: tbar(),
+                title: 'Charts › 4 Charts Autosized',
                 icon: Icon.chartLine(),
-                width: 800,
-                height: 600,
-                item: example(),
-                tbar: tbar()
+                items: [
+                    hframe(
+                        chart({
+                            model: model.chartModel1
+                        }), 
+                        chart({
+                            model: model.chartModel2
+                        })
+                    ),
+                    hframe(
+                        chart({
+                            model: model.chartModel3
+                        }),
+                        chart({
+                            model: model.chartModel4
+                        })
+                    )
+                ]
             })
-        });
+        }
+
+        );
     }
 });
 
-const example = hoistCmp.factory(
-    ({model}) => vframe({
-        className: 'toolbox-example-container',
-        item: chart({
-            aspectRatio: model.aspectRatio
-        })
-    })
-);
 
 const tbar = hoistCmp.factory(
     ({model}) => toolbar(
@@ -59,9 +72,9 @@ const tbar = hoistCmp.factory(
         button({
             text: 'Call chart API',
             icon: Icon.code(),
-            disabled: !model.chartModel.highchart,
+            disabled: !model.chartModel1.highchart,
             onClick: () => {
-                const xExtremes = model.chartModel.highchart.axes[0].getExtremes();
+                const xExtremes = model.chartModel1.highchart.axes[0].getExtremes();
                 XH.alert({
                     title: 'X-axis extremes - as read from chart API',
                     message: JSON.stringify(xExtremes)

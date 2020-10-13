@@ -13,6 +13,7 @@ export class PortfolioService {
     }
 
     async getSymbolsAsync({loadSpec} = {}) {
+        await wait(5000);
         return XH.fetchJson({url: 'portfolio/symbols', loadSpec});
     }
 
