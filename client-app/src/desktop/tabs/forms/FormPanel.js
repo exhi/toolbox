@@ -122,7 +122,9 @@ const tags = hoistCmp.factory(
         field: 'tags',
         item: select({
             enableMulti: true,
-            enableCreate: true
+            enableCreate: true,
+            enableClear: true,
+            height: 100
         })
     })
 );

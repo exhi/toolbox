@@ -1,5 +1,5 @@
 import {grid, gridCountLabel} from '@xh/hoist/cmp/grid';
-import {filler} from '@xh/hoist/cmp/layout';
+import {hframe, filler, hbox} from '@xh/hoist/cmp/layout';
 import {hoistCmp, uses} from '@xh/hoist/core';
 import {colChooserButton} from '@xh/hoist/desktop/cmp/button';
 import {filterChooser} from '@xh/hoist/desktop/cmp/filter';
@@ -16,15 +16,20 @@ export const ordersPanel = hoistCmp.factory({
         return panel({
             title: `Orders: ${formatPositionId(positionId)}`,
             icon: Icon.edit(),
-            item: grid(),
+            item: hframe(
+                grid(),
+                hbox({
+                    width: 400,
+                    item: filterChooser({
+                        placeholder: 'Filter orders...',
+                        flex: 1,
+                        height: '100%',
+                        menuPlacement: 'top'
+                    })
+                })
+            ),
             mask: (positionId == null || loadModel.isPending),
             bbar: [
-                filterChooser({
-                    placeholder: 'Filter orders...',
-                    enableClear: true,
-                    flex: 10,
-                    maxWidth: 800
-                }),
                 gridCountLabel({unit: 'orders'}),
                 filler(),
                 colChooserButton()
