@@ -8,6 +8,9 @@ import './WelcomeWidget.scss';
 export const welcomeWidget = hoistCmp.factory(
     () => {
         const link = (txt, url) => <a href={url} target="_blank">{txt}</a>;
+        const obj = {
+            items: [1]
+        };
         return panel({
             className: 'tb-welcome-widget',
             items: [
@@ -16,7 +19,8 @@ export const welcomeWidget = hoistCmp.factory(
                         <img src={xhHoist} alt="xh.io + Hoist"/>
                     </div>,
                     <div className="tb-welcome-widget__greeting">
-                        <p style={{fontWeight: 'bold'}}>Welcome, {XH.getUser().displayName}!</p>
+                        {/* put an optional chaining operator in `items.map` to trigger the eslint bug described in issue https://github.com/xh/eslint-config/issues/3  */}
+                        {obj.items.map(it => <p style={{fontWeight: 'bold'}} key={`${XH.getUser().displayName}_${it}`}>Welcome, {XH.getUser().displayName}!</p>)}
                         <p>
                             Toolbox demonstrates key components, code patterns, utilities, and
                             other tooling included in {link('Hoist React', 'https://github.com/xh/hoist-react/')} and {link('Hoist Core', 'https://github.com/xh/hoist-core/')},
