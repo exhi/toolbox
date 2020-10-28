@@ -1,13 +1,13 @@
 
 describe('Login', () => {
     it('Compares login prompt',   () => {
-        cy.visit("app")
+        cy.visit("admin")
         cy.matchImageSnapshot("login");
     });
     it('Rejects bad login',   () => {
-        cy.visit("app")
+        cy.visit("admin")
         cy.get('.bp3-input:first')
-            .type('toolbox@xh.io')
+            .type('admin@xh.io')
         cy.get('.bp3-input:last')
             .type('badpassword')
             .type('{enter}')
@@ -15,11 +15,11 @@ describe('Login', () => {
     });
 
     it('Logs in',   () => {
-        cy.visit("app")
+        cy.visit("admin")
         cy.get('.bp3-input:first')
-            .type('toolbox@xh.io').should('have.value', 'toolbox@xh.io')
+            .type('admin@xh.io').should('have.value', 'admin@xh.io')
         cy.get('.bp3-input:last')
-            .type('Hoist_Toolb0x')
+            .type('[TODO - use cypress env]')
             .type('{enter}')
     });
 });
