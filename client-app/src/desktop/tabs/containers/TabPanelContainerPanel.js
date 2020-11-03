@@ -9,6 +9,7 @@ import {Icon} from '@xh/hoist/icon';
 import {find, shuffle, isEmpty} from 'lodash';
 import React from 'react';
 import {wrapper} from '../../common/Wrapper';
+import {tabSwitcher} from '@xh/hoist/desktop/cmp/tab';
 
 export const tabPanelContainerPanel = hoistCmp.factory({
     model: creates(() => new Model()),
@@ -131,6 +132,12 @@ export const tabPanelContainerPanel = hoistCmp.factory({
                                 content: () => {
                                     return panel({
                                         className: 'child-tabcontainer',
+                                        tbar: [
+                                            tabSwitcher({
+                                                model: dynamicModel,
+                                                enableOverflow: true
+                                            })
+                                        ],
                                         bbar: [
                                             button({icon: Icon.add(), text:  'Add', onClick: () => model.addDynamic()}),
                                             button({icon: Icon.transaction(), text:  'Shuffle', onClick: () => model.shuffleDynamic()}),
@@ -164,10 +171,7 @@ class Model {
     @managed
     dynamicModel = new TabContainerModel({
         tabs: [],
-        switcher: {
-            orientation: 'top',
-            enableOverflow: true
-        }
+        switcher: false
     });
 
     constructor() {
