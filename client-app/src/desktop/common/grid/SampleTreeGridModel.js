@@ -142,22 +142,12 @@ export class SampleTreeGridModel {
                 fields: [{name: 'isChecked', type: 'bool'}],
                 processRawData: (r) => ({isChecked: false, ...r})
             },
-            showSummary: 'top',
             selModel: {mode: 'multiple'},
             sortBy: 'pnl|desc|abs',
             emptyText: 'No records found...',
             colChooserModel: true,
             enableExport: true,
             sizingMode: XH.appModel.gridSizingMode,
-            rowClassFn: (data, params) => { // TEST when this is called, when do we have to force a redraw?
-                // const classes = [];
-                // console.log('rowClassFn');
-                // if (params.node.level === 0) classes.push('xh-top-level-tree-row');
-                // if (params.node.firstChild && params.node.lastChild) classes.push('xh-single-child'); // Works
-                // // if (params.node.childIndex % 2) classes.push('xh-row-odd');
-                // return classes.join(', ');
-                // return 'don-is-everywhere';
-            },
             columns: [
                 {
                     headerName: 'Name',
