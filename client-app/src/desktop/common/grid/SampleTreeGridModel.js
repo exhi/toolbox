@@ -17,6 +17,8 @@ import {createRef} from 'react';
 @LoadSupport
 export class SampleTreeGridModel {
 
+    count = 1
+
     @bindable
     filterIncludesChildren = false;
 
@@ -73,14 +75,37 @@ export class SampleTreeGridModel {
         return XH.portfolioService
             .getPositionsAsync(dims, true)
             .then(data => {
+                // TODO: Top level leaf test
+                // data[0].children.forEach(it => {
+                //     if (it.name == 'AGDY') {
+                //         it.children = [];
+                //     }
+                // });
                 if (isRefresh) {
                     gridModel.updateData({update: data});
+                    this.count++;
                     if (isAutoRefresh) {
                         XH.toast({
                             intent: 'primary',
                             message: 'Data Updated',
                             containerRef: this.panelRef.current
                         });
+                    } else {
+                        // TODO: Test adding a row to a previously single child leaf.
+                        // Dim chooser Region >> Symbol >> Sector, Sort by name to float this group to top
+                        // Must manually refresh.
+                        gridModel.updateData([{
+                            rawData: {
+                                id: 'root>>region:Asia/Pac>>symbol:A>>sector:DingDong' + this.count,
+                                children: null,
+                                mktVal: 4403029,
+                                name: 'DingDong' + this.count,
+                                pnl: 537442
+                            },
+                            parentId: 'root>>region:Asia/Pac>>symbol:A'
+                        }]);
+
+                        // gridModel.agGridModel.agApi.redrawRows(); // TODO: This seems to fix row class problem, but is probably not desired.
                     }
                 } else {
                     gridModel.loadData(data);
@@ -117,12 +142,22 @@ export class SampleTreeGridModel {
                 fields: [{name: 'isChecked', type: 'bool'}],
                 processRawData: (r) => ({isChecked: false, ...r})
             },
+            showSummary: 'top',
             selModel: {mode: 'multiple'},
             sortBy: 'pnl|desc|abs',
             emptyText: 'No records found...',
             colChooserModel: true,
             enableExport: true,
             sizingMode: XH.appModel.gridSizingMode,
+            rowClassFn: (data, params) => { // TEST when this is called, when do we have to force a redraw?
+                // const classes = [];
+                // console.log('rowClassFn');
+                // if (params.node.level === 0) classes.push('xh-top-level-tree-row');
+                // if (params.node.firstChild && params.node.lastChild) classes.push('xh-single-child'); // Works
+                // // if (params.node.childIndex % 2) classes.push('xh-row-odd');
+                // return classes.join(', ');
+                // return 'don-is-everywhere';
+            },
             columns: [
                 {
                     headerName: 'Name',
