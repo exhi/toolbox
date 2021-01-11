@@ -53,7 +53,7 @@ export class CubeModel {
                 {name: 'symbol', isDimension: true},
                 {name: 'sector', isDimension: true},
                 {name: 'model', isDimension: true},
-                {name: 'fund', isDimension: true},
+                {name: 'fund', isDimension: true, aggregator: 'UNIQUE'},
                 {name: 'region', isDimension: true},
                 {name: 'trader', isDimension: true},
                 {name: 'dir', displayName: 'Direction', isDimension: true},
@@ -66,7 +66,8 @@ export class CubeModel {
                 {name: 'maxConfidence', aggregator: 'MAX'},
                 {name: 'minConfidence', aggregator: 'MIN'},
                 {name: 'time', aggregator: 'MAX'}
-            ]
+            ],
+            closeFn: (row) => ['Red River'].includes(row.data.fund)
         });
     }
 
