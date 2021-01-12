@@ -12,6 +12,8 @@ import {CubeModel} from './CubeModel';
 @LoadSupport
 export class CubeTestModel {
 
+    persistWith = {localStorageKey: 'cubeTestState'};
+
     @managed cubeModel;
     @managed gridModel;
     @managed view;
@@ -26,8 +28,8 @@ export class CubeTestModel {
 
     constructor() {
         this.loadTimesModel = new LoadTimesModel();
-        this.gridModel = this.createGridModel();
         this.cubeModel = new CubeModel(this);
+        this.gridModel = this.createGridModel();
 
         const {cube} = this.cubeModel;
 
@@ -92,7 +94,8 @@ export class CubeTestModel {
         return new GridModel({
             treeMode: true,
             showSummary: this.showSummary,
-            store: {loadRootAsSummary: this.showSummary},
+            store: {loadRootAsSummary: this.showSummary, fields: this.cubeModel.cube.fields},
+            persistWith: this.persistWith,
             sortBy: 'time|desc',
             emptyText: 'No records found...',
             colChooserModel: true,
@@ -120,6 +123,10 @@ export class CubeTestModel {
                 },
                 {
                     field: 'trader',
+                    width: 130
+                },
+                {
+                    field: 'dir',
                     width: 130
                 },
                 {

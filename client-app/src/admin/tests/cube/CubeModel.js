@@ -53,10 +53,10 @@ export class CubeModel {
                 {name: 'symbol', isDimension: true},
                 {name: 'sector', isDimension: true},
                 {name: 'model', isDimension: true},
-                {name: 'fund', isDimension: true, aggregator: 'UNIQUE'},
+                {name: 'fund', isDimension: true},
                 {name: 'region', isDimension: true},
                 {name: 'trader', isDimension: true},
-                {name: 'dir', displayName: 'Direction', isDimension: true},
+                {name: 'dir', displayName: 'Direction', isDimension: true, aggregator: 'UNIQUE'},
                
                 {name: 'quantity', aggregator: 'SUM', canAggregateFn: isInstrument},
                 {name: 'price', aggregator: 'UNIQUE', canAggregateFn: isInstrument},
@@ -67,7 +67,8 @@ export class CubeModel {
                 {name: 'minConfidence', aggregator: 'MIN'},
                 {name: 'time', aggregator: 'MAX'}
             ],
-            closeFn: (row) => ['Red River'].includes(row.data.fund)
+            closeFn: (row) => ['Winter Star', 'Hudson Bay'].includes(row.data.fund),
+            leafUnit: 'order'
         });
     }
 
