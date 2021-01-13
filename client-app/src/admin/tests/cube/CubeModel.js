@@ -57,7 +57,7 @@ export class CubeModel {
                 {name: 'region', isDimension: true},
                 {name: 'trader', isDimension: true},
                 {name: 'dir', displayName: 'Direction', isDimension: true, aggregator: 'UNIQUE'},
-               
+
                 {name: 'quantity', aggregator: 'SUM', canAggregateFn: isInstrument},
                 {name: 'price', aggregator: 'UNIQUE', canAggregateFn: isInstrument},
 
@@ -67,7 +67,13 @@ export class CubeModel {
                 {name: 'minConfidence', aggregator: 'MIN'},
                 {name: 'time', aggregator: 'MAX'}
             ],
-            closeFn: (row) => ['Winter Star', 'Hudson Bay'].includes(row.data.fund),
+            bucketFn: (row) => {
+                if (['Red River', 'Hudson Bay'].includes(row.data.fund)) {
+                    return 'WATERY';
+                } else if (['Winter Star', 'Black Crescent'].includes(row.data.fund)) {
+                    return 'CELESTIAL';
+                }
+            },
             leafUnit: 'order'
         });
     }
