@@ -1,9 +1,10 @@
 import {HoistModel, LoadSupport, managed, XH} from '@xh/hoist/core';
 import {Cube} from '@xh/hoist/data';
 import {fmtThousands} from '@xh/hoist/format';
-import {times} from 'lodash';
+import {times, upperFirst} from 'lodash';
 import {SECONDS} from '@xh/hoist/utils/datetime';
 import {Timer} from '@xh/hoist/utils/async';
+import {pluralize} from '@xh/hoist/utils/js';
 
 @HoistModel
 @LoadSupport
@@ -67,14 +68,21 @@ export class CubeModel {
                 {name: 'minConfidence', aggregator: 'MIN'},
                 {name: 'time', aggregator: 'MAX'}
             ],
-            bucketFn: (row) => {
-                if (['Red River', 'Hudson Bay'].includes(row.data.fund)) {
-                    return 'WATERY';
-                } else if (['Winter Star', 'Black Crescent'].includes(row.data.fund)) {
-                    return 'CELESTIAL';
-                }
-            },
-            leafUnit: 'order'
+            bucketSpecFn: ({childDim}) => {
+                // We will bucket fund aggregate rows or order leaf rows
+                if (childDim && childDim.name !== 'fund') return false;
+
+                return {
+                    labelFn: ({bucket}) => `${bucket} ${pluralize(upperFirst(childDim?.name ?? 'order'))}`,
+                    bucketFn: (row) => {
+                        if (['Red River', 'Hudson Bay'].includes(row.fund)) {
+                            return 'Wet';
+                        } else if (['Winter Star', 'Black Crescent'].includes(row.fund)) {
+                            return 'Celestial';
+                        }
+                    }
+                };
+            }
         });
     }
 

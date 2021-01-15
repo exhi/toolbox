@@ -126,10 +126,6 @@ export class CubeTestModel {
                     width: 130
                 },
                 {
-                    field: 'dir',
-                    width: 130
-                },
-                {
                     field: 'quantity',
                     headerName: 'Qty',
                     align: 'right',
