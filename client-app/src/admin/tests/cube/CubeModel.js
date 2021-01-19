@@ -68,12 +68,14 @@ export class CubeModel {
                 {name: 'minConfidence', aggregator: 'MIN'},
                 {name: 'time', aggregator: 'MAX'}
             ],
-            bucketSpecFn: ({childDim}) => {
+            bucketSpecFn: (row, children) => {
                 // We will bucket fund aggregate rows or order leaf rows
-                if (childDim && childDim.name !== 'fund') return false;
+                const childDimName = children[0]?._meta.dimName,
+                    isLeaf = children[0]?._meta.isLeaf;
+                if (!isLeaf && childDimName !== 'fund') return null;
 
                 return {
-                    labelFn: ({bucket}) => `${bucket} ${pluralize(upperFirst(childDim?.name ?? 'order'))}`,
+                    labelFn: (bucket) => `${bucket} ${pluralize(upperFirst(childDimName ?? 'order'))}`,
                     bucketFn: (row) => {
                         if (['Red River', 'Hudson Bay'].includes(row.fund)) {
                             return 'Wet';
