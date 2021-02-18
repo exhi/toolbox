@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React from 'react';
 import {creates, hoistCmp, HoistModel, managed, XH} from '@xh/hoist/core';
 import {Icon} from '@xh/hoist/icon';
 import {filler} from '@xh/hoist/cmp/layout';
@@ -54,10 +54,7 @@ class Model extends HoistModel {
         contextMenu: [
             'copyCell'
         ],
-        itemHeight: ({node}) => {
-            const rec = node.data;
-            return rec.raw.ref.current?.scrollHeight;
-        },
+        itemHeight: 'auto',
         rowClassFn: () => 'dataview-item',
         stripeRows: true
     });
@@ -77,8 +74,7 @@ class Model extends HoistModel {
                 name: it.company,
                 city: it.city,
                 value: randVal,
-                comment: it.comment,
-                ref: createRef()
+                comment: it.comment
             };
         }));
 
