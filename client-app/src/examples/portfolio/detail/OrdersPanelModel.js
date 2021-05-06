@@ -69,11 +69,11 @@ export class OrdersPanelModel extends HoistModel {
                         return fmtNumber(val, {precision: 2});
                     },
                     sortValue: (v, params) => {
-                        return v.value;
-                    }
-                    ,
+                        return v ? v.value : v;
+                    },
                     comparator: (valueA, valueB, sortDir, abs, params) => {
-                        return  valueA > valueB ? 1 : -1;
+                        if (valueA == '') console.log(params);
+                        return valueA > valueB ? 1 : (valueA < valueB ? -1 : 0);
                     }
                 },
                 {
@@ -126,7 +126,7 @@ export class OrdersPanelModel extends HoistModel {
             loadSpec
         }).catchDefault() ?? [];
 
-        orders.forEach(it => it.price = {value: it.price})
+        orders.forEach(it => it.price = {value: it.price});
         gridModel.loadData(orders);
         await gridModel.preSelectFirstAsync();
 
