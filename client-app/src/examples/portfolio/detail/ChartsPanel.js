@@ -5,6 +5,7 @@ import {tabContainer} from '@xh/hoist/cmp/tab';
 import {chart} from '@xh/hoist/cmp/chart';
 import {ChartsPanelModel} from './ChartsPanelModel';
 import {PERSIST_DETAIL} from '../AppModel';
+import {dialog} from '@xh/hoist/kit/blueprint';
 
 export const chartsPanel = hoistCmp.factory({
     model: uses(ChartsPanelModel),
@@ -20,7 +21,8 @@ export const chartsPanel = hoistCmp.factory({
                 collapsedRenderMode: 'unmountOnHide',
                 persistWith: {...PERSIST_DETAIL, path: 'chartPanel'}
             },
-            item: tabContainer({
+            items: [
+                tabContainer({
                 model: {
                     persistWith: {...PERSIST_DETAIL, path: 'chartsTab'},
                     tabs: [
@@ -36,7 +38,9 @@ export const chartsPanel = hoistCmp.factory({
                         }
                     ]
                 }
-            })
+            }),
+                dialog({item:chart({model: model.lineChartModel.chartModel}), isOpen: true, style: {height: 450, width: '95%'}})
+            ]
         });
     }
 });
