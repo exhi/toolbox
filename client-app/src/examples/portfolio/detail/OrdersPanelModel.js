@@ -1,7 +1,7 @@
 import {FilterChooserModel} from '@xh/hoist/cmp/filter';
 import {HoistModel, managed, XH} from '@xh/hoist/core';
 import {dateTimeCol, GridModel} from '@xh/hoist/cmp/grid';
-import {fmtNumber, numberRenderer} from '@xh/hoist/format';
+import {numberRenderer} from '@xh/hoist/format';
 import {isNil} from 'lodash';
 import {bindable, makeObservable} from '@xh/hoist/mobx';
 import {PERSIST_DETAIL} from '../AppModel';
@@ -36,7 +36,7 @@ export class OrdersPanelModel extends HoistModel {
                     {name: 'sector', type: 'string'},
                     {name: 'dir', displayName: 'Direction', type: 'string'},
                     {name: 'quantity', type: 'number'},
-                    {name: 'price'},
+                    {name: 'price', type: 'number'},
                     {name: 'time', displayName: 'Exec Time', type: 'date'}
 
 
@@ -64,17 +64,7 @@ export class OrdersPanelModel extends HoistModel {
                 {
                     field: 'price',
                     width: 80,
-                    renderer: (v) => {
-                        const val = v.value;
-                        return fmtNumber(val, {precision: 2});
-                    },
-                    sortValue: (v, params) => {
-                        return v ? v.value : v;
-                    },
-                    comparator: (valueA, valueB, sortDir, abs, params) => {
-                        if (valueA == '') console.log(params);
-                        return valueA > valueB ? 1 : (valueA < valueB ? -1 : 0);
-                    }
+                    renderer: numberRenderer({precision: 2})
                 },
                 {
                     field: 'time',
@@ -126,7 +116,6 @@ export class OrdersPanelModel extends HoistModel {
             loadSpec
         }).catchDefault() ?? [];
 
-        orders.forEach(it => it.price = {value: it.price});
         gridModel.loadData(orders);
         await gridModel.preSelectFirstAsync();
 
