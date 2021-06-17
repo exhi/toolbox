@@ -17,15 +17,16 @@ export const jsxPanel = hoistCmp.factory(
                 on a factory pattern.
             </p>,
             <p>
-                Hoist encourages the use of its <code>elemFactory()</code> method to create and export
-                factory methods for custom components. These methods take a configuration
-                object where properties and child elements are specified without any wrapping
-                braces or additional syntax required.
+                Hoist encourages the use of its <code>hoistCmp</code> function to define new components and their
+                corresponding element factories. Along with the ability to use React hooks, core Hoist support -
+                including MobX reactivity, model lookup, and support for forward refs - is applied to Hoist functional
+                components. As they are designed to read and write their models via context, this allows a much less
+                verbose specification of component element trees.
             </p>,
             <p>
                 We believe that the factory approach excels for declarative specification
                 of code-heavy element trees.  For element trees with a significant amount of
-                hypertext, JSX might be a better choice. Both can be used interchangably, even within
+                hypertext, JSX might be a better choice. Both can be used interchangeably, even within
                 the same render method.
             </p>
         ],
