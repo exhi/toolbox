@@ -17,14 +17,16 @@ export const jsxPanel = hoistCmp.factory(
                 on a factory pattern.
             </p>,
             <p>
-                Hoist encourages the use of its <code>hoistCmp</code> function to define new components and their
-                corresponding element factories. Along with the ability to use React hooks, core Hoist support -
+                Hoist encourages the use of its <code>hoistCmp</code> factory function to define new components and
+                their corresponding element factories. Along with the ability to use React hooks, core Hoist support -
                 including MobX reactivity, model lookup, and support for forward refs - applies to Hoist functional
                 components. They are designed to read and write their models via context and therefore require a much
-                less verbose specification of component element trees. Additionally, many layout related components
-                provide layout support and promote most flexbox layout properties (e.g. 'width', 'height', 'flex') to
-                being first class props on the component itself. This allows many layout operations to be done in
-                declarative Javascript.
+                less verbose specification of component element trees.
+            </p>,
+            <p>
+                Additionally, many layout-related components provide layout support and promote most flexbox layout
+                properties (e.g. "width", "height", "flex") to being first class props on the component itself. This
+                allows many layout operations to be done in declarative Javascript.
             </p>,
             <p>
                 We believe that the factory approach excels for declarative specification
